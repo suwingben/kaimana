@@ -380,31 +380,31 @@ int pollSwitches(void)
   }
   
 
-  // test switch and set LED based on result
-  if(!digitalRead(PIN_P4))
-  {
-    switchActivity |= ATTACK_P4;
-    
-    // switch is active
-    if(iLED[LED_P4] == true)
-    {
-      //maintain color while switch is active
-      iLED[LED_P4] = true;
-    }
-    else
-    {
-      // select new color when switch is first activated
-      setLEDRandomColor(LED_P4);
-      iLED[LED_P4] = true;
-    }
-  }
-  else
-  {
-      // switch is inactive
-      kaimana.setLED(LED_P4, BLACK);    
-      iLED[LED_P4] = false;
-  }
-
+//  // test switch and set LED based on result
+//  if(!digitalRead(PIN_P4))
+//  {
+//    switchActivity |= ATTACK_P4;
+//    
+//    // switch is active
+//    if(iLED[LED_P4] == true)
+//    {
+//      //maintain color while switch is active
+//      iLED[LED_P4] = true;
+//    }
+//    else
+//    {
+//      // select new color when switch is first activated
+//      setLEDRandomColor(LED_P4);
+//      iLED[LED_P4] = true;
+//    }
+//  }
+//  else
+//  {
+//      // switch is inactive
+//      kaimana.setLED(LED_P4, BLACK);    
+//      iLED[LED_P4] = false;
+//  }
+//
 
   // test switch and set LED based on result
   if(!digitalRead(PIN_K1))
@@ -484,30 +484,30 @@ int pollSwitches(void)
   }
 
 
-  // test switch and set LED based on result
-  if(!digitalRead(PIN_K4))
-  {
-    switchActivity |= ATTACK_K4;
-    
-    // switch is active
-    if(iLED[LED_K4] == true)
-    {
-      //maintain color while switch is active
-      iLED[LED_K4] = true;
-    }
-    else
-    {
-      // select new color when switch is first activated
-      setLEDRandomColor(LED_K4);
-      iLED[LED_K4] = true;
-    }
-  }
-  else
-  {
-      // switch is inactive
-      kaimana.setLED(LED_K4, BLACK);    
-      iLED[LED_K4] = false;
-  }
+//  // test switch and set LED based on result
+//  if(!digitalRead(PIN_K4))
+//  {
+//    switchActivity |= ATTACK_K4;
+//    
+//    // switch is active
+//    if(iLED[LED_K4] == true)
+//    {
+//      //maintain color while switch is active
+//      iLED[LED_K4] = true;
+//    }
+//    else
+//    {
+//      // select new color when switch is first activated
+//      setLEDRandomColor(LED_K4);
+//      iLED[LED_K4] = true;
+//    }
+//  }
+//  else
+//  {
+//      // switch is inactive
+//      kaimana.setLED(LED_K4, BLACK);    
+//      iLED[LED_K4] = false;
+//  }
 
 
 

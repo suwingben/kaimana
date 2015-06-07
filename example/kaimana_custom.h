@@ -38,9 +38,9 @@
 // uncomment exactly one of the _LED_ORDER_*_ choices below or make your own 
 // based on the order you have your LEDs connected to the Kaimana board
 //
-#define  _LED_ORDER_DEFAULT_  true
+//#define  _LED_ORDER_DEFAULT_  true
 //#define  _LED_ORDER_JWYDER_   true
-
+#define  _LED_ORDER_JWYDER_6BTN_ true
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -87,6 +87,29 @@
   #define  LED_SELECT  10
   #define  LED_BACK    10
   #define  LED_START   11
+#endif
+
+#ifdef _LED_ORDER_JWYDER_6BTN_
+  // Map function names to LED index numbers 
+  // example for just K3-K1 and P1-P3 are connected first to the Kaimana board
+  // Based off jwyder
+  //
+  //   KAIMANA->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_JOY->LED_HOME->LED_SELECT->LED_START
+  //
+  //#define  LED_K4      0
+  #define  LED_K3      0
+  #define  LED_K2      1
+  #define  LED_K1      2
+  #define  LED_P1      3
+  #define  LED_P2      4
+  #define  LED_P3      5
+ // #define  LED_P4      5
+  #define  LED_JOY     6
+  #define  LED_HOME    7
+  #define  LED_GUIDE   7
+  #define  LED_SELECT  8
+  #define  LED_BACK    8
+  #define  LED_START   9
 #endif
 
 
