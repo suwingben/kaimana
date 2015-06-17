@@ -31,4 +31,6 @@ Revised:  October 29, 2013    zonbipanda
 
 Revised:  April   11, 2015    zonbipanda  -- Arduino 1.6.3 Support
 
+Forked and revised on:  June 6, 2015 javierorosario- 6 button layout setup
+
 _
