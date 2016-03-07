@@ -23,7 +23,7 @@
 //  Created:  October 24, 2013    zonbipanda // gmail.com  -- Arduino 1.0.5 Support
 //  Revised:  October 29, 2013    zonbipanda // gmail.com
 //  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
-//
+//  Revised:  December 5.2015     info	//	mightyjrmods.com -- 6 button jwyder support
 
 #ifndef __kaimana_local_h__
 #define __kaimana_local_h__
