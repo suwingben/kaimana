@@ -39,8 +39,8 @@
 // based on the order you have your LEDs connected to the Kaimana board
 //
 //#define  _LED_ORDER_DEFAULT_  true
-//#define  _LED_ORDER_JWYDER_   true
-#define  _LED_ORDER_MIGHTYJR_  true
+#define  _LED_ORDER_JWYDER_   true
+
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -92,7 +92,7 @@
 
 #ifdef _LED_ORDER_MIGHTYJR_
   // Map function names to LED index numbers 
-  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
+  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
   // submitted by MIGHTYJR
   //
   //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY->LED_HOME->LED_SELECT->LED_START

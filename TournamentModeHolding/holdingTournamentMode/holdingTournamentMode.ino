@@ -50,16 +50,7 @@ void setup()
 {                
   // light up all leds at boot to demonstrate everything is functional
   defaultStartup();
-  
-  //Walking light animation
-  walkyStartup();
-  
-  // Random blink animation
-  starryStartup();
-  
-  tourneyModeActivate();
-  tourneyModeDeactivate();
-  
+ 
 }
 
 
@@ -147,9 +138,7 @@ void setLEDRandomColor(int index)
     case 7:
       kaimana.setLED(index, COLOR_RANDOM_7);
       break;
-    case 8:
-      kaimana.setLED(index, COLOR_RANDOM_8);
-      break;
+   
     default:   // any undefined value so discard data and set led to BLACK
       kaimana.setLED(index, BLACK);    
       break;
@@ -288,6 +277,13 @@ int pollSwitches(void)
   // test switch and set LED based on result
   if(!digitalRead(PIN_START))
   {
+  //Button hold to start tourneymode
+	holdTimeout += 1;
+	if(holdTimeout == 2000)
+	{
+	  tournamentMode = true;
+	  tourneyModeActivate();
+	}
     // switch is active
     if(iLED[LED_START] == true)
     {
@@ -298,6 +294,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
+      holdTimeout = 0;
       setLEDRandomColor(LED_START);
       iLED[LED_START] = true;
 	  
@@ -315,15 +312,6 @@ int pollSwitches(void)
   if(!digitalRead(PIN_P1))
   {
     switchActivity |= ATTACK_P1;
-    
-	
-	//Button hold to start tourneymode
-	holdTimeout += 1;
-	if(holdTimeout == 2000)
-	{
-	  tournamentMode = true;
-	  tourneyModeActivate();
-	}
     // switch is active
     if(iLED[LED_P1] == true)
     {
@@ -334,7 +322,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      holdTimeout = 0;
+      
 	  setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
     }
@@ -597,21 +585,7 @@ int pollSwitches(void)
 		  tournamentMode = false;
 	  }
   } */
-  // Adding a custom animation when pressing buttons
-  if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
-  {
-	  
-	   if (tournamentMode != true)
-	  {
-		  tournamentMode = true;
-		  tourneyModeActivate();
-	  }
-	  else
-	  {
-		  tourneyModeDeactivate();
-		  tournamentMode = false;
-	  }
-  }
+  
 
   // zero active switch counter (note: 4 way joystick counts as 1)
   iActiveSwitchCount = 0;
@@ -747,7 +721,15 @@ int tourneypollSwitches(void)
   // test switch and set LED based on result
   if(!digitalRead(PIN_START))
   {
+  
     // switch is active
+	//Button hold to stop tourneymode
+	holdTimeout += 1;
+	if(holdTimeout == 2000)
+	{
+	  tournamentMode = false;
+	  tourneyModeDeactivate();
+	}
     if(iLED[LED_START] == true)
     {
       //maintain color while switch is active
@@ -756,6 +738,7 @@ int tourneypollSwitches(void)
     else
     {
       // select new color when switch is first activated
+      holdTimeout = 0;
       iLED[LED_START] = true;
     }
   }
@@ -770,13 +753,7 @@ int tourneypollSwitches(void)
   if(!digitalRead(PIN_P1))
   {
     switchActivity |= ATTACK_P1;
-    //Button hold to start tourneymode
-	holdTimeout += 1;
-	if(holdTimeout == 2000)
-	{
-	  tournamentMode = false;
-	  tourneyModeDeactivate();
-	}
+    
     // switch is active
     if(iLED[LED_P1] == true)
     {		
@@ -786,7 +763,7 @@ int tourneypollSwitches(void)
     else
     {    
 	iLED[LED_P1] = true;
-      holdTimeout = 0;
+    
     }
   }
   else
@@ -1019,19 +996,7 @@ int tourneypollSwitches(void)
 	
 	//Tournament mode
 	// Adding a custom animation when pressing buttons
-  if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
-  {	  
-	   if (tournamentMode != true)
-	  {
-		  tournamentMode = true;
-		  tourneyModeActivate();
-	  }
-	  else
-	  {
-		  tourneyModeDeactivate();
-		  tournamentMode = false;
-	  }
-  }
+
 
   // zero active switch counter (note: 4 way joystick counts as 1)
   iActiveSwitchCount = 0;
