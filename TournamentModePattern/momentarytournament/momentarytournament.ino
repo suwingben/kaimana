@@ -1,4 +1,4 @@
-//  AnimationWork.ino
+//  momentarytournament.ino
 //
 //  Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com  
 //  All rights reserved.  Use is subject to license terms.
@@ -112,7 +112,7 @@ void loop()
 //
 void setLEDRandomColor(int index)
 {
-  switch(random(1,8))    // pick a random color between 1 and 8
+  switch(random(1,7))    // pick a random color between 1 and 7
   {
     case 1:
       kaimana.setLED(index, COLOR_RANDOM_1);
@@ -135,9 +135,7 @@ void setLEDRandomColor(int index)
     case 7:
       kaimana.setLED(index, COLOR_RANDOM_7);
       break;
-    case 8:
-      kaimana.setLED(index, COLOR_RANDOM_8);
-      break;
+    
     default:   // any undefined value so discard data and set led to BLACK
       kaimana.setLED(index, BLACK);    
       break;
