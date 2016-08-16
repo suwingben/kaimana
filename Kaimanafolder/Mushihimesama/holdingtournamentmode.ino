@@ -1,4 +1,4 @@
-//  example.ino
+//  AnimationWork.ino
 //
 //  Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com  
 //  All rights reserved.  Use is subject to license terms.
@@ -23,8 +23,7 @@
 //  Created:  October 24, 2013    zonbipanda // gmail.com  -- Arduino 1.0.5 Support
 //  Revised:  October 29, 2013    zonbipanda // gmail.com
 //  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
-//  Revised:  December 5.2015     info	//	mightyjrmods.com -- 6 button jwyder support
-
+//	Revised:  March	   7, 2016	  info // mightyjrmods.com -- Added startup animations
 
 #define __PROG_TYPES_COMPAT__
 #include <avr/io.h>
@@ -39,7 +38,8 @@
 int  pollSwitches(void);
 void showStartup(void);
 void setLEDRandomColor(int index);
-
+boolean tournamentMode = false;
+int holdTimeout = 0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -49,7 +49,17 @@ Kaimana kaimana;
 void setup() 
 {                
   // light up all leds at boot to demonstrate everything is functional
-  showStartup();
+  defaultStartup();
+  
+  //Walking light animation
+  walkyStartup();
+  
+  // Random blink animation
+  starryStartup();
+  
+  tourneyModeActivate();
+  tourneyModeDeactivate();
+  
 }
 
 
@@ -63,28 +73,40 @@ void loop()
   // initialize timeout value to now + some seconds
   ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
   
-
-  // infinite loop of read switches, update LEDs and idle animation when necessary
-  while(true)
+ // infinite loop of read switches, update LEDs and idle animation when necessary
+  while( true)
   {
     // active -- poll switches and update leds
-    if( pollSwitches() != 0 )
-    {
-        // some switches were active so reset idle timeout to now + some seconds
-        ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
-    }
-    else
-    {
-        // no switches active so test for start of idle timeout  
-        if( millis() > ulTimeout )
-        {
-          animation_idle();
-        }  
-    }
-    
+	
+	if (tournamentMode != true)
+	{
+		if( pollSwitches() != 0 )	
+		{
+			// some switches were active so reset idle timeout to now + some seconds
+			ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
+		}
+		else
+		{
+			// no switches active so test for start of idle timeout  
+			if( millis() > ulTimeout )
+			{
+			animation_idle();
+			}  
+		}
+	}
+	else
+	{
+		if( tourneypollSwitches() != 0 )	
+		{
+			// some switches were active so reset idle timeout to now + some seconds
+			ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
+		}
+		
+	}
+  }
     // delay a little to avoid flickering (yea, updates happens really, really fast!)
     delay( MAIN_LOOP_DELAY );
-  } 
+ 
 }
 
 
@@ -97,21 +119,6 @@ void loop()
 
 // light up all leds at boot to demonstrate everything is functional
 //
-void showStartup(void)
-{
-  kaimana.setALL( BLACK );
-  delay( BOOT_COLOR_DELAY );
-  kaimana.setALL( RED );
-  delay( BOOT_COLOR_DELAY );
-  kaimana.setALL( GREEN );
-  delay( BOOT_COLOR_DELAY );
-  kaimana.setALL( BLUE );
-  delay( BOOT_COLOR_DELAY );
-
-  kaimana.setALL( BLACK );
-  delay( BOOT_COMPLETE_DELAY );
-} 
-
 
 // set LED to one of 8 predefined colors selected at random
 //
@@ -286,12 +293,14 @@ int pollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_START] = true;
+	  
     }
     else
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_START);
       iLED[LED_START] = true;
+	  
     }
   }
   else
@@ -307,16 +316,26 @@ int pollSwitches(void)
   {
     switchActivity |= ATTACK_P1;
     
+	
+	//Button hold to start tourneymode
+	holdTimeout += 1;
+	if(holdTimeout == 2000)
+	{
+	  tournamentMode = true;
+	  tourneyModeActivate();
+	}
     // switch is active
     if(iLED[LED_P1] == true)
     {
-      //maintain color while switch is active
-      iLED[LED_P1] = true;
+		//maintain color while switch is active
+		iLED[LED_P1] = true;
+		
     }
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_P1);
+      holdTimeout = 0;
+	  setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
     }
   }
@@ -324,7 +343,8 @@ int pollSwitches(void)
   {
       // switch is inactive
       kaimana.setLED(LED_P1, BLACK);    
-      iLED[LED_P1] = false;
+      
+	  iLED[LED_P1] = false;
   }
 
 
@@ -380,31 +400,32 @@ int pollSwitches(void)
   }
   
 
-//  // test switch and set LED based on result
-//  if(!digitalRead(PIN_P4))
-//  {
-//    switchActivity |= ATTACK_P4;
-//    
-//    // switch is active
-//    if(iLED[LED_P4] == true)
-//    {
-//      //maintain color while switch is active
-//      iLED[LED_P4] = true;
-//    }
-//    else
-//    {
-//      // select new color when switch is first activated
-//      setLEDRandomColor(LED_P4);
-//      iLED[LED_P4] = true;
-//    }
-//  }
-//  else
-//  {
-//      // switch is inactive
-//      kaimana.setLED(LED_P4, BLACK);    
-//      iLED[LED_P4] = false;
-//  }
-//
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_P4))
+  {
+    switchActivity |= ATTACK_P4;
+    
+    // switch is active
+    if(iLED[LED_P4] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_P4] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_P4);
+	  
+      iLED[LED_P4] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_P4, BLACK);    
+      iLED[LED_P4] = false;
+  }
+
 
   // test switch and set LED based on result
   if(!digitalRead(PIN_K1))
@@ -484,30 +505,30 @@ int pollSwitches(void)
   }
 
 
-//  // test switch and set LED based on result
-//  if(!digitalRead(PIN_K4))
-//  {
-//    switchActivity |= ATTACK_K4;
-//    
-//    // switch is active
-//    if(iLED[LED_K4] == true)
-//    {
-//      //maintain color while switch is active
-//      iLED[LED_K4] = true;
-//    }
-//    else
-//    {
-//      // select new color when switch is first activated
-//      setLEDRandomColor(LED_K4);
-//      iLED[LED_K4] = true;
-//    }
-//  }
-//  else
-//  {
-//      // switch is inactive
-//      kaimana.setLED(LED_K4, BLACK);    
-//      iLED[LED_K4] = false;
-//  }
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_K4))
+  {
+    switchActivity |= ATTACK_K4;
+    
+    // switch is active
+    if(iLED[LED_K4] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_K4] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_K4);
+      iLED[LED_K4] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_K4, BLACK);    
+      iLED[LED_K4] = false;
+  }
 
 
 
@@ -561,7 +582,36 @@ int pollSwitches(void)
       animation_combo_1();
   if( kaimana.switchHistoryTest( COMBO_PATTERN_1B ) )
       animation_combo_1();
-
+	
+	  //Tournament mode
+/*   if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
+  {
+	  if (tournamentMode != true)
+	  {
+		  tournamentMode = true;
+		  tourneyMode
+	  }
+	  else
+	  {
+		  
+		  tournamentMode = false;
+	  }
+  } */
+  // Adding a custom animation when pressing buttons
+  if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
+  {
+	  
+	   if (tournamentMode != true)
+	  {
+		  tournamentMode = true;
+		  tourneyModeActivate();
+	  }
+	  else
+	  {
+		  tourneyModeDeactivate();
+		  tournamentMode = false;
+	  }
+  }
 
   // zero active switch counter (note: 4 way joystick counts as 1)
   iActiveSwitchCount = 0;
@@ -580,7 +630,424 @@ int pollSwitches(void)
   return(iActiveSwitchCount);
 }  
 
+int tourneypollSwitches(void)
+{
+  static int  iLED[LED_COUNT];
+  static int  iActiveSwitchCount;
+  static int  i;  
+  static int  j;  
+  static int  firsttime;
+  static uint16_t  joystickDirection;
+  static uint16_t  switchActivity;
+
+  // reset LED status
+  if (firsttime == 1)
+  {
+    for(i=0;i<LED_COUNT;++i)
+    {
+      iLED[i] = false;
+      firsttime = 0;
+    }
+  }
+
+  // read arduino pins and save results in the mapped LED if button is pressed (pin grounded)
+
+  // complex special case for joystick but it's worth the effort
+  joystickDirection = ATTACK_NONE;
+
+  if(!digitalRead(PIN_RIGHT))    
+    joystickDirection |= ATTACK_RIGHT;
+  if(!digitalRead(PIN_LEFT))
+    joystickDirection |= ATTACK_LEFT;
+  if(!digitalRead(PIN_DOWN))
+    joystickDirection |= ATTACK_DOWN;
+  if(!digitalRead(PIN_UP))
+    joystickDirection |= ATTACK_UP;
+
+  switch(joystickDirection)
+  {
+    case ATTACK_RIGHT:    // right
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_LEFT:    // left
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN:    // down
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN + ATTACK_LEFT:    // down + left
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP:    // up
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP + ATTACK_RIGHT:    // up + right
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP + ATTACK_LEFT:   // up + left
+      iLED[LED_JOY] = true;
+      break;
+    default:   // zero or any undefined value on an 8 way stick like UP+DOWN which is not happening on my watch
+      iLED[LED_JOY] = false;
+      break;
+  }  
+  
+  
+
+  // clear results for switch activity
+  switchActivity = ATTACK_NONE;
+  
+  // test switch and set LED based on result       // HOME = GUIDE
+  if(!digitalRead(PIN_HOME))
+  {
+    // switch is active
+    if(iLED[LED_HOME] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_HOME] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_HOME] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_HOME] = false;
+  }
 
 
- 
+  // test switch and set LED based on result    // SELECT = BACK 
+  if(!digitalRead(PIN_SELECT))
+  {
+    // switch is active
+    if(iLED[LED_SELECT] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_SELECT] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_SELECT] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_SELECT] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_START))
+  {
+    // switch is active
+    if(iLED[LED_START] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_START] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_START] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_START] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_P1))
+  {
+    switchActivity |= ATTACK_P1;
+    //Button hold to start tourneymode
+	holdTimeout += 1;
+	if(holdTimeout == 2000)
+	{
+	  tournamentMode = false;
+	  tourneyModeDeactivate();
+	}
+    // switch is active
+    if(iLED[LED_P1] == true)
+    {		
+		
+	  iLED[LED_P1] = true;
+    }
+    else
+    {    
+	iLED[LED_P1] = true;
+      holdTimeout = 0;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_P1] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_P2))
+  {
+    switchActivity |= ATTACK_P2;
+    
+    // switch is active
+    if(iLED[LED_P2] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_P2] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_P2] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_P2] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_P3))
+  {
+    switchActivity |= ATTACK_P3;
+    
+    // switch is active
+    if(iLED[LED_P3] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_P3] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_P3] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_P3] = false;
+  }
+  
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_P4))
+  {
+    switchActivity |= ATTACK_P4;
+    
+    // switch is active
+    if(iLED[LED_P4] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_P4] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+	  
+      iLED[LED_P4] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_P4] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_K1))
+  {
+    switchActivity |= ATTACK_K1;
+    
+    // switch is active
+    if(iLED[LED_K1] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_K1] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_K1] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_K1] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_K2))
+  {
+    switchActivity |= ATTACK_K2;
+    
+    // switch is active
+    if(iLED[LED_K2] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_K2] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_K2] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_K2] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_K3))
+  {
+    switchActivity |= ATTACK_K3;
+    
+    // switch is active
+    if(iLED[LED_K3] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_K3] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_K3] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_K3] = false;
+  }
+
+
+  // test switch and set LED based on result
+  if(!digitalRead(PIN_K4))
+  {
+    switchActivity |= ATTACK_K4;
+    
+    // switch is active
+    if(iLED[LED_K4] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_K4] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      iLED[LED_K4] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      iLED[LED_K4] = false;
+  }
+
+
+
+  // convert joystick, P1-P4, K1-K4 into a single unsigned int
+  switchActivity = joystickDirection + switchActivity;
+  kaimana.switchHistorySet(switchActivity);
+  
+
+  // test for combinations from most complext to least complex
+  // test for switches in reverse order (newest to oldest)
+
+
+  // combo #6
+  // test for: Ultra 2 (Metsu Shoryuken)
+  // combo is: DOWN, DOWN+RIGHT, RIGHT, DOWN, DOWN+RIGHT, RIGHT, RIGHT+K3
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_6A ) )
+      animation_combo_6();
+
+  // combo #5
+  // test for: Ultra 1 (Metsu Hadouken)
+  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P3
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_5A ) )
+      animation_combo_5();
+
+  // combo #4
+  // test for: Super (Shinkuu Hadouken)
+  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_4A ) )
+      animation_combo_4();
+
+  // combo #3
+  // test for: Tatsumaki Senpukyaku (Hurricane Kick)
+  // combo is: DOWN, DOWN+LEFT, LEFT, LEFT+K1 or LEFT+K2
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_3A ) )
+      animation_combo_3();
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_3B ) )
+      animation_combo_3();
+
+  // combo #2
+  // test for: Ryu Shoryuken (Dragon Punch)
+  // combo is: RIGHT, <NONE>, DOWN, DOWN+RIGHT, DOWN+RIGHT+P1 or DOWN+RIGHT+P2
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_2A ) )
+      animation_combo_2();
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_2B ) )
+      animation_combo_2();
+
+  // combo #1
+  // test for: Ryu Hadouken (Fireball) 
+  // combo is: DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1 or RIGHT+P2  
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_1A ) )
+      animation_combo_1();
+  if( kaimana.switchHistoryTest( COMBO_PATTERN_1B ) )
+      animation_combo_1();
+	
+	//Tournament mode
+	// Adding a custom animation when pressing buttons
+  if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
+  {	  
+	   if (tournamentMode != true)
+	  {
+		  tournamentMode = true;
+		  tourneyModeActivate();
+	  }
+	  else
+	  {
+		  tourneyModeDeactivate();
+		  tournamentMode = false;
+	  }
+  }
+
+  // zero active switch counter (note: 4 way joystick counts as 1)
+  iActiveSwitchCount = 0;
+  
+  // set LED color based on switch
+  for(i=0;i<LED_COUNT;++i)
+  {
+    if(iLED[i] == true)
+      ++iActiveSwitchCount;
+  }  
+
+  // update the leds with new/current colors in the array
+  kaimana.updateALL();
+  
+  // return number of active switches
+  return(iActiveSwitchCount);
+}  
+
 
