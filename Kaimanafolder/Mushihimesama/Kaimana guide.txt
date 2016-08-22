@@ -1,0 +1,251 @@
+Hello Everyone! Today I will be presenting an in-progress guide to work with your Paradise Arcade Kaimana LED controller. If you do not know yet what the Kaimana is or where to get it read below, otherwise skip the next section.
+
+
+WHAT IS A KAIMANA?
+The Kaimana is an Arduino based LED controller for fightsticks/arcadesticks developed and distributerd by Paradise Arcade, who you can find at www.paradisearcadeshop.com . It works with any [b]indexable[/b] LEDs but was primarily built as a driver for Paradise's KaimanaJ LEDs.
+
+
+
+WHAT CAN I DO WITH A KAIMANA? 
+Since it is Arduino based, just about anything! After going through this VERY basic guide, you can let your imagination run free! 
+
+
+
+INTRODUCTION (FILES, FUNCTIONS AND VARIABLES) 
+First, we have to define what we will be working with. Below you will find a breakdown of the files we use, the functions they include and some global variables that affect certain aspects of the Kaimana.
+
+Note that throughout this guide we will be using the word "install" to refer to your particular Kaimana configuration, an install can consist of 8 action buttons (punches and kicks), 3 menu buttons(start,select,home) and a joystick (4 directions)
+
+
+
+FILES: 
+
+You can get all of these on https://github.com/armi0024/kaimana . Just download the zip file and unextract them to a folder for now.
+
+The file heriarchy is explaned at https://github.com/armi0024/kaimana/blob/master/docs/kaimana-cpp-class-map.png
+
+Headers:
+animations.h
+kaimana.h
+kaimana_custom.h
+
+Cpp files
+animations.cpp
+kaimana.cpp
+
+ino file
+example.ino
+
+FILE BREAKDOWN
+
+animations.h
+Defines function prototypes and holds global variables related to timing and animations (get more info on this)
+
+kaimana.h
+Converts pin numbers and binary masks to easy to remember names. Defines the Kaimana class and prototype functions.
+
+Variables in this file 
+
+SWITCH_COUNT         Default value: 15
+This variable defines how many "switches" our install will have, mine will have the full 15 consisting of 8 action buttons (punches and kicks), 3 menu buttons(start,select,home) and a joystick (4 directions) even though I am ONLY using the 8 action buttons for this guide. You can change this value to reflect the MAX leds you will have in your install.
+
+SWITCH_HISTORY_MAX  Default value: 16
+(need more info) Is tied to how the program monitors for input in order to present animations.
+
+
+kaimana_custom.h
+This file defines the button "order", how many leds are in our install along with timing variables, some animation prototypes and Sine wave definitions (more on this later)
+
+The two variables below you will notice one is commented and the other is not, this means the order in which the LEDs are accessed. There are two "main" layouts that come by default but you can build your own! These two layouts are pretty self explanatory, you look at how many buttons you have and which order you want them to be numbered. 
+
+Variables in this file
+_LED_ORDER_DEFAULT_  default value: true
+Map function names to default LED index numbers, sets joystick LED as the first led followed by the menu buttons and finally the action buttons.
+
+_LED_ORDER_JWYDER_   default value: true
+Map function names to LED index numbers ,example for just K4-K1 and P1-P4 are connected first to the Kaimana board, followed by joystick and menu LEDs
+
+LED_COUNT   default value: 12
+Maximum number of LEDs attached to Kaimana board, this variable helps processes like the reset of switch history and animations, if you are using more LEDs or less this the variable you want that number to be in. You could leave the default value in unless you want complete control on how the LED count is handled or if you are using more than the default 12.
+
+BOOT_COLOR_DELAY         default value: 250
+Defines how long the boot sequence colors will display between each other when the Kaimana boots (function is showStartup in your ino file)
+
+BOOT_COMPLETE_DELAY      default value: 500
+Defines how long the boot animation waits before exiting (boot function is showStartup in your ino file)
+
+MAIN_LOOP_DELAY          default value:  50
+Defines the delay to avoid flickering (yea, updates happens really, really fast!)
+
+IDLE_TIMEOUT_SECONDS     default value:  30
+Defines the delay before the idle animation loop starts. Decrease for shorter wait times and increase for longer, may be of use when deploying long boot sequences.
+
+IDLE_ANIMATION_DELAY     default value:  8
+Defines the speed in which the idle animation colors cycle.
+
+The next section shows definitions of RGB values used by random color generator: setLEDRandomColor(int). You can add your own by using an online calculator such as the one in here 
+
+For example adding the following line at the bottom of this section adds a magenta color to the mix:
+
+#define  COLOR_RANDOM_8    220,000,127    // magenta
+
+The next section defines a few default animations which you can extend by using the different action commands.
+
+The variable prog_uint8_t sinusoid[257] PROGMEM is a data structure that is used to achieve the default "breathing" effect in the idle animation.
+
+The variable prog_uint8_t colorCycleData[] PROGMEM is a data structure used in all animations
+
+
+animations.cpp
+
+This file defines the different animations.
+
+Functions in this file:
+
+int animation_idle(void)
+
+  Defines default idle animation
+
+void animation_combo_1(void)
+
+  Defines animation for Hadouken (Fireball)
+
+
+void animation_combo_2(void)
+
+  Defines animation for Shoryuken (Dragon Punch)
+
+
+void animation_combo_3(void)
+
+  Defines animation for Tatsumaki Senpukyaku (Hurricane Kick)
+
+void animation_combo_4(void)
+
+  Defines animation for Super (Shinkuu Hadouken) 
+
+
+void animation_combo_5(void)
+
+  Defines animation for Ultra 1 (Metsu Hadouken)
+
+
+
+void animation_combo_6(void)
+
+  Defines animation for Ultra 2 (Metsu Shoryuken)
+
+
+
+kaimana.cpp
+
+This file handles the Arduino pin initialization as well as switch history processing
+
+Functions in this file:
+
+Kaimana::setLED
+This function is used to update individual LED colors 
+
+Kaimana::setALL
+This function is used to update every LED's colors 
+
+Kaimana::updateALL
+This function update the leds with new/current colors and delay a little to avoid flickering (yea, it happens really, really fast!)
+DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING!!. I really don't understand what happens here so I will wait until a greater being explains it to me then I will update this.
+
+Kaimana::switchHistoryClear
+This function clears the History "buffer" this program has for animation detection.
+
+Kaimana::switchHistorySet
+This function adds commands to the History "buffer" this program has for animation detection.
+
+Kaimana::switchHistoryTest
+This function helps to test out functionalities without adding more code complexity
+
+
+example.ino
+This is the file that will be loaded into the Arduino. 
+
+Functions in this file
+setup() 
+This setup routine runs first and only once each time power is applied to the Kaimana board. This is where our startup animation call would go, you could also program the animation directly into this function but for readability and organization we would be better off changing the showStartup() function below it.
+
+loop() 
+The loop routine repeats indefinitely and executes immediately following the setup() function. All we have here is logic to listen for switches (polling) and idle animation startup when the IDLE_TIMEOUT_SECONDS kicks in.
+
+showStartup(void)
+This function defines the startup animation, which by default is a flash of different colors. You can change the values to the ones located in the kaimana.h colors section. A few sample animations will be demoed further down this guide.
+
+setLEDRandomColor(int index)
+This function by itself does not do anything interesting, but when called from a switch detection it sets the LED of the button that called it to one of 8 predefined colors selected at random. You can add more colors or remove them from here to have tighter control of the colors that appear.
+
+
+pollSwitches(void)
+This is the main driver for detecting when a switch is pressed as well as the overall LED Animation triggering.
+
+
+
+FIRST START
+So now we are going to make our first change in the default Kaimana configuration. Right now, when you start your Kaimana it should quickly cycle through 3 colors, RED, BLUE and GREEN without pausing. This is because of what we have defined in out showStartup function in the example.ino file. Let's change this to test our knowledge!
+
+First, you need to download the Arduino software. This is located at https://www.arduino.cc/en/Main/Software. I suggest you keep the default install path so it is easier to navigate this guide.
+
+You will then download the Kaimana code if you haven't already by going to https://github.com/armi0024/kaimana and clicking on Download ZIP on the right side of your screen 
+
+After this, you WILL NEED TO PLACE THE FILES IN THE CORRECT LOCATION. This is caled installing libraries. The location is C:\Users\-yourUser-\Documents\Arduino\libraries and you could simply extract the Kaimana folder inside here. Your library files should now be in C:\Users\-yourUser-\Documents\Arduino\libraries\Kaimana
+
+You should have the following files in that Kaimana folder:
+
+animations.h
+kaimana.h
+kaimana_custom.h
+animations.cpp
+kaimana.cpp
+example.ino
+You can move the example.ino file to an easier to locate place like your Desktop.
+
+Now open the example.ino in your favorite text editor or the Arduino IDE. If you try to upload this example.ino directly into your Arduino it may or may not work. I don't have an exaplanation for this behaviour but the fix is simple. Select ALL of the code in the example file and COPY it into a NEW sketch, which you can create by going into FILE -> NEW.
+
+In this new file you will have a few lines of text, DELETE THEM and PASTE your copied code.
+
+When this is done, you will save your new sketch with whatever name you find convenient and proceed to do a test upload. Click on the right pointing arrow on the top and it should flash without any problems. 
+
+Your arduino should reboot and your idle animation should start playing!
+
+
+
+CHANGING OUR STARTUP ANIMATION
+Our example.ino has a function called void showStartup(void) and here is where we are making our very first changes! Change the code inside this function to match below:
+
+kaimana.setALL( BLACK );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( RED );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( BLACK );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( GREEN );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( BLACK );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( BLUE );
+delay( BOOT_COLOR_DELAY );
+kaimana.setALL( BLACK );
+delay( BOOT_COMPLETE_DELAY );
+After this save your ino file and click again on upload. You will now see the LEDs blink each color with a pause between them!
+
+TOURNAMENT MODE
+
+Imagine you are playing at an event and suddently the stick of the player next to you starts lighting up, kinda annoying right? Tournament mode disables ALL you leds and animations
+
+
+
+
+
+
+
+
+
+
+
+
+

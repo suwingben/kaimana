@@ -23,7 +23,7 @@
 //  Created:  October 24, 2013    zonbipanda // gmail.com  -- Arduino 1.0.5 Support
 //  Revised:  October 29, 2013    zonbipanda // gmail.com
 //  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
-//  Revised:  December 5.2015     info	//	mightyjrmods.com -- 6 button jwyder support
+//
 
 #ifndef __kaimana_local_h__
 #define __kaimana_local_h__
@@ -39,8 +39,8 @@
 // based on the order you have your LEDs connected to the Kaimana board
 //
 //#define  _LED_ORDER_DEFAULT_  true
-//#define  _LED_ORDER_JWYDER_   true
-#define  _LED_ORDER_JWYDER_6BTN_ true
+#define  _LED_ORDER_JWYDER_   true
+
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -89,30 +89,6 @@
   #define  LED_START   11
 #endif
 
-#ifdef _LED_ORDER_JWYDER_6BTN_
-  // Map function names to LED index numbers 
-  // example for just K3-K1 and P1-P3 are connected first to the Kaimana board
-  // Based off jwyder
-  //
-  //   KAIMANA->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  //#define  LED_K4      0
-  #define  LED_K3      0
-  #define  LED_K2      1
-  #define  LED_K1      2
-  #define  LED_P1      3
-  #define  LED_P2      4
-  #define  LED_P3      5
- // #define  LED_P4      5
-  #define  LED_JOY     6
-  #define  LED_HOME    7
-  #define  LED_GUIDE   7
-  #define  LED_SELECT  8
-  #define  LED_BACK    8
-  #define  LED_START   9
-#endif
-
-
 // maximum number of LEDs attached to Kaimana board
 // best to leave value untouched at 12 unless you understand why
 #define  LED_COUNT   12
@@ -120,12 +96,12 @@
 
 // general definitions for delays and other customizable features
 // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
-#define  BOOT_COLOR_DELAY         250    // value in miliseconds
+#define  BOOT_COLOR_DELAY         200    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
 #define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
-#define  IDLE_TIMEOUT_SECONDS      30    // value in seconds - normally 60 or 30 seconds but set very short for testing
-#define  IDLE_ANIMATION_DELAY       8    // value in miliseconds - use smaller value for faster idle animation playback
-
+#define  IDLE_TIMEOUT_SECONDS       3    // value in seconds - normally 60 or 30 seconds but set very short for testing
+#define  IDLE_ANIMATION_DELAY       5    // value in miliseconds - use smaller value for faster idle animation playback
+#define  T_DELAY      			  250    
 
 // definitions of RGB values use by random color generator: setLEDRandomColor(int)
 #define  COLOR_RANDOM_1    127,220,000    // lime green
@@ -135,7 +111,7 @@
 #define  COLOR_RANDOM_5    000,127,255    // cobalt blue
 #define  COLOR_RANDOM_6    255,000,000    // red
 #define  COLOR_RANDOM_7    220,127,000    // orange
-#define  COLOR_RANDOM_8    220,000,127    // magenta
+
 
 
 // definitions for combo switch patterns
@@ -155,7 +131,8 @@
 #define  COMBO_PATTERN_5A    ATTACK_RIGHT + ATTACK_P3, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN, ATTACK_NONE, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN
 #define  COMBO_PATTERN_6A    ATTACK_RIGHT + ATTACK_K3, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN, ATTACK_NONE, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN
 
-
+#define  TOURNAMENT_MODE     	ATTACK_P4 + ATTACK_P3
+//ATTACK_LEFT, ATTACK_RIGHT , ATTACK_LEFT,ATTACK_RIGHT
 // data points for single full sinusoidal wave _/-\_/-
 //
 const prog_uint8_t sinusoid[257] PROGMEM = {
