@@ -23,8 +23,8 @@ void breatheApple(int iR, int iG, int iB)
 		// update the leds with new/current colors in the array
 		kaimana.updateALL();
 		Serial.print(alpha);
-	Serial.print("\n");}
-		//delay(100);
+	    Serial.print("\n");}
+		delay(100);
 		
 	}
   }

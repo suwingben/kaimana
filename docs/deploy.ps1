@@ -1,0 +1,1 @@
+Copy-Item -Path H:\Projects\kaimana\Kaimana8btn\Vanilla\* -Destination C:\Users\gatzaraki\Documents\Arduino -Force -Recurse
