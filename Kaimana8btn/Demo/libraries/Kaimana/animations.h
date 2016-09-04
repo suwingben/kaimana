@@ -72,5 +72,5 @@ void defaultStartup(void);
 void tourneyModeActivate(void);
 void tourneyModeDeactivate(void);
 int breatheSine(int iR, int iG, int iB);
-
+int breatheApple(int iR, int iG, int iB);
 #endif

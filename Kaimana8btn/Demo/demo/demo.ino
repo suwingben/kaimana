@@ -33,7 +33,6 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-
 // local function declarations
 int  pollSwitches(void);
 void showStartup(void);
@@ -80,8 +79,10 @@ void loop()
 			// no switches active so test for start of idle timeout  
 			if( millis() > ulTimeout )
 			{
-			//animation_idle();
 			breatheSine(RED);
+			animation_idle();
+			
+			breatheApple(YELLOW);
 			}  
 		}
 	}

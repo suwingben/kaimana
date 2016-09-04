@@ -24,6 +24,7 @@
 //  Revised:  October 29, 2013    zonbipanda // gmail.com
 //  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
 //  Revised:  August  23, 2016    info //mightyjrmods.com  -- Added _LED_ORDER_MIGHTYJR_
+//  Revised:  August  28, 2016    info //mightyjrmods.com  -- Updated uint8_t value type for Arduino 1.6.11 support
 
 #ifndef __kaimana_local_h__
 #define __kaimana_local_h__
@@ -38,9 +39,56 @@
 // uncomment exactly one of the _LED_ORDER_*_ choices below or make your own 
 // based on the order you have your LEDs connected to the Kaimana board
 //
-
+//#define  _LED_ORDER_DEFAULT_  true
 #define  _LED_ORDER_MIGHTYJR_   true
 
+
+#ifdef _LED_ORDER_DEFAULT_
+  // Map function names to default LED index numbers
+  // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
+  // change or expand as needed
+  //
+  //   KAIMANA->LED_JOY->LED_HOME->LED_SELECT->LED_START->LED_P1->LED-P2->LED_P3->LED-P4->LED_K1->LED-K2->LED_K3->LED-K4
+  //
+  #define  LED_JOY     0
+  #define  LED_HOME    1
+  #define  LED_GUIDE   1
+  #define  LED_SELECT  2
+  #define  LED_BACK    2
+  #define  LED_START   3
+  #define  LED_P1      4
+  #define  LED_P2      5
+  #define  LED_P3      6
+  #define  LED_P4      7
+  #define  LED_K1      8
+  #define  LED_K2      9
+  #define  LED_K3      10
+  #define  LED_K4      11
+#endif
+
+
+#ifdef _LED_ORDER_JWYDER_
+  // Map function names to LED index numbers 
+  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
+  // submitted by jwyder
+  //
+  //   KAIMANA->LED-K4->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_P4->LED_JOY->LED_HOME->LED_SELECT->LED_START
+  //
+  #define  LED_K4      0
+  #define  LED_K3      1
+  #define  LED_K2      2
+  #define  LED_K1      3
+  #define  LED_P1      4
+  #define  LED_P2      5
+  #define  LED_P3      6
+  #define  LED_P4      7
+  #define  LED_JOY     8
+  #define  LED_HOME    9
+  #define  LED_GUIDE   9
+  #define  LED_SELECT  10
+  #define  LED_BACK    10
+  #define  LED_START   11
+#endif
 
 
 #ifdef _LED_ORDER_MIGHTYJR_
@@ -50,30 +98,20 @@
   //
   //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY->LED_HOME->LED_SELECT->LED_START
   //
-#define  LED_P4         15
-#define  LED_P4_B       16
-#define  LED_P3         13
-#define  LED_P3_B       14
-#define  LED_P2         11    
-#define  LED_P2_B       12
-#define  LED_P1         9
-#define  LED_P1_B       10
-#define  LED_JOY        0xFF    
-#define  LED_K4         0        
-#define  LED_K4_B       1
-#define  LED_K3         2 
-#define  LED_K3_B       3
-#define  LED_K2         4
-#define  LED_K2_B       5
-#define  LED_K1         6
-#define  LED_K1_B       7
-#define  LED_SELECT     17
-#define  LED_SELECT_B   18
-#define  LED_HOME       19
-#define  LED_HOME_B     20
-#define  LED_START      21
-#define  LED_START_B    22
-#define  LED_COUNT      23
+  #define  LED_P4      0
+  #define  LED_P3      1
+  #define  LED_P2      2
+  #define  LED_P1      3
+  #define  LED_K1      4
+  #define  LED_K2      5
+  #define  LED_K3      6
+  #define  LED_K4      7
+  #define  LED_JOY     8
+  #define  LED_HOME    9
+  #define  LED_GUIDE   9
+  #define  LED_SELECT  10
+  #define  LED_BACK    10
+  #define  LED_START   11
 #endif
 
 // maximum number of LEDs attached to Kaimana board
@@ -124,7 +162,7 @@
 //ATTACK_LEFT, ATTACK_RIGHT , ATTACK_LEFT,ATTACK_RIGHT
 // data points for single full sinusoidal wave _/-\_/-
 //
-const prog_uint8_t sinusoid[257] PROGMEM = {
+const uint8_t sinusoid[257] PROGMEM = {
   0, 3, 6, 9, 12, 15, 18, 21, 24, 28, 31, 34, 37, 40, 43, 46, 49, 52,
   55, 58, 61, 64, 68, 71, 74, 77, 79, 82, 85, 88, 91, 94, 97, 100, 103,
   106, 109, 111, 114, 117, 120, 122, 125, 128, 131, 133, 136, 139, 141,
@@ -148,7 +186,7 @@ const prog_uint8_t sinusoid[257] PROGMEM = {
 
 // data points for color cycling
 //
-const prog_uint8_t colorCycleData[] PROGMEM = {
+const uint8_t colorCycleData[] PROGMEM = {
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,

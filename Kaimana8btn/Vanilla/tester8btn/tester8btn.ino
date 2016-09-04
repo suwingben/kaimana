@@ -38,8 +38,10 @@
 int  pollSwitches(void);
 void showStartup(void);
 void setLEDRandomColor(int index);
+int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
+int selection = 0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -50,8 +52,8 @@ void setup()
 {                
   // light up all leds at boot to demonstrate everything is functional
   defaultStartup();
-  walkyStartup(YELLOW);
-  starryStartup(RED);
+  walkyStartup(GREEN);
+  starryStartup(BLUE);
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -80,8 +82,21 @@ void loop()
 			// no switches active so test for start of idle timeout  
 			if( millis() > ulTimeout )
 			{
-			//animation_idle();
-			breatheSine(RED);
+				switch(selection) 
+				{
+					case 0:
+						animation_idle();
+						break;
+					case 1:
+						breatheSine(RED);
+						break;
+					case 2:
+						breatheApple(YELLOW);
+						break;
+					default:
+						selection = 0;
+						break;
+				}
 			}  
 		}
 	}
@@ -193,6 +208,7 @@ int pollSwitches(void)
       break;
     case ATTACK_DOWN:    // down
       kaimana.setLED(LED_JOY, 000, 220, 220);
+	  selection++;
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
@@ -323,6 +339,7 @@ int pollSwitches(void)
     {
       // select new color when switch is first activated
       starryStartup(BLUE);
+	  selection++;
 	  ///setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
     }
