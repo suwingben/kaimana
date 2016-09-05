@@ -73,4 +73,7 @@ void tourneyModeActivate(void);
 void tourneyModeDeactivate(void);
 int breatheSine(int iR, int iG, int iB);
 int breatheApple(int iR, int iG, int iB);
+void starryIdle(int iR,int iG, int iB);	
+void starryIdleMulti();
+
 #endif

@@ -54,6 +54,10 @@ void setup()
   defaultStartup();
   walkyStartup(GREEN);
   starryStartup(BLUE);
+  walkyStartup(RED);
+  starryStartup(MAGENTA);
+  starryIdleMulti();
+  starryIdle(CYAN);
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -81,7 +85,7 @@ void loop()
 		{
 			// no switches active so test for start of idle timeout  
 			if( millis() > ulTimeout )
-			{
+			{				
 				switch(selection) 
 				{
 					case 0:
@@ -92,6 +96,18 @@ void loop()
 						break;
 					case 2:
 						breatheApple(YELLOW);
+						break;
+					case 3:
+						starryStartup(MAGENTA);
+						break;
+					case 4:
+						walkyStartup(ORANGE);
+						break;
+					case 5:
+						starryIdle(CYAN);
+						break;
+					case 6:
+						starryIdleMulti();
 						break;
 					default:
 						selection = 0;
@@ -123,42 +139,6 @@ void loop()
 // ==============================================================
 
 
-// light up all leds at boot to demonstrate everything is functional
-//
-
-// set LED to one of 8 predefined colors selected at random
-//
-void setLEDRandomColor(int index)
-{
-  switch(random(1,7))    // pick a random color between 1 and 7
-  {
-    case 1:
-      kaimana.setLED(index, COLOR_RANDOM_1);
-      break;
-    case 2:
-      kaimana.setLED(index, COLOR_RANDOM_2);
-      break;
-    case 3:
-      kaimana.setLED(index, COLOR_RANDOM_3);
-      break;
-    case 4:
-      kaimana.setLED(index, COLOR_RANDOM_4);
-      break;
-    case 5:
-      kaimana.setLED(index, COLOR_RANDOM_5);
-      break;
-    case 6:
-      kaimana.setLED(index, COLOR_RANDOM_6);
-      break;
-    case 7:
-      kaimana.setLED(index, COLOR_RANDOM_7);
-      break;
-   
-    default:   // any undefined value so discard data and set led to BLACK
-      kaimana.setLED(index, BLACK);    
-      break;
-  }  
-}
 
 
 
@@ -338,7 +318,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      starryStartup(BLUE);
+      kaimana.setLED(LED_P1,BLUE);
 	  selection++;
 	  ///setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;

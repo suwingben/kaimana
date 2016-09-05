@@ -247,7 +247,7 @@ void starryStartup(int iR,int iG, int iB)
     {     
 		if (i != 7)
 		{
-			delay_val = BOOT_COLOR_DELAY;
+			delay_val = FAST_COLOR_DELAY;
 		}
 		else
 		{

@@ -93,8 +93,8 @@
 #define  PURPLE   255,000,255
 #define  CYAN     000,255,255
 #define  WHITE    255,255,255
-#define  MAGENTA	255,0,255
-
+#define  MAGENTA  255,000,255
+#define  ORANGE   220,127,000
 // RGB value structure.
 typedef struct __attribute__ ((__packed__)) {
     uint8_t r;

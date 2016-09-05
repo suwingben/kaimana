@@ -40,8 +40,8 @@
 // based on the order you have your LEDs connected to the Kaimana board
 //
 //#define  _LED_ORDER_DEFAULT_  true
-#define  _LED_ORDER_MIGHTYJR_   true
-
+//#define  _LED_ORDER_MIGHTYJR_   true
+#define  _LED_ORDER_JWYDER_ 	true
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -122,7 +122,7 @@
 // general definitions for delays and other customizable features
 // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
 #define  BOOT_COLOR_DELAY         200    // value in miliseconds
-#define  FAST_COLOR_DELAY         100    // value in miliseconds
+#define  FAST_COLOR_DELAY         200    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
 #define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
 #define  IDLE_TIMEOUT_SECONDS       3    // value in seconds - normally 60 or 30 seconds but set very short for testing
@@ -138,7 +138,7 @@
 #define  COLOR_RANDOM_6    255,000,000    // red
 #define  COLOR_RANDOM_7    220,127,000    // orange
 #define  COLOR_RANDOM_8    220,000,127    // magenta
-
+#define  COLOR_RANDOM_9	   177,037,075	
 
 // definitions for combo switch patterns
 //
