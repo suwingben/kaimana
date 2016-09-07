@@ -41,7 +41,8 @@
 //
 //#define  _LED_ORDER_DEFAULT_  true
 //#define  _LED_ORDER_MIGHTYJR_   true
-#define  _LED_ORDER_JWYDER_ 	true
+//#define  _LED_ORDER_JWYDER_ 	true
+#define  _LED_ORDER_NEOPIXEL12_ 	true
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -66,8 +67,30 @@
   #define  LED_K4      11
 #endif
 
-
 #ifdef _LED_ORDER_JWYDER_
+  // Map function names to LED index numbers 
+  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
+  // submitted by jwyder
+  //
+  //   KAIMANA->LED-K4->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_P4->LED_JOY->LED_HOME->LED_SELECT->LED_START
+  //
+  #define  LED_K4      0
+  #define  LED_K3      1
+  #define  LED_K2      2
+  #define  LED_K1      3
+  #define  LED_P1      4
+  #define  LED_P2      5
+  #define  LED_P3      6
+  #define  LED_P4      7
+  #define  LED_JOY     8
+  #define  LED_HOME    9
+  #define  LED_GUIDE   9
+  #define  LED_SELECT  10
+  #define  LED_BACK    10
+  #define  LED_START   11
+#endif
+
+#ifdef _LED_ORDER_NEOPIXEL12_
   // Map function names to LED index numbers 
   // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
   // submitted by jwyder

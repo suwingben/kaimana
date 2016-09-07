@@ -33,7 +33,7 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-
+//Light up an LED with assigned RGB value
 void turnOn(int i,int iR,int iG, int iB)
 {
 	kaimana.setLED(i, iR,iG,iB);
@@ -47,8 +47,7 @@ void blink(int i,int iR,int iG, int iB)
   delay( FAST_COLOR_DELAY );
   Serial.print(i);
   Serial.print("\n");
-  kaimana.setALL(BLACK);
-	
+  kaimana.setALL(BLACK);	
 }
 // blink LED to a color selected at random
 void blinkMulti(int index)
@@ -114,6 +113,7 @@ void blinkMulti(int index)
 		break;
 	} 
 }	
+//Blink experiments with light combinations
 void blinkMultiExperimental(int index)
 {
 	int iR = random(1,256);
@@ -130,7 +130,6 @@ void blinkMultiExperimental(int index)
 	}
 }
 // set LED to one of 8 predefined colors selected at random
-//
 void setLEDRandomColor(int index)
 {
   switch(random(1,7))    // pick a random color between 1 and 7
@@ -204,8 +203,16 @@ int animation_idle(void)
 }
 //light walks thru all 8 buttons
 void walkyStartup(int iR,int iG, int iB)	
-{
-  	for (int i = 0; i < LED_COUNT; i++) 
+{	
+	for (int i = 0; i < LED_COUNT; ++i) 
+	{
+		turnOn(i, iR,iG,iB);
+	}
+}
+//light walks thru all 8 buttons while idling
+void walkyIdle(int iR,int iG, int iB)	
+{	
+	for (int i = 0; i < LED_COUNT; i++) 
 	{
 		blink(i, iR,iG,iB);
 	}
@@ -303,62 +310,55 @@ int breatheApple(int iR, int iG, int iB)
 void starryStartup(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12};
 	int delay_val;
-	
-	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(1,8);
+      int rand = random(1,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
 	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i < 8; ++i) 
+	for (i = 0; i <= LED_COUNT; ++i) 
     {      
 		switch(trackled[i])
 		{
 			case 1:
-			kaimana.setLED(LED_P4, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_P4, iR,iG,iB);
 			break;
 			case 2:
-			kaimana.setLED(LED_P3, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_P3, iR,iG,iB);
 			break;
 			case 3:
-			kaimana.setLED(LED_P2, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_P2, iR,iG,iB);
 			break;
 			case 4:
-			kaimana.setLED(LED_P1, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_P1, iR,iG,iB);
 			break;
 			case 5:
-			kaimana.setLED(LED_K1, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_K1, iR,iG,iB);
 			break;
 			case 6:
-			kaimana.setLED(LED_K2, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_K2, iR,iG,iB);
 			break;
 			case 7:
-			kaimana.setLED(LED_K3, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_K3, iR,iG,iB);
 			break;
 			case 8:
-			kaimana.setLED(LED_K4, iR,iG,iB);
-			kaimana.updateALL();
-			delay( delay_val );
+			turnOn(LED_K4, iR,iG,iB);
 			break;
+			case 9:
+			turnOn(LED_JOY, iR,iG,iB);			
+			break;
+			case 10:
+			turnOn(LED_HOME, iR,iG,iB);
+			break;
+			case 11:
+			turnOn(LED_SELECT, iR,iG,iB);			
+			break;
+			case 12:
+			turnOn(LED_START, iR,iG,iB);
 			default:   // any undefined value so discard data and set led to BLACK
 			kaimana.setALL( BLACK );    
 			kaimana.updateALL();
@@ -371,19 +371,18 @@ void starryStartup(int iR,int iG, int iB)
 void starryIdle(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12};
 	int delay_val;
 	
-	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(1,8);
+      int rand = random(1,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i < 8; ++i) 
+	
+	for (i = 0; i <= LED_COUNT; ++i) 
     {      
 		switch(trackled[i])
 		{
@@ -411,6 +410,17 @@ void starryIdle(int iR,int iG, int iB)
 			case 8:
 			blink(LED_K4, iR,iG,iB);			
 			break;
+			case 9:
+			blink(LED_JOY, iR,iG,iB);			
+			break;
+			case 10:
+			blink(LED_HOME, iR,iG,iB);
+			break;
+			case 11:
+			blink(LED_SELECT, iR,iG,iB);			
+			break;
+			case 12:
+			blink(LED_START, iR,iG,iB);
 			default:   // any undefined value so discard data and set led to BLACK
 			kaimana.setALL( BLACK );    
 			kaimana.updateALL();
@@ -423,19 +433,19 @@ void starryIdle(int iR,int iG, int iB)
 void starryIdleMulti()	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(1,8);
+      int rand = random(1,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
 	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i < 8; ++i) 
+	for (i = 0; i < LED_COUNT; ++i) 
     {      
 		switch(trackled[i])
 		{
@@ -462,6 +472,18 @@ void starryIdleMulti()
 			break;
 			case 8:
 			blinkMulti(LED_K4);			
+			break;
+			case 9:
+			blinkMulti(LED_JOY);			
+			break;
+			case 10:
+			blinkMulti(LED_HOME);			
+			break;
+			case 11:
+			blinkMulti(LED_SELECT);			
+			break;
+			case 12:
+			blinkMulti(LED_START);			
 			break;
 			default:   // any undefined value so discard data and set led to BLACK
 			kaimana.setALL( BLACK );    
