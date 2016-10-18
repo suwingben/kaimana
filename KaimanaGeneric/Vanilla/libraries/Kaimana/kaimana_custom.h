@@ -116,7 +116,7 @@
 
 // maximum number of LEDs attached to Kaimana board
 // best to leave value untouched at 12 unless you understand why
-#define  LED_COUNT   40
+#define  LED_COUNT   32
 
 
 // general definitions for delays and other customizable features
@@ -124,7 +124,7 @@
 #define  BOOT_COLOR_DELAY         200    // value in miliseconds
 #define  FAST_COLOR_DELAY         50    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
-#define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
+#define  MAIN_LOOP_DELAY           100    // value in miliseconds - used main loop
 #define  IDLE_TIMEOUT_SECONDS       3    // value in seconds - normally 60 or 30 seconds but set very short for testing
 #define  IDLE_ANIMATION_DELAY       5    // value in miliseconds - use smaller value for faster idle animation playback
 #define  T_DELAY      			  250    
