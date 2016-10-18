@@ -1,6 +1,8 @@
+WARNING UPDATE TO ARDUINO 1.6.11 BEFORE LOADING THIS CODE IT IS UPDATED
+
+Vanilla Code with updates
 Paradise Arcade Shop Kaimana LED Driver Board
 Initial Release October 15, 2013
-
 
 Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com  
 All rights reserved.  Use is subject to license terms.
@@ -31,4 +33,9 @@ Revised:  October 29, 2013    zonbipanda
 
 Revised:  April   11, 2015    zonbipanda  -- Arduino 1.6.3 Support
 
+Revised:  December 5,2015     mightyjrmods.com -- 6 button jwyder support
+
+Revised:  August  23, 2016    info //mightyjrmods.com  -- Added _LED_ORDER_MIGHTYJR_
+
+Revised:  August  28, 2016    info //mightyjrmods.com  -- Updated uint8_t value type for Arduino 1.6.11 support
 _
