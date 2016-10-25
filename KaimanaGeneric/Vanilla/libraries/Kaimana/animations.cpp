@@ -33,7 +33,15 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-
+bool checkbtn(void)
+{
+	int  i;
+	for(i=0;i<SWITCH_COUNT;++i)
+	{
+		if( !digitalRead(switchPins[i]) )
+		return(false);
+	}
+}
 void turnOn(int i,int iR,int iG, int iB)
 {
 	kaimana.setLED(i, iR,iG,iB);
@@ -84,21 +92,7 @@ void blinkMulti(int index)
 		break;
 	} 
 }	
-void blinkMultiExperimental(int index)
-{
-	int iR = random(1,256);
-	int iG = random(1,256);
-	int iB = random(1,256);
-	
-	int variance = abs(iR-iG-iB);
-	if(variance <100)
-	{
-		kaimana.setLED(index, iR,iG,iB);
-		delay( FAST_COLOR_DELAY );
-		kaimana.updateALL();
-		kaimana.setLED(index, BLACK);		
-	}
-}
+
 // set LED to one of 8 predefined colors selected at random
 void setLEDRandomColor(int index)
 {
@@ -159,11 +153,11 @@ int animation_idle(void)
       kaimana.updateALL();
 
       // test all switches and exit idle animation if active switch found
-      for(i=0;i<SWITCH_COUNT;++i)
-      {
-        if( !digitalRead(switchPins[i]) )
-          return(false);
-      }
+	for(i=0;i<SWITCH_COUNT;++i)
+	{
+		if( !digitalRead(switchPins[i]) )
+		return(false);
+	} 
 
       // place test for switches here and use calculated timer not delay
       //
@@ -212,9 +206,17 @@ int animation_idle2(void)
 //light walks thru all 8 buttons
 void walkyStartup(int iR,int iG, int iB)	
 {
-  	for (int i = 0; i < LED_COUNT; i++) 
+  	for (int i = 1; i <= LED_COUNT; i++) 
 	{
 		turnOn(i, iR,iG,iB);
+	}
+	kaimana.setALL(BLACK);
+}
+void walkyidle(int iR,int iG, int iB)	
+{
+  	for (int i = 1; i <= LED_COUNT; i++) 
+	{
+		blink(i, iR,iG,iB);
 	}
 	kaimana.setALL(BLACK);
 }
@@ -308,7 +310,7 @@ int breatheApple(int iR, int iG, int iB)
 void starryStartup(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
@@ -320,27 +322,21 @@ void starryStartup(int iR,int iG, int iB)
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
 
-    }	
-	
-	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
-    {
-		turnOn(trackled[i], iR,iG,iB);
-		delay_val = FAST_COLOR_DELAY;
-	}
-	
-	// test all switches and exit idle animation if active switch found
-    for(i=0;i<SWITCH_COUNT;++i)
-    {
-      if( !digitalRead(switchPins[i]) )
-        return(false);
     }
-	
+		
+	for (i = 0; i < LED_COUNT; ++i) 
+    {  
+		turnOn(trackled[i], iR,iG,iB);	
+		checkbtn(); 
+	}
+	delay_val = FAST_COLOR_DELAY;
+    	
 }
 // LEDS blink on/off randomly
 void starryIdle(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
@@ -361,7 +357,7 @@ void starryIdle(int iR,int iG, int iB)
 void starryIdleMulti()	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32};
+	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
@@ -376,6 +372,7 @@ void starryIdleMulti()
 	for (i = 0; i < LED_COUNT; ++i) 
     {  
 		blinkMulti(i);		
+		checkbtn(); 
 	}
 }
 //Tournament mode animations
@@ -445,317 +442,3 @@ void tourneyModeDeactivate(void)
 	kaimana.updateALL();
 	delay( T_DELAY );
 }
-// Hadouken (Fireball)
-void animation_combo_1(void)
-{
-  int  index;
-  int  i;
-  int  counter;
-
-  counter = FIREBALL_SIZE-1;
-
-  kaimana.setALL( BLACK );
-
-  while(counter >=0)
-  {
-    // P1 & K1
-    if( (counter < FIREBALL_SIZE) && (counter >= 0) )
-    {
-      kaimana.setLED(
-        LED_P1,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[counter%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[counter%FIREBALL_SIZE])
-      );
-      kaimana.setLED(
-        LED_K1,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[counter%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[counter%FIREBALL_SIZE])
-      );
-    }
-    else
-    {
-      kaimana.setLED( LED_P1, BLACK );
-      kaimana.setLED( LED_K1, BLACK );
-    }
-
-    // P2 & K2
-    if( ((counter+(FIREBALL_OFFSET_1)) < FIREBALL_SIZE) && ((counter+(FIREBALL_OFFSET_1)) >= 0) )
-    {
-      kaimana.setLED(
-        LED_P2,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_1))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_1))%FIREBALL_SIZE])
-      );
-      kaimana.setLED(
-        LED_K2,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_1))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_1))%FIREBALL_SIZE])
-      );
-    }
-    else
-    {
-      kaimana.setLED( LED_P2, BLACK );
-      kaimana.setLED( LED_K2, BLACK );
-    }
-
-    // P3 & K3
-    if( ((counter+(FIREBALL_OFFSET_2)) < 768) && ((counter+(FIREBALL_OFFSET_2)) >= 0) )
-    {
-      kaimana.setLED(
-        LED_P3,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_2))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_2))%FIREBALL_SIZE])
-      );
-      kaimana.setLED(
-        LED_K3,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_2))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_2))%FIREBALL_SIZE])
-      );
-    }
-    else
-    {
-      kaimana.setLED( LED_P3, BLACK );
-      kaimana.setLED( LED_K3, BLACK );
-    }
-
-    // P4 & K4
-    if( ((counter+(FIREBALL_OFFSET_3)) < 768) && ((counter+(FIREBALL_OFFSET_3)) >= 0) )
-    {
-      kaimana.setLED(
-        LED_P4,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_3))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_3))%FIREBALL_SIZE])
-      );
-      kaimana.setLED(
-        LED_K4,
-        0,  // no red just cyan used for fireball
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_3))%FIREBALL_SIZE]),
-        pgm_read_byte_near(&colorCycleData[(counter+(FIREBALL_OFFSET_3))%FIREBALL_SIZE])
-      );
-    }
-    else
-    {
-      kaimana.setLED( LED_P4, BLACK );
-      kaimana.setLED( LED_K4, BLACK );
-    }
-
-    // update the leds with new/current colors in the array
-    kaimana.updateALL();
-
-    // slow down the fireball animation
-    delayMicroseconds( FIREBALL_DELAY );
-
-    counter -= 4;
-  }
-
-  kaimana.setALL( BLACK );
-}
-// Shoryuken (Dragon Punch)
-void animation_combo_2(void)
-{
-  kaimana.setALL(BLACK);
-
-  kaimana.setALL(RED);
-  delay(2000);
-
-  kaimana.setALL(BLACK);
-}
-// Tatsumaki Senpukyaku (Hurricane Kick)
-//
-void animation_combo_3(void)
-{
-
-  kaimana.setALL(BLACK);
-
- kaimana.setLED( LED_K1, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K2, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K3, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K4, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P4, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P3, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P2, RED );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P1, RED );
-   delay(25);
-   kaimana.updateALL();
-
-
- kaimana.setLED( LED_K1, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K2, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K3, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K4, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P4, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P3, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P2, GREEN );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P1, GREEN );
-   delay(25);
-   kaimana.updateALL();
-
-
- kaimana.setLED( LED_K1, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K2, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K3, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K4, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P4, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P3, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P2, BLUE );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P1, BLUE );
-   delay(25);
-   kaimana.updateALL();
-
- kaimana.setLED( LED_K1, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K2, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K3, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_K4, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P4, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P3, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P2, BLACK );
-   delay(25);
-   kaimana.updateALL();
- kaimana.setLED( LED_P1, BLACK );
-   delay(25);
-   kaimana.updateALL();
-
-}
-// Super (Shinkuu Hadouken)
-//
-void animation_combo_4(void)
-{
-  kaimana.setALL(BLACK);
-
-  kaimana.setALL(BLUE);
-  delay(2000);
-
-  kaimana.setALL(BLACK);
-}
-// Ultra 1 (Metsu Hadouken)
-//
-void animation_combo_5(void)
-{
-  kaimana.setALL(BLACK);
-
-  kaimana.setALL(PURPLE);
-  delay(2000);
-
-  kaimana.setALL(BLACK);
-}
-// Ultra 2 (Metsu Shoryuken)
-//
-void animation_combo_6(void)
-{
-  kaimana.setALL(BLACK);
-
-
-  kaimana.setALL(WHITE);
-  delay(100);
-
-  kaimana.setALL(BLACK);
-  delay(100);
-
-
-  kaimana.setALL(WHITE);
-  delay(80);
-
-  kaimana.setALL(BLACK);
-  delay(80);
-
-
-  kaimana.setALL(WHITE);
-  delay(60);
-
-  kaimana.setALL(BLACK);
-  delay(60);
-
-
-  kaimana.setALL(WHITE);
-  delay(40);
-
-  kaimana.setALL(BLACK);
-  delay(40);
-
-
-  kaimana.setALL(WHITE);
-  delay(20);
-
-  kaimana.setALL(BLACK);
-  delay(20);
-
-
-  kaimana.setALL(WHITE);
-  delay(10);
-
-  kaimana.setALL(BLACK);
-  delay(10);
-
-
-  kaimana.setALL(WHITE);
-  delay(5);
-
-  kaimana.setALL(BLACK);
-  delay(5);
-
-
-  kaimana.setALL(BLACK);
-}
-
-

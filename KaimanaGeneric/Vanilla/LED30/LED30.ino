@@ -90,13 +90,14 @@ void loop()
 				switch(selection) 
 				{
 					case 0:
-						animation_idle();
+						walkyidle(GREEN);
+						//breatheApple(RED);			
 						break;
 					case 1:
-						breatheSine(RED);
+						animation_idle();
 						break;
 					case 2:
-						breatheApple(YELLOW);
+						breatheSine(BLUE);
 						break;
 					case 3:
 						starryStartup(MAGENTA);
@@ -518,52 +519,6 @@ int pollSwitches(void)
   kaimana.switchHistorySet(switchActivity);
   
 
-  // test for combinations from most complext to least complex
-  // test for switches in reverse order (newest to oldest)
-
-
-  // combo #6
-  // test for: Ultra 2 (Metsu Shoryuken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, DOWN, DOWN+RIGHT, RIGHT, RIGHT+K3
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_6A ) )
-      animation_combo_6();
-
-  // combo #5
-  // test for: Ultra 1 (Metsu Hadouken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P3
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_5A ) )
-      animation_combo_5();
-
-  // combo #4
-  // test for: Super (Shinkuu Hadouken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_4A ) )
-      animation_combo_4();
-
-  // combo #3
-  // test for: Tatsumaki Senpukyaku (Hurricane Kick)
-  // combo is: DOWN, DOWN+LEFT, LEFT, LEFT+K1 or LEFT+K2
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_3A ) )
-      animation_combo_3();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_3B ) )
-      animation_combo_3();
-
-  // combo #2
-  // test for: Ryu Shoryuken (Dragon Punch)
-  // combo is: RIGHT, <NONE>, DOWN, DOWN+RIGHT, DOWN+RIGHT+P1 or DOWN+RIGHT+P2
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_2A ) )
-      animation_combo_2();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_2B ) )
-      animation_combo_2();
-
-  // combo #1
-  // test for: Ryu Hadouken (Fireball) 
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1 or RIGHT+P2  
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_1A ) )
-      animation_combo_1();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_1B ) )
-      animation_combo_1();
-	
 	  //Tournament mode
 /*   if( kaimana.switchHistoryTest( TOURNAMENT_MODE ) )
   {
@@ -578,7 +533,6 @@ int pollSwitches(void)
 		  tournamentMode = false;
 	  }
   } */
-  
 
   // zero active switch counter (note: 4 way joystick counts as 1)
   iActiveSwitchCount = 0;
@@ -941,54 +895,6 @@ int tourneypollSwitches(void)
   kaimana.switchHistorySet(switchActivity);
   
 
-  // test for combinations from most complext to least complex
-  // test for switches in reverse order (newest to oldest)
-
-
-  // combo #6
-  // test for: Ultra 2 (Metsu Shoryuken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, DOWN, DOWN+RIGHT, RIGHT, RIGHT+K3
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_6A ) )
-      animation_combo_6();
-
-  // combo #5
-  // test for: Ultra 1 (Metsu Hadouken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P3
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_5A ) )
-      animation_combo_5();
-
-  // combo #4
-  // test for: Super (Shinkuu Hadouken)
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, <NONE>, DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_4A ) )
-      animation_combo_4();
-
-  // combo #3
-  // test for: Tatsumaki Senpukyaku (Hurricane Kick)
-  // combo is: DOWN, DOWN+LEFT, LEFT, LEFT+K1 or LEFT+K2
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_3A ) )
-      animation_combo_3();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_3B ) )
-      animation_combo_3();
-
-  // combo #2
-  // test for: Ryu Shoryuken (Dragon Punch)
-  // combo is: RIGHT, <NONE>, DOWN, DOWN+RIGHT, DOWN+RIGHT+P1 or DOWN+RIGHT+P2
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_2A ) )
-      animation_combo_2();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_2B ) )
-      animation_combo_2();
-
-  // combo #1
-  // test for: Ryu Hadouken (Fireball) 
-  // combo is: DOWN, DOWN+RIGHT, RIGHT, RIGHT+P1 or RIGHT+P2  
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_1A ) )
-      animation_combo_1();
-  if( kaimana.switchHistoryTest( COMBO_PATTERN_1B ) )
-      animation_combo_1();
-	
-	//Tournament mode
-	// Adding a custom animation when pressing buttons
 
 
   // zero active switch counter (note: 4 way joystick counts as 1)

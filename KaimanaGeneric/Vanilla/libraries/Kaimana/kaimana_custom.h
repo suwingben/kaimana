@@ -116,7 +116,7 @@
 
 // maximum number of LEDs attached to Kaimana board
 // best to leave value untouched at 12 unless you understand why
-#define  LED_COUNT   32
+#define  LED_COUNT   140
 
 
 // general definitions for delays and other customizable features
