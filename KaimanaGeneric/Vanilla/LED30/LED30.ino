@@ -38,7 +38,6 @@
 // local function declarations
 int  pollSwitches(void);
 void showStartup(void);
-void setLEDRandomColor(int index);
 int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
