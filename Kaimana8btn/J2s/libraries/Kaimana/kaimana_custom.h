@@ -40,8 +40,10 @@
 // based on the order you have your LEDs connected to the Kaimana board
 //
 //#define  _LED_ORDER_DEFAULT_  true
-#define  _LED_ORDER_MIGHTYJR_   true
+//#define _LED_ORDER_MIGHTYJR_ true
+#define  _LED_ORDER_MIGHTYJR_J2   true
 //#define  _LED_ORDER_JWYDER_ 	true
+//#define
 
 #ifdef _LED_ORDER_DEFAULT_
   // Map function names to default LED index numbers
@@ -90,9 +92,32 @@
   #define  LED_START   11
 #endif
 
-
 #ifdef _LED_ORDER_MIGHTYJR_
   // Map function names to LED index numbers 
+  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
+  // submitted by MIGHTYJR
+  //
+  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY->LED_HOME->LED_SELECT->LED_START
+  //
+  #define  LED_P4      0
+  #define  LED_P3      1
+  #define  LED_P2      2
+  #define  LED_P1      3
+  #define  LED_K1      4
+  #define  LED_K2      5
+  #define  LED_K3      6
+  #define  LED_K4      7
+  #define  LED_JOY     8
+  #define  LED_HOME    9
+  #define  LED_GUIDE   9
+  #define  LED_SELECT  10
+  #define  LED_BACK    10
+  #define  LED_START   11
+  #define  LED_COUNT   12
+#endif
+
+#ifdef _LED_ORDER_MIGHTYJR_J2
+  // Map function names to Kaimana J2 LED index numbers 
   // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
   // submitted by MIGHTYJR
   //
@@ -115,21 +140,19 @@
   #define  LED_K3_B    14
   #define  LED_K4      15
   #define  LED_K4_B    16  
-  #define  LED_HOME    17
-  #define  LED_HOME_B  18
-  #define  LED_GUIDE   19
-  #define  LED_GUIDE_B 20
-  #define  LED_SELECT  21
-  #define  LED_SELECT_B 22
-  #define  LED_BACK    23
-  #define  LED_BACK_B  24
-  #define  LED_START   25
-  #define  LED_START_B 26
+  #define  LED_HOME    0xff
+  #define  LED_HOME_B  0xff
+  #define  LED_GUIDE   0xff
+  #define  LED_GUIDE_B 0xff
+  #define  LED_SELECT  0xff
+  #define  LED_SELECT_B 0xff
+  #define  LED_BACK    0xff
+  #define  LED_BACK_B  0xff
+  #define  LED_START   0xff
+  #define  LED_START_B 0xff
+  // maximum number of LEDs attached to Kaimana board
+  #define  LED_COUNT   17
 #endif
-
-// maximum number of LEDs attached to Kaimana board
-// best to leave value untouched at 12 unless you understand why
-#define  LED_COUNT   27
 
 
 // general definitions for delays and other customizable features
@@ -149,7 +172,7 @@
 #define  COLOR_RANDOM_4    000,255,127    // cyan
 #define  COLOR_RANDOM_5    000,127,255    // cobalt blue
 #define  COLOR_RANDOM_6    255,000,000    // red
-#define  COLOR_RANDOM_7    220,127,000    // orange
+#define  COLOR_RANDOM_7    245,113,012    // orange
 #define  COLOR_RANDOM_8    220,000,127    // magenta
 #define  COLOR_RANDOM_9	   177,037,075	
 

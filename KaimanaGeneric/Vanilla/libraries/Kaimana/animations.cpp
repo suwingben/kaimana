@@ -214,7 +214,7 @@ void walkyStartup(int iR,int iG, int iB)
 }
 void walkyidle(int iR,int iG, int iB)	
 {
-  	for (int i = 1; i <= LED_COUNT; i++) 
+  	for (int i = 0; i <= LED_COUNT; i++) 
 	{
 		blink(i, iR,iG,iB);
 	}

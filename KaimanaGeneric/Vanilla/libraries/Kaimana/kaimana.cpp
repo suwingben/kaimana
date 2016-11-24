@@ -106,7 +106,6 @@ void Kaimana::setALL(int iR, int iG, int iB)
   updateALL();
 }
 
-
 void Kaimana::updateALL(void)
 {
   // update the leds with new/current colors and delay a little to avoid flickering (yea, it happens really, really fast!)
@@ -229,8 +228,6 @@ void Kaimana::updateALL(void)
   );
 }  
 
-
-
 void Kaimana::switchHistoryClear(void)
 {
   static int  i;
@@ -255,8 +252,7 @@ void Kaimana::switchHistorySet(uint16_t latestValue)
     _switchHistory[0] = latestValue;
   }
 }  
-
-
+ 
 boolean Kaimana::switchHistoryTest( uint16_t a0, uint16_t a1, uint16_t a2,  uint16_t a3,  uint16_t a4,  uint16_t a5,  uint16_t a6,  uint16_t a7, uint16_t a8, uint16_t a9, uint16_t a10, uint16_t a11, uint16_t a12, uint16_t a13, uint16_t a14, uint16_t a15 )
 {
   static boolean result;

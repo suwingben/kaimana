@@ -1,5 +1,5 @@
 //  tester8btn.ino
-//
+// n
 //  Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com  
 //  All rights reserved.  Use is subject to license terms.
 //
@@ -52,13 +52,13 @@ Kaimana kaimana;
 void setup() 
 {                
   // light up all leds at boot to demonstrate everything is functional
-  defaultStartup();
+  //defaultStartup();
   walkyStartup(GREEN);
-  starryStartup(BLUE);
+  //starryStartup(BLUE);
   walkyStartup(RED);
-  starryStartup(MAGENTA);
-  starryIdleMulti();
-  starryIdle(CYAN);
+  //starryStartup(MAGENTA);
+  //starryIdleMulti();
+  //starryIdle(CYAN);
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -90,7 +90,8 @@ void loop()
 				switch(selection) 
 				{
 					case 0:
-						animation_idle();
+						//animation_idle();
+						walkyidle(ORANGE);
 						break;
 					case 1:
 						breatheSine(RED);
@@ -128,7 +129,7 @@ void loop()
 	}
   }
     // delay a little to avoid flickering (yea, updates happens really, really fast!)
-    delay( MAIN_LOOP_DELAY );
+    // delay( MAIN_LOOP_DELAY );
  
 }
 
@@ -348,9 +349,8 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      //setLEDRandomColor(LED_P2);
-      walkyStartup(YELLOW);
-	  iLED[LED_P2] = true;
+      setLEDRandomColor(LED_P2);
+      iLED[LED_P2] = true;
     }
   }
   else
