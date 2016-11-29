@@ -1,0 +1,1 @@
+Copy-Item -Path F:\Projects\kaimana\Kaimana8btn\doublestickSlave\* -Destination  C:\Users\javie\Documents\Arduino -Force -Recurse
