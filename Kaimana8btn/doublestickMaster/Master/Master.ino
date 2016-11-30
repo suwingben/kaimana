@@ -34,15 +34,23 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-
+struct Button
+{
+	int pin;
+	int led;
+};
 // local function declarations
 int  pollSwitches(void);
 void showStartup(void);
 void setLEDRandomColor(int index);
+void buttonDetect(Button button);
 int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
 int selection = 0;
+
+
+Button K1 = {PIN_K1,LED_K1};
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -81,12 +89,7 @@ void loop()
 			// no switches active so test for start of idle timeout  
 			if( millis() > ulTimeout )
 			{				
-				switch(selection) 
-				{
-					case 0:
-						animation_idle();
-						break;
-				}
+			  animation_idle();
 			}  
 		}
 	}
@@ -299,9 +302,18 @@ int pollSwitches(void)
       iLED[LED_P4] = false;
   }
 
-
+	if(!digitalRead(K1.pin))
+	{
+		buttonDetect(K1);
+	}		
+	  else
+	{
+      // switch is inactive
+      kaimana.setLED(K1.led, BLACK);          
+	  iLED[K1.led] = false;
+	}
   // test switch and set LED based on result
-  if(!digitalRead(PIN_K1))
+  /* if(!digitalRead(PIN_K1))
   {
     switchActivity |= ATTACK_K1;
     
@@ -315,15 +327,17 @@ int pollSwitches(void)
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_K1);
+	  digitalWrite(PIN_START, LOW);
       iLED[LED_K1] = true;
     }
   }
   else
   {
       // switch is inactive
+	  digitalWrite(PIN_START, HIGH);
       kaimana.setLED(LED_K1, BLACK);    
       iLED[LED_K1] = false;
-  }
+  } */
 
 
   // test switch and set LED based on result
@@ -651,7 +665,7 @@ int tourneypollSwitches(void)
   if(!digitalRead(PIN_K1))
   {
     switchActivity |= ATTACK_K1;
-    
+    digitalWrite(PIN_START, HIGH);
     // switch is active
     if(iLED[LED_K1] == true)
     {
@@ -820,4 +834,20 @@ int tourneypollSwitches(void)
 }  
 
 
-
+void buttonDetect(Button button)
+{
+    switchActivity |= ATTACK_K1;
+    // switch is active
+    if(iLED[button.led] == true)
+    {
+		//maintain color while switch is active
+		iLED[button.led] = true;		
+    }
+    else
+    {
+      // select new color when switch is first activated
+	  setLEDRandomColor(button.led);
+      iLED[button.led] = true;
+    }
+ 	
+}

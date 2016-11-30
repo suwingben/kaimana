@@ -80,13 +80,8 @@ void loop()
 		{
 			// no switches active so test for start of idle timeout  
 			if( millis() > ulTimeout )
-			{				
-				switch(selection) 
-				{
-					case 0:
-						animation_idle();
-						break;
-				}
+			{	
+				animation_idle();
 			}  
 		}
 	}
@@ -277,6 +272,18 @@ int pollSwitches(void)
       iLED[LED_START] = false;
   }
 
+
+// test switch and set LED based on result
+  if(!digitalRead(PIN_P1))
+  {
+    switchActivity |= ATTACK_P1;
+	iLED[0] = true;
+
+  }
+  else
+  {
+	  iLED[0] = false;
+  }
 
   // test switch and set LED based on result
   if(!digitalRead(PIN_K1))
