@@ -158,13 +158,13 @@ void setLEDRandomColor(int index)
       break;
   }  
 }
-// Color Fade Animation when Idle
+//Color Fade Animation when Idle
 int animation_idle(void)
 {
   int  index;
   int  i;
 
- // set initial color to BLACK
+  // set initial color to BLACK
   kaimana.setALL(BLACK);
   
   while(true)
@@ -181,6 +181,7 @@ int animation_idle(void)
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_0+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)])
         );
       }
+
       // update the leds with new/current colors in the array
       kaimana.updateALL();
 
@@ -271,24 +272,21 @@ int breatheApple(int iR, int iG, int iB)
 		
 		if (alpha != 0 ){
 			for(index=0;index<LED_COUNT;++index)
-		{
-			kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+			{
+				kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+			}
+			// update the leds with new/current colors in the array
+			kaimana.updateALL();
+			// test all switches and exit idle animation if active switch found
+			for(i=0;i<SWITCH_COUNT;++i)
+			{
+				if( !digitalRead(switchPins[i]) )
+				return(false);
+			}
+			// place test for switches here and use calculated timer not delay
+			delay( IDLE_ANIMATION_DELAY );
+			Serial.print(alpha);
 		}
-		// update the leds with new/current colors in the array
-		kaimana.updateALL();
-		if (alpha != 0 ){
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
-		// place test for switches here and use calculated timer not delay
-		delay( IDLE_ANIMATION_DELAY );
-		Serial.print(alpha);
-		Serial.print("\n");}}
-		//delay(100);
-		
 	}
   }  
 // LEDS blink on randomly

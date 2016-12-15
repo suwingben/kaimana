@@ -93,8 +93,8 @@
 #define  PURPLE   255,000,255
 #define  CYAN     000,255,255
 #define  WHITE    255,255,255
-#define  MAGENTA  255,000,255
-#define  ORANGE   220,127,000
+
+
 // RGB value structure.
 typedef struct __attribute__ ((__packed__)) {
     uint8_t r;
@@ -104,7 +104,7 @@ typedef struct __attribute__ ((__packed__)) {
 
 
 // table of switch pin numbers
-const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_K1, PIN_K2, PIN_K3};
+const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_P3, PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
 
 
 // define the Kaimana class
@@ -120,7 +120,6 @@ class Kaimana
   public:
     Kaimana(void);
     void    setLED(int index, int iR, int iG, int iB);
-	void    setLEDBrightness(int index, int iR, int iG, int iB,int alpha);
     void    setALL(int iR, int iG, int iB);
     void    updateALL(void);
     void    switchHistoryClear(void);

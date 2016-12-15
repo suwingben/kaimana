@@ -40,12 +40,16 @@ Kaimana::Kaimana(void)
   // set arduino led driver pin to output and low
   pinMode( PIN_LED, OUTPUT );
   digitalWrite( PIN_LED, LOW );
-  pinMode( PIN_P2, OUTPUT);
-  digitalWrite( PIN_P2, HIGH );
+  //set pins for i2c comms
+/*   pinMode( PIN_P3,     OUTPUT);
+  pinMode( PIN_P2,     OUTPUT);
+  digitalWrite( PIN_P3, HIGH );
+  digitalWrite( PIN_P2, HIGH ); */
   // initialize random number seed with analog input #4 on port F1
   randomSeed(analogRead(4));
 
   // set arduino pins for input and enable internal pull up resistors
+  
   pinMode( PIN_DOWN,   INPUT_PULLUP );
   pinMode( PIN_UP,     INPUT_PULLUP );
   pinMode( PIN_LEFT,   INPUT_PULLUP );
@@ -54,8 +58,6 @@ Kaimana::Kaimana(void)
   pinMode( PIN_SELECT, INPUT_PULLUP );    // SELECT = BACK 
   pinMode( PIN_START,  INPUT_PULLUP );
   pinMode( PIN_P1,     INPUT_PULLUP );
-
-  pinMode( PIN_P3,     INPUT_PULLUP );
   pinMode( PIN_P4,     INPUT_PULLUP );
   pinMode( PIN_K1,     INPUT_PULLUP );
   pinMode( PIN_K2,     INPUT_PULLUP );
@@ -69,20 +71,6 @@ Kaimana::Kaimana(void)
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
-  // set led identified by index to the RGB color passed to this function
-  if(index >=0 && index < LED_COUNT)
-  {
-    _led[index].r=iR;
-    _led[index].g=iG;
-    _led[index].b=iB;
-  }
-}  
-
-void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
-{
-	iR = iR * alpha;
-	iG = iG * alpha;
-	iB = iB * alpha;
   // set led identified by index to the RGB color passed to this function
   if(index >=0 && index < LED_COUNT)
   {

@@ -45,6 +45,8 @@ void blink(int i,int iR,int iG, int iB)
   kaimana.setLED(i,iR,iG,iB);
   kaimana.updateALL();
   delay( FAST_COLOR_DELAY );
+  Serial.print(i);
+  Serial.print("\n");
   kaimana.setALL(BLACK);
 	
 }
@@ -160,6 +162,7 @@ void setLEDRandomColor(int index)
       break;
   }  
 }
+// Color Fade Animation when Idle
 int animation_idle(void)
 {
   int  index;
@@ -187,15 +190,11 @@ int animation_idle(void)
       kaimana.updateALL();
 
       // test all switches and exit idle animation if active switch found
-	for(i=0;i<SWITCH_COUNT;++i)
-	{
-		if( !digitalRead(switchPins[i]) )
-		{
-			kaimana.setALL(BLACK);
-			return(false);
-		}
-	
-	} 
+      for(i=0;i<SWITCH_COUNT;++i)
+      {
+        if( !digitalRead(switchPins[i]) )
+          return(false);
+      }
 
       // place test for switches here and use calculated timer not delay
       //
@@ -257,11 +256,9 @@ int breatheSine(int iR, int iG, int iB)
         }
 
 		// place test for switches here and use calculated timer not delay
-		delay( IDLE_ANIMATION_DELAY );
-		
+	
 	}
   } 
-}
 int breatheApple(int iR, int iG, int iB)
 {
 	int index;
@@ -278,99 +275,193 @@ int breatheApple(int iR, int iG, int iB)
 		
 		if (alpha != 0 ){
 			for(index=0;index<LED_COUNT;++index)
-		{
-			kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+			{
+				kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+			}
+			// update the leds with new/current colors in the array
+			kaimana.updateALL();
+			// test all switches and exit idle animation if active switch found
+			for(i=0;i<SWITCH_COUNT;++i)
+			{
+				if( !digitalRead(switchPins[i]) )
+				return(false);
+			}
+			// place test for switches here and use calculated timer not delay
+			delay( IDLE_ANIMATION_DELAY );
+			Serial.print(alpha);
 		}
-		// update the leds with new/current colors in the array
-		kaimana.updateALL();
-		if (alpha != 0 ){
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
-		// place test for switches here and use calculated timer not delay
-		delay( IDLE_ANIMATION_DELAY );
-		Serial.print(alpha);
-		Serial.print("\n");}}
-		//delay(100);
-		
 	}
   }  
 // LEDS blink on randomly
 void starryStartup(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {0,1,2,3,4,5,6,7,8};
+	static int trackled[]= {1,2,3,4,5,6,7,8};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
+	for (i = 0; i < 8; ++i) //randomizing the array
     {     
-      int rand = random(1,LED_COUNT);
-	  int temp = trackled[i];
-	  trackled[i] = trackled[rand];
-	  trackled[rand] = temp;
-    }
-		
-	for (i = 0; i < LED_COUNT; ++i) 
-    {  
-		turnOn(trackled[i], iR,iG,iB);	
-
-	}
-	delay_val = FAST_COLOR_DELAY;
-}
-// LEDS blink on/off randomly
-int starryIdle(int iR,int iG, int iB)	
-{
-	static int i;
-	static int trackled[]= {0,1,2,3,4,5,6,7,8};
-	int delay_val;
-	
-	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
-    {     
-      int rand = random(0,8);
+      int rand = random(1,8);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-	
-	for (i = 0; i < LED_COUNT; ++i) 
+	delay_val = FAST_COLOR_DELAY;
+	for (i = 0; i < 8; ++i) 
     {      
-		blink(trackled[i], iR,iG,iB);
-		for(i=0;i<SWITCH_COUNT;++i)
+		switch(trackled[i])
 		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-		}
+			case 1:
+			kaimana.setLED(LED_P4, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 2:
+			kaimana.setLED(LED_P3, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 3:
+			kaimana.setLED(LED_P2, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 4:
+			kaimana.setLED(LED_P1, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 5:
+			kaimana.setLED(LED_K1, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 6:
+			kaimana.setLED(LED_K2, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 7:
+			kaimana.setLED(LED_K3, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			case 8:
+			kaimana.setLED(LED_K4, iR,iG,iB);
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+			default:   // any undefined value so discard data and set led to BLACK
+			kaimana.setALL( BLACK );    
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+		};		
+	}
+}
+// LEDS blink on/off randomly
+void starryIdle(int iR,int iG, int iB)	
+{
+	static int i;
+	static int trackled[]= {1,2,3,4,5,6,7,8};
+	int delay_val;
+	
+	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
+	for (i = 0; i < 8; ++i) //randomizing the array
+    {     
+      int rand = random(1,8);
+	  int temp = trackled[i];
+	  trackled[i] = trackled[rand];
+	  trackled[rand] = temp;
+    }	
+	delay_val = FAST_COLOR_DELAY;
+	for (i = 0; i < 8; ++i) 
+    {      
+		switch(trackled[i])
+		{
+			case 1:
+			blink(LED_P4, iR,iG,iB);
+			break;
+			case 2:
+			blink(LED_P3, iR,iG,iB);
+			break;
+			case 3:
+			blink(LED_P2, iR,iG,iB);
+			break;
+			case 4:
+			blink(LED_P1, iR,iG,iB);
+			break;
+			case 5:
+			blink(LED_K1, iR,iG,iB);
+			break;
+			case 6:
+			blink(LED_K2, iR,iG,iB);
+			break;
+			case 7:
+			blink(LED_K3, iR,iG,iB);
+			break;
+			case 8:
+			blink(LED_K4, iR,iG,iB);			
+			break;
+			default:   // any undefined value so discard data and set led to BLACK
+			kaimana.setALL( BLACK );    
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+		};		
 	}
 }
 // LEDS blink on/off randomly with multiple colors
-int starryIdleMulti()	
+void starryIdleMulti()	
 {
 	static int i;
-	static int trackled[]= {0,1,2,3,4,5,6,7,8};
+	static int trackled[]= {1,2,3,4,5,6,7,8};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
+	for (i = 0; i < 8; ++i) //randomizing the array
     {     
-      int rand = random(0,8);
+      int rand = random(1,8);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-
-	for (i = 0; i < LED_COUNT; ++i) 
-    {  
-		blinkMulti(i);		
-		for(i=0;i<SWITCH_COUNT;++i)
+	delay_val = FAST_COLOR_DELAY;
+	for (i = 0; i < 8; ++i) 
+    {      
+		switch(trackled[i])
 		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-		} 
+			case 1:
+			blinkMulti(LED_P4);
+			break;
+			case 2:
+			blinkMulti(LED_P3);
+			break;
+			case 3:
+			blinkMulti(LED_P2);
+			break;
+			case 4:
+			blinkMulti(LED_P1);
+			break;
+			case 5:
+			blinkMulti(LED_K1);
+			break;
+			case 6:
+			blinkMulti(LED_K2);
+			break;
+			case 7:
+			blinkMulti(LED_K3);
+			break;
+			case 8:
+			blinkMulti(LED_K4);			
+			break;
+			default:   // any undefined value so discard data and set led to BLACK
+			kaimana.setALL( BLACK );    
+			kaimana.updateALL();
+			delay( delay_val );
+			break;
+		};		
 	}
 }
 //Tournament mode animations
@@ -400,19 +491,11 @@ void tourneyModeActivate(void)
 	kaimana.setLED(LED_P1, BLACK);
 	kaimana.updateALL();
 	delay( T_DELAY );
-	
-	kaimana.setLED(LED_JOY, BLACK);
-	kaimana.updateALL();
-	delay( T_DELAY );
 }
 void tourneyModeDeactivate(void)
 {
 	
 	kaimana.setALL(BLACK);
-	kaimana.updateALL();
-	delay( T_DELAY );
-	
-	kaimana.setLED(LED_JOY, RED);
 	kaimana.updateALL();
 	delay( T_DELAY );
 	

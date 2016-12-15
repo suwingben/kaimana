@@ -58,6 +58,9 @@
   #define  LED_K2      6
   #define  LED_K3      7
   #define  LED_K4      8
+  #define  LED_START   0xff
+  #define  LED_SELECT  0xff
+  #define  LED_HOME    0xff
 #endif
 
 // maximum number of LEDs attached to Kaimana board
