@@ -40,11 +40,7 @@ Kaimana::Kaimana(void)
   // set arduino led driver pin to output and low
   pinMode( PIN_LED, OUTPUT );
   digitalWrite( PIN_LED, LOW );
-  //set pins for i2c comms
-/*   pinMode( PIN_P3,     OUTPUT);
-  pinMode( PIN_P2,     OUTPUT);
-  digitalWrite( PIN_P3, HIGH );
-  digitalWrite( PIN_P2, HIGH ); */
+  
   // initialize random number seed with analog input #4 on port F1
   randomSeed(analogRead(4));
 
@@ -59,7 +55,8 @@ Kaimana::Kaimana(void)
   pinMode( PIN_START,  INPUT_PULLUP );
   pinMode( PIN_P1,     INPUT_PULLUP );
   pinMode( PIN_P2,     INPUT_PULLUP );
-  //pinMode( PIN_P4,     INPUT_PULLUP );
+  pinMode( PIN_P3,     INPUT_PULLUP );
+  pinMode( PIN_P4,     INPUT_PULLUP );
   pinMode( PIN_K1,     INPUT_PULLUP );
   pinMode( PIN_K2,     INPUT_PULLUP );
   pinMode( PIN_K3,     INPUT_PULLUP );

@@ -48,8 +48,8 @@
 #define  PIN_START   10
 #define  PIN_P1      3
 #define  PIN_P2      2
-#define  PIN_P3      0
-#define  PIN_P4      1
+#define  RX      0
+#define  TX      1
 #define  PIN_K1      4
 #define  PIN_K2      21
 #define  PIN_K3      12
@@ -77,7 +77,7 @@
 
 
 // number of switch inputs on kaimana
-#define  SWITCH_COUNT         12
+#define  SWITCH_COUNT         15
 
 // if this is changed then Kaimana::switchHistoryTest must also be revised
 #define SWITCH_HISTORY_MAX  16
@@ -104,8 +104,7 @@ typedef struct __attribute__ ((__packed__)) {
 
 
 // table of switch pin numbers
-//const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
-const unsigned char switchPins[SWITCH_COUNT] = {PIN_P1};
+const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
 
 
 // define the Kaimana class

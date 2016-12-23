@@ -32,8 +32,6 @@
 #include "kaimana.h"
 #include "kaimana_custom.h"
 #include "animations.h"
-#include <Wire.h>
-
 
 
 // Color Fade Animation when Idle
@@ -42,19 +40,24 @@ int animation_idle(void)
 {
   int  index;
   int  i;
-  
+  int incomingByte =0;
+  bool mybreak= true;
   // set initial color to BLACK
   kaimana.setALL(BLACK);
 
-  while(true)
+  while(mybreak == true)
   {
+	incomingByte =0;
 	
+
     for(index=0;index<IDLE_SIZE;++index)
     {
-	   
+		
       // update strip with new color2
       for(i=0;i<LED_COUNT;++i)
       {
+		  //Serial.print("im inthe for line ");
+		  //Serial.println(index);
         kaimana.setLED(
           i,
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_2+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)]),
@@ -62,19 +65,45 @@ int animation_idle(void)
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_0+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)])
         );
       }
-
+	  if (Serial.available() > 0) {
+           // read the incoming byte:
+           incomingByte = Serial.read();
+    
+           // say what you got:
+           //Serial.print("I received: ");
+           //Serial.println(incomingByte, DEC);
+		   
+		}
+		if (incomingByte != 0)
+		{		
+			//Serial.print("its not equaltozero setallblack ");
+			mybreak = false;
+			kaimana.setALL(BLACK);
+			kaimana.updateALL();
+			
+			
+		}
       // update the leds with new/current colors in the array
       kaimana.updateALL();
 
       // test all switches and exit idle animation if active switch found
-      if( !digitalRead(PIN_P1))
-          return(false);
-      
-
+      for(i=0;i<SWITCH_COUNT;++i)
+      {
+        if( !digitalRead(switchPins[i]))
+		{
+			mybreak = false;
+			kaimana.setALL(BLACK);
+			kaimana.updateALL();
+			
+		}
+      }
+		if(mybreak == false)
+			break;
       // place test for switches here and use calculated timer not delay
       //
       delay( IDLE_ANIMATION_DELAY );
     }
+
   }
 }
 

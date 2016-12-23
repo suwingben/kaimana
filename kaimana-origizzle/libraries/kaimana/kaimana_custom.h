@@ -50,14 +50,14 @@
   //   KAIMANA->LED_JOY->LED_HOME->LED_SELECT->LED_START->LED_P1->LED-P2->LED_P3->LED-P4->LED_K1->LED-K2->LED_K3->LED-K4
   //
   #define  LED_JOY     0
-  #define  LED_P1      1
-  #define  LED_P2      2
-  #define  LED_P3      3
-  #define  LED_P4      4
-  #define  LED_K1      8
-  #define  LED_K2      7
-  #define  LED_K3      6
-  #define  LED_K4      5
+  #define  LED_P1      5
+  #define  LED_P2      6
+  #define  LED_P3      7
+  #define  LED_P4      8
+  #define  LED_K1      4
+  #define  LED_K2      3
+  #define  LED_K3      2
+  #define  LED_K4      1
   #define  LED_HOME    0xff
   #define  LED_GUIDE   0xff
   #define  LED_SELECT  0xff
@@ -100,7 +100,7 @@
 #define  BOOT_COLOR_DELAY         250    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
 #define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
-#define  IDLE_TIMEOUT_SECONDS      5    // value in seconds - normally 60 or 30 seconds but set very short for testing
+#define  IDLE_TIMEOUT_SECONDS      10    // value in seconds - normally 60 or 30 seconds but set very short for testing
 #define  IDLE_ANIMATION_DELAY       8    // value in miliseconds - use smaller value for faster idle animation playback
 
 

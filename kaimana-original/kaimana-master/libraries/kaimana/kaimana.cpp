@@ -40,11 +40,11 @@ Kaimana::Kaimana(void)
   // set arduino led driver pin to output and low
   pinMode( PIN_LED, OUTPUT );
   digitalWrite( PIN_LED, LOW );
+
   // initialize random number seed with analog input #4 on port F1
   randomSeed(analogRead(4));
 
   // set arduino pins for input and enable internal pull up resistors
-  
   pinMode( PIN_DOWN,   INPUT_PULLUP );
   pinMode( PIN_UP,     INPUT_PULLUP );
   pinMode( PIN_LEFT,   INPUT_PULLUP );
@@ -53,7 +53,7 @@ Kaimana::Kaimana(void)
   pinMode( PIN_SELECT, INPUT_PULLUP );    // SELECT = BACK 
   pinMode( PIN_START,  INPUT_PULLUP );
   pinMode( PIN_P1,     INPUT_PULLUP );
-  pinMode( PIN_P4,     INPUT_PULLUP );
+  pinMode( PIN_P2,     INPUT_PULLUP );
   pinMode( PIN_K1,     INPUT_PULLUP );
   pinMode( PIN_K2,     INPUT_PULLUP );
   pinMode( PIN_K3,     INPUT_PULLUP );
