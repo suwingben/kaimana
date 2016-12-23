@@ -56,8 +56,8 @@ int animation_idle(void)
       // update strip with new color2
       for(i=0;i<LED_COUNT;++i)
       {
-		  //Serial.print("im inthe for line ");
-		  //Serial.println(index);
+		  Serial.print("im inthe for line ");
+		  Serial.println(index);
         kaimana.setLED(
           i,
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_2+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)]),
@@ -70,13 +70,13 @@ int animation_idle(void)
            incomingByte = Serial.read();
     
            // say what you got:
-           //Serial.print("I received: ");
-           //Serial.println(incomingByte, DEC);
+           Serial.print("I received: ");
+           Serial.println(incomingByte, DEC);
 		   
 		}
 		if (incomingByte != 0)
 		{		
-			//Serial.print("its not equaltozero setallblack ");
+			Serial.print("got serial, breaking ");
 			mybreak = false;
 			kaimana.setALL(BLACK);
 			kaimana.updateALL();
@@ -91,6 +91,7 @@ int animation_idle(void)
       {
         if( !digitalRead(switchPins[i]))
 		{
+			Serial.print("press btn, breaking ");
 			mybreak = false;
 			kaimana.setALL(BLACK);
 			kaimana.updateALL();

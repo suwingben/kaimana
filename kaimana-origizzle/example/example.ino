@@ -33,6 +33,9 @@
 #include "kaimana.h"
 #include "kaimana_custom.h"
 #include "animations.h"
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(9, 10);
 
 
 // local function declarations
@@ -53,6 +56,7 @@ void setup()
   // light up all leds at boot to demonstrate everything is functional
   showStartup();
   Serial.begin(9600);
+  mySerial.begin(9600);
   ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
 }
 
@@ -84,7 +88,7 @@ void loop()
 			//dirty, when animation breaks set flag to false to break the whole thing
 			anibreak =true;
 			//Serial.println("BREAK");	
-			delay(1000);
+			//delay(1000);
         }  
     }
     
@@ -176,9 +180,9 @@ int pollSwitches(void)
       firsttime = 0;
     }
   }
-	if (Serial.available() > 0) {
+	if (mySerial.available() > 0) {
            // read the incoming byte:
-           incomingByte = Serial.read();
+           incomingByte = mySerial.read();
     
            // say what you got:
            //Serial.print("I received: ");
@@ -326,7 +330,7 @@ int pollSwitches(void)
   {
     switchActivity |= ATTACK_P1;
     //Serial.println("Pressed the button");
-	Serial.write("1"); 
+	mySerial.write("1"); 
     // switch is active
     if(iLED[LED_P1] == true)
     {
