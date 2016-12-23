@@ -32,6 +32,9 @@
 #include "kaimana.h"
 #include "kaimana_custom.h"
 #include "animations.h"
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(9, 10);
 
 
 // Color Fade Animation when Idle
