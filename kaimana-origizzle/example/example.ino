@@ -65,7 +65,7 @@ void setup()
 // the loop routine repeats indefinitely and executes immediately following the setup() function
 void loop() 
 {
-	//Serial.println("Im looping");
+	Serial.println("Im looping");
 	incomingByte=0;
 	
     // active -- poll switches and update leds
@@ -73,21 +73,21 @@ void loop()
     {
         // some switches were active so reset idle timeout to now + some seconds
         ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
-		//Serial.println("Im looping in the IF");
+		Serial.println("Im looping in the IF");
 		anibreak=false;
 		
     }
     else
     {
-		//Serial.println("Im in the else");
+		Serial.println("Im in the else");
         // no switches active so test for start of idle timeout  
         if( millis() > ulTimeout )
         {
-			//Serial.println("Activating idle ani");			
+			Serial.println("Activating idle ani");			
             animation_idle();
 			//dirty, when animation breaks set flag to false to break the whole thing
 			anibreak =true;
-			//Serial.println("BREAK");	
+			Serial.println("BREAK");	
 			//delay(1000);
         }  
     }
@@ -185,8 +185,8 @@ int pollSwitches(void)
            incomingByte = mySerial.read();
     
            // say what you got:
-           //Serial.print("I received: ");
-           //Serial.println(incomingByte, DEC);
+           Serial.print("I received: ");
+           Serial.println(incomingByte, DEC);
 		   
     }
 	
@@ -329,7 +329,7 @@ int pollSwitches(void)
   if(!digitalRead(PIN_P1))
   {
     switchActivity |= ATTACK_P1;
-    //Serial.println("Pressed the button");
+    Serial.println("Pressed the button");
 	mySerial.write("1"); 
     // switch is active
     if(iLED[LED_P1] == true)
