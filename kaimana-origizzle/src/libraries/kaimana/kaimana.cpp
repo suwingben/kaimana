@@ -50,9 +50,6 @@ Kaimana::Kaimana(void)
   pinMode( PIN_LEFT,   INPUT_PULLUP );
   pinMode( PIN_RIGHT,  INPUT_PULLUP );
   pinMode( PIN_HOME,   INPUT_PULLUP );    // HOME = GUIDE
-  pinMode( PIN_SELECT, INPUT_PULLUP );    // SELECT = BACK
-  pinMode( PIN_START,  OUTPUT);
-  digitalWrite(PIN_START,LOW);
   pinMode( PIN_P1,     INPUT_PULLUP );
   pinMode( PIN_P2,     INPUT_PULLUP );
   pinMode( PIN_P3,     INPUT_PULLUP );

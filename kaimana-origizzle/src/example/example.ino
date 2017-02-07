@@ -33,7 +33,7 @@
 #include "kaimana.h"
 #include "kaimana_custom.h"
 #include "animations.h"
-#include <SoftwareSerial.h>
+
 
 
 // local function declarations
@@ -46,15 +46,15 @@ int outgoingByte=0;
 bool anibreak = false;
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
+SoftwareSerial mySerial(9, 10);
 
-//SoftwareSerial mySerial(9, 10);
 // the setup routine runs first and once each time power is applied to the Kaimana board
 void setup()
 {
   // light up all leds at boot to demonstrate everything is functional
   showStartup();
-  Serial.begin(9600);
-  //mySerial.begin(9600);
+  mySerial.begin(9600);
+
   ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
 }
 
@@ -63,29 +63,26 @@ void setup()
 // the loop routine repeats indefinitely and executes immediately following the setup() function
 void loop()
 {
-	//Serial.println("Im looping");
 
     // active -- poll switches and update leds
     if( pollSwitches() != 0 || anibreak ==true)
     {
         // some switches were active so reset idle timeout to now + some seconds
-        ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
-        digitalWrite(PIN_START,LOW);
-		//Serial.println("Im looping in the IF");
+        ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );   
 		anibreak=false;
 
     }
     else
     {
-		//Serial.println("Im in the else");
+
         // no switches active so test for start of idle timeout
         if( millis() > ulTimeout )
         {
-			Serial.println("Activating idle ani");
+
          animation_idle();
 			//dirty, when animation breaks set flag to false to break the whole thing
 			anibreak =true;
-			Serial.println("BREAK");
+
 			//delay(1000);
         }
     }
@@ -168,6 +165,7 @@ int pollSwitches(void)
   static int  firsttime;
   static uint16_t  joystickDirection;
   static uint16_t  switchActivity;
+  static bool sendSerial;
 
   // reset LED status
   if (firsttime == 1)
@@ -177,22 +175,9 @@ int pollSwitches(void)
       iLED[i] = false;
       firsttime = 0;
     }
+	sendSerial = true;
   }
-/*	if (mySerial.available()) {
-           // read the incoming byte:
-           incomingByte = mySerial.read();
 
-           // say what you got:
-           Serial.print("I received: ");
-           Serial.println(incomingByte, DEC);
-
-    }
-
-	if(incomingByte !=0)
-	{
-		return(1);
-	}
-  */
   // read arduino pins and save results in the mapped LED if button is pressed (pin grounded)
 
   // complex special case for joystick but it's worth the effort
@@ -300,7 +285,7 @@ int pollSwitches(void)
   }
 
 
-  /*/ test switch and set LED based on result
+
   if(!digitalRead(PIN_START))
   {
     // switch is active
@@ -322,15 +307,15 @@ int pollSwitches(void)
       kaimana.setLED(LED_START, BLACK);
       iLED[LED_START] = false;
   }
-*/
+
 
   // test switch and set LED based on result
   if(!digitalRead(PIN_P1))
   {
     switchActivity |= ATTACK_P1;
-  //  Serial.println("Sending 1");
-	  //mySerial.print(1);
-    digitalWrite(PIN_START,HIGH);
+    
+
+    //digitalWrite(PIN_START,HIGH);
     // switch is active
     if(iLED[LED_P1] == true)
     {
@@ -594,9 +579,18 @@ int pollSwitches(void)
   for(i=0;i<LED_COUNT;++i)
   {
     if(iLED[i] == true)
-      ++iActiveSwitchCount;
+	{
+		++iActiveSwitchCount;
+		mySerial.print(1);		
+	}
   }
 
+  if(iActiveSwitchCount >0 && sendSerial == true)
+  {
+	  mySerial.print(1);
+	  sendSerial = false;
+  }
+  
   // update the leds with new/current colors in the array
   kaimana.updateALL();
 

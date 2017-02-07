@@ -34,28 +34,31 @@
 #include "animations.h"
 #include <SoftwareSerial.h>
 
-//SoftwareSerial mySerial2(9, 10);
+SoftwareSerial mySerial2(9, 10);
 
 // Color Fade Animation when Idle
 //
 int animation_idle(void)
 {
-//  mySerial2.begin(9600);
+  mySerial2.begin(9600);
   int  index;
   int  i;
-  //int incomingByte =0;
+  int incomingByte =0;
   bool mybreak= true;
+  
   // set initial color to BLACK
   kaimana.setALL(BLACK);
-
+  
   while(mybreak == true)
   {
-	//incomingByte =0;
 
 
     for(index=0;index<IDLE_SIZE;++index)
-    {
-
+    {		
+	  while(mySerial2.available()){  //is there anything to read?
+		incomingByte = mySerial2.read();  //if yes, read it
+		}	
+			
       // update strip with new color2
       for(i=0;i<LED_COUNT;++i)
       {
@@ -67,25 +70,17 @@ int animation_idle(void)
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_1+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)]),
           pgm_read_byte_near(&colorCycleData[((index+IDLE_OFFSET_0+((LED_COUNT-i)*IDLE_OFFSET))%IDLE_SIZE)])
         );
-      }
-	/*/  if (mySerial2.available()) {
-           // read the incoming byte:
-           incomingByte = mySerial2.read();
-
-           // say what you got:
-           Serial.print("I received: ");
-           Serial.println(incomingByte, DEC);
-
 		}
+
+		
+		   
 		if (incomingByte > 0)
-		{
-			//Serial.print("got serial, breaking ");
-			mybreak = false;
-			kaimana.setALL(BLACK);
-			kaimana.updateALL();
-
-
-		}*/
+		{			
+		    Serial.println("I set to false");
+			mybreak = false;			
+		}
+		
+			
       // update the leds with new/current colors in the array
       kaimana.updateALL();
 
@@ -93,22 +88,26 @@ int animation_idle(void)
       for(i=0;i<SWITCH_COUNT;++i)
       {
         if( !digitalRead(switchPins[i]))
-		      {
-      			//Serial.print("press btn, breaking ");
-      			mybreak = false;
-      			kaimana.setALL(BLACK);
-      			kaimana.updateALL();
-
-      		}
+		{
+			mySerial2.print(1);
+			mybreak = false;
+			kaimana.setALL(BLACK);
+			kaimana.updateALL();
+			
+      	}
       }
 		if(mybreak == false)
+		{
+			Serial.println("DEad");
 			break;
+		}
       // place test for switches here and use calculated timer not delay
       //
       delay( IDLE_ANIMATION_DELAY );
-    }
 
-  }
+    }
+	
+}
 }
 
 
