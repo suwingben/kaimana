@@ -100,7 +100,7 @@
 #define  BOOT_COLOR_DELAY         250    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
 #define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
-#define  IDLE_TIMEOUT_SECONDS      2    // value in seconds - normally 60 or 30 seconds but set very short for testing
+#define  IDLE_TIMEOUT_SECONDS      30   // value in seconds - normally 60 or 30 seconds but set very short for testing
 #define  IDLE_ANIMATION_DELAY       8    // value in miliseconds - use smaller value for faster idle animation playback
 
 

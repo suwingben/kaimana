@@ -580,7 +580,8 @@ int pollSwitches(void)
   {
     if(iLED[i] == true)
 	{
-		++iActiveSwitchCount;		
+		++iActiveSwitchCount;
+		mySerial.print(1);		
 	}
   }
 

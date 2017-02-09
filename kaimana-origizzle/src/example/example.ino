@@ -41,8 +41,7 @@ int  pollSwitches(void);
 void showStartup(void);
 void setLEDRandomColor(int index);
 unsigned long  ulTimeout;
-char incomingByte=0;
-int outgoingByte=0;
+int incomingByte=0;
 bool anibreak = false;
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
