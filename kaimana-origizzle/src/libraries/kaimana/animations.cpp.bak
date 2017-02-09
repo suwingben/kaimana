@@ -34,7 +34,7 @@
 #include "animations.h"
 #include <SoftwareSerial.h>
 
-SoftwareSerial mySerial2(14, 16);
+SoftwareSerial mySerial2(9, 10);
 
 // Color Fade Animation when Idle
 //
