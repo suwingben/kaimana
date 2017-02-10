@@ -58,6 +58,9 @@ Kaimana::Kaimana(void)
   pinMode( PIN_K2,     INPUT_PULLUP );
   pinMode( PIN_K3,     INPUT_PULLUP );
   pinMode( PIN_K4,     INPUT_PULLUP );
+  pinMode( PIN_HOME,   INPUT_PULLUP );    // HOME = GUIDE
+  pinMode( PIN_SELECT, INPUT_PULLUP );    // SELECT = BACK 
+  pinMode( PIN_START,  INPUT_PULLUP );
 
   // initialize Switch History
   switchHistoryClear();
