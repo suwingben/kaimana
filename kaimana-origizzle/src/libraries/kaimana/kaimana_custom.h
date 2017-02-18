@@ -58,11 +58,11 @@
   #define  LED_K2      3
   #define  LED_K3      2
   #define  LED_K4      1
-  #define  LED_HOME    0xff
-  #define  LED_GUIDE   0xff
-  #define  LED_SELECT  0xff
-  #define  LED_BACK    0xff
-  #define  LED_START   0xff
+  #define  LED_HOME    9
+  #define  LED_GUIDE   9
+  #define  LED_SELECT  10
+  #define  LED_BACK    10
+  #define  LED_START   11
 #endif
 
 
@@ -92,7 +92,7 @@
 
 // maximum number of LEDs attached to Kaimana board
 // best to leave value untouched at 12 unless you understand why
-#define  LED_COUNT   8
+#define  LED_COUNT   12
 
 
 // general definitions for delays and other customizable features
