@@ -43,6 +43,7 @@ void setLEDRandomColor(int index);
 unsigned long  ulTimeout;
 int incomingByte=0;
 bool anibreak = false;
+bool normalFunct = false;
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
 SoftwareSerial mySerial(9, 10);
@@ -53,8 +54,15 @@ void setup()
   // light up all leds at boot to demonstrate everything is functional
   showStartup();
   mySerial.begin(9600);
-
   ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
+  
+  if(!digitalRead(PIN_HOME) && !digitalRead(PIN_START))
+  {
+	normalFunct = true;  
+  }
+  else{
+	  kaimana.setALL( RED );
+  }
 }
 
 
@@ -62,7 +70,7 @@ void setup()
 // the loop routine repeats indefinitely and executes immediately following the setup() function
 void loop()
 {
-
+	if(normalFunct==true){
     // active -- poll switches and update leds
     if( pollSwitches() != 0 || anibreak ==true)
     {
@@ -88,7 +96,7 @@ void loop()
 
     // delay a little to avoid flickering (yea, updates happens really, really fast!)
     delay( MAIN_LOOP_DELAY );
-
+}
 }
 
 
@@ -107,9 +115,9 @@ void showStartup(void)
   delay( BOOT_COLOR_DELAY );
   kaimana.setALL( RED );
   delay( BOOT_COLOR_DELAY );
-  kaimana.setALL( GREEN );
+  kaimana.setALL( RED );
   delay( BOOT_COLOR_DELAY );
-  kaimana.setALL( BLUE );
+  kaimana.setALL( RED );;
   delay( BOOT_COLOR_DELAY );
 
   kaimana.setALL( BLACK );
