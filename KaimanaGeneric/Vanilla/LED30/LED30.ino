@@ -52,12 +52,9 @@ void setup()
 {                
   // light up all leds at boot to demonstrate everything is functional
   defaultStartup();
-  //walkyStartup(GREEN);
   starryStartup(BLUE);
-  //walkyStartup(RED);
-  starryStartup(MAGENTA);
-  starryIdleMulti();
-  //starryIdle(CYAN);
+  walkyStartup(MAGENTA);
+  //starryIdleMulti();
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -81,33 +78,33 @@ void loop()
 	}
 	else
 	{
-		// no switches active so test for start of idle timeout  
+		// no switches active so test for start of idle timeout
+		kaimana.setALL( BLACK );
 		if( millis() > ulTimeout )
 		{				
 			switch(selection) 
 			{
-				case 0:
-					walkyidle(GREEN);
-					//breatheApple(RED);			
+				case 0:					
+					breatheApple(RED);			
 					break;
 				case 1:
-					animation_idle();
+					animation_idle2();
 					break;
 				case 2:
 					breatheSine(BLUE);
 					break;
 				case 3:
-					starryStartup(MAGENTA);
+					animation_idle();	
 					break;
 				case 4:
-					walkyStartup(ORANGE);
+					walkyIdle(ORANGE);
 					break;
 				case 5:
 					starryIdle(CYAN);
 					break;
 				case 6:
 					starryIdleMulti();
-					break;
+					break;	
 				default:
 					selection = 0;
 					break;
@@ -170,8 +167,7 @@ int pollSwitches(void)
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN:    // down
-      kaimana.setLED(LED_JOY, 000, 220, 220);
-	  selection++;
+      kaimana.setLED(LED_JOY, 000, 220, 220);	  
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
@@ -219,6 +215,7 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
+	  selection++;
     }
   }
   else
@@ -294,6 +291,7 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
+	  
     }
   }
   else

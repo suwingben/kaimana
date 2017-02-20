@@ -124,10 +124,10 @@
 #define  BOOT_COLOR_DELAY         200    // value in miliseconds
 #define  FAST_COLOR_DELAY         50    // value in miliseconds
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
-#define  MAIN_LOOP_DELAY           100    // value in miliseconds - used main loop
-#define  IDLE_TIMEOUT_SECONDS       3    // value in seconds - normally 60 or 30 seconds but set very short for testing
+#define  MAIN_LOOP_DELAY          100    // value in miliseconds - used main loop
+#define  IDLE_TIMEOUT_SECONDS       1    // value in seconds - normally 60 or 30 seconds but set very short for testing
 #define  IDLE_ANIMATION_DELAY       5    // value in miliseconds - use smaller value for faster idle animation playback
-#define  T_DELAY      			  250    
+#define  T_DELAY      			  150    
 
 // definitions of RGB values use by random color generator: setLEDRandomColor(int)
 #define  COLOR_RANDOM_1    127,220,000    // lime green

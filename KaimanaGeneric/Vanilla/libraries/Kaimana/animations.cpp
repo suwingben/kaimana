@@ -33,15 +33,8 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-bool checkbtn(void)
-{
-	int  i;
-	for(i=0;i<SWITCH_COUNT;++i)
-	{
-		if( !digitalRead(switchPins[i]) )
-		return(false);
-	}
-}
+int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
+
 void turnOn(int i,int iR,int iG, int iB)
 {
 	kaimana.setLED(i, iR,iG,iB);
@@ -92,7 +85,6 @@ void blinkMulti(int index)
 		break;
 	} 
 }	
-
 // set LED to one of 8 predefined colors selected at random
 void setLEDRandomColor(int index)
 {
@@ -187,9 +179,6 @@ int animation_idle2(void)
         );
       }
 
-      // update the leds with new/current colors in the array
-      kaimana.updateALL();
-
       // test all switches and exit idle animation if active switch found
       for(i=0;i<SWITCH_COUNT;++i)
       {
@@ -209,31 +198,34 @@ void walkyStartup(int iR,int iG, int iB)
   	for (int i = 1; i <= LED_COUNT; i++) 
 	{
 		turnOn(i, iR,iG,iB);
+		      // test all switches and exit idle animation if active switch found
 	}
 	kaimana.setALL(BLACK);
 }
-void walkyidle(int iR,int iG, int iB)	
+void walkyIdle(int iR,int iG, int iB)	
 {
   	for (int i = 0; i <= LED_COUNT; i++) 
 	{
 		blink(i, iR,iG,iB);
+		      // test all switches and exit idle animation if active switch found
+	for(i=0;i<SWITCH_COUNT;++i)
+	{
+		if( !digitalRead(switchPins[i]) )
+		return(false);
+	} 
 	}
 	kaimana.setALL(BLACK);
 }
 void defaultStartup(void)
 {
   kaimana.setALL( BLACK );
-  delay( FAST_COLOR_DELAY );
+  delay( BOOT_COLOR_DELAY );
   kaimana.setALL( RED );
-  delay( FAST_COLOR_DELAY );
+  delay( BOOT_COLOR_DELAY );
   kaimana.setALL( BLACK );
-  delay( FAST_COLOR_DELAY );
-  kaimana.setALL( GREEN );
-  delay( FAST_COLOR_DELAY );
-  kaimana.setALL( BLACK );
-  delay( FAST_COLOR_DELAY );
-  kaimana.setALL( BLUE );
-  delay( FAST_COLOR_DELAY );
+  delay( BOOT_COLOR_DELAY );
+  kaimana.setALL( RED );
+  delay( BOOT_COLOR_DELAY );
   kaimana.setALL( BLACK );
   delay( BOOT_COMPLETE_DELAY );  
 } 
@@ -310,8 +302,7 @@ int breatheApple(int iR, int iG, int iB)
 void starryStartup(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
-	int delay_val;
+	
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
 	
@@ -327,16 +318,16 @@ void starryStartup(int iR,int iG, int iB)
 	for (i = 0; i < LED_COUNT; ++i) 
     {  
 		turnOn(trackled[i], iR,iG,iB);	
-		checkbtn(); 
+      // test all switches and exit idle animation if active switch found
+
 	}
-	delay_val = FAST_COLOR_DELAY;
+	
     	
 }
 // LEDS blink on/off randomly
-void starryIdle(int iR,int iG, int iB)	
+int starryIdle(int iR,int iG, int iB)	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
@@ -351,13 +342,17 @@ void starryIdle(int iR,int iG, int iB)
 	for (i = 0; i < LED_COUNT; ++i) 
     {      
 		blink(trackled[i], iR,iG,iB);
+ 		for(i=0;i<SWITCH_COUNT;++i)
+		{
+			if( !digitalRead(switchPins[i]) )
+			{return(false);}
+		}  
 	}
 }
 // LEDS blink on/off randomly with multiple colors
-void starryIdleMulti()	
+int starryIdleMulti()	
 {
 	static int i;
-	static int trackled[]= {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140};
 	int delay_val;
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
@@ -371,8 +366,7 @@ void starryIdleMulti()
 
 	for (i = 0; i < LED_COUNT; ++i) 
     {  
-		blinkMulti(i);		
-		checkbtn(); 
+		blinkMulti(trackled[i]);		
 	}
 }
 //Tournament mode animations
