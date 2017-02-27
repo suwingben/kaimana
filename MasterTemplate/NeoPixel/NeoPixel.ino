@@ -157,7 +157,8 @@ int pollSwitches(void)
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN:    // down
-      kaimana.setLED(LED_JOY, 000, 220, 220);	  
+      kaimana.setLED(LED_JOY, 000, 220, 220);
+	  selection++;
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
@@ -205,7 +206,6 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
-	  selection++;
     }
   }
   else
@@ -982,3 +982,6 @@ int tourneypollSwitches(void)
   // return number of active switches
   return(iActiveSwitchCount);
 }  
+
+
+

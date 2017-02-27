@@ -1,1 +1,1 @@
-Copy-Item -Path H:\Projects\kaimana\KaimanaNeoPixel\* -Destination C:\Users\gatzaraki\Documents\Arduino -Force -Recurse
+Copy-Item -Path F:\Projects\kaimana\KaimanaNeoPixel\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse

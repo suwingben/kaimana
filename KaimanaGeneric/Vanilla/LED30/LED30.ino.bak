@@ -94,7 +94,7 @@ void loop()
 					breatheSine(BLUE);
 					break;
 				case 3:
-					starryStartup(MAGENTA);
+					animation_idle();	
 					break;
 				case 4:
 					walkyIdle(ORANGE);
@@ -104,9 +104,7 @@ void loop()
 					break;
 				case 6:
 					starryIdleMulti();
-					break;
-				case 7:
-					animation_idle();	
+					break;	
 				default:
 					selection = 0;
 					break;

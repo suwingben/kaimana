@@ -68,7 +68,7 @@ Kaimana::Kaimana(void)
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
-/*if(index == LED_JOY)
+if(index == LED_JOY)
   {
     index = 0;
    _led[index].r = iR;
@@ -76,7 +76,7 @@ void Kaimana::setLED(int index, int iR, int iG, int iB)
    _led[index].b = iB;
   }
   else
-  {*/
+  {
 
      _led[index].r = iR;
      _led[index].g = iG;
@@ -84,7 +84,7 @@ void Kaimana::setLED(int index, int iR, int iG, int iB)
      _led[index+ 1].r = iR;
      _led[index+ 1].g = iG;
      _led[index+ 1].b = iB;
-   //}
+   }
    
 }
   

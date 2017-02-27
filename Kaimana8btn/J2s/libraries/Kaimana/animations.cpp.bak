@@ -322,8 +322,7 @@ int breatheApple(int iR, int iG, int iB)
 
 	}
   }  
-}
-}
+	}
 // LEDS blink on randomly
 void starryStartup(int iR,int iG, int iB)	
 {

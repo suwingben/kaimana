@@ -264,10 +264,6 @@ int breatheSine(int iR, int iG, int iB)
 
 		// place test for switches here and use calculated timer not delay
 		delay( IDLE_ANIMATION_DELAY );
-		Serial.print(alpha);
-		Serial.print("\n");}
-		//delay(100);
-		
 	}
   } 
 int breatheApple(int iR, int iG, int iB)
@@ -300,10 +296,7 @@ int breatheApple(int iR, int iG, int iB)
         }
 		// place test for switches here and use calculated timer not delay
 		delay( IDLE_ANIMATION_DELAY );
-		Serial.print(alpha);
-		Serial.print("\n");}}
-		//delay(100);
-		
+	
 	}
   }  
 // LEDS blink on randomly

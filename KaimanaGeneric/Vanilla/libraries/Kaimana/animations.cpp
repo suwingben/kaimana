@@ -258,8 +258,7 @@ int breatheSine(int iR, int iG, int iB)
 	
 			// place test for switches here and use calculated timer not delay
 			delay( IDLE_ANIMATION_DELAY );
-			Serial.print(alpha);
-			Serial.print("\n");
+
 		}			
 	}
   } 
@@ -318,8 +317,6 @@ void starryStartup(int iR,int iG, int iB)
 	for (i = 0; i < LED_COUNT; ++i) 
     {  
 		turnOn(trackled[i], iR,iG,iB);	
-      // test all switches and exit idle animation if active switch found
-
 	}
 	
     	

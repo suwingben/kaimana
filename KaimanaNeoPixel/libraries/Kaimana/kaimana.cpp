@@ -71,9 +71,9 @@ void Kaimana::setLED(int index, int iR, int iG, int iB)
   // set led identified by index to the RGB color passed to this function
   if(index >=0 && index < LED_COUNT)
   {
-    _led[index].r=iR;
-    _led[index].g=iG;
-    _led[index].b=iB;
+    _led[index].r=iR * 0.3;
+    _led[index].g=iG * 0.3;
+    _led[index].b=iB * 0.3;
   }
 }  
 
@@ -228,7 +228,6 @@ void Kaimana::updateALL(void)
   : "r18", "r19", "r20", "r26", "r27", "cc", "memory" \
   );
 }  
-
 
 
 void Kaimana::switchHistoryClear(void)

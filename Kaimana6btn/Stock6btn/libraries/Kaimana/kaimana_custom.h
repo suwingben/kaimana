@@ -38,56 +38,8 @@
 // uncomment exactly one of the _LED_ORDER_*_ choices below or make your own 
 // based on the order you have your LEDs connected to the Kaimana board
 //
-//#define  _LED_ORDER_DEFAULT_  true
-//#define  _LED_ORDER_JWYDER_   true
 #define  _LED_ORDER_JWYDER_6BTN_ true
 
-#ifdef _LED_ORDER_DEFAULT_
-  // Map function names to default LED index numbers
-  // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
-  // change or expand as needed
-  //
-  //   KAIMANA->LED_JOY->LED_HOME->LED_SELECT->LED_START->LED_P1->LED-P2->LED_P3->LED-P4->LED_K1->LED-K2->LED_K3->LED-K4
-  //
-  #define  LED_JOY     0
-  #define  LED_HOME    1
-  #define  LED_GUIDE   1
-  #define  LED_SELECT  2
-  #define  LED_BACK    2
-  #define  LED_START   3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_K1      8
-  #define  LED_K2      9
-  #define  LED_K3      10
-  #define  LED_K4      11
-#endif
-
-
-#ifdef _LED_ORDER_JWYDER_
-  // Map function names to LED index numbers 
-  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
-  // submitted by jwyder
-  //
-  //   KAIMANA->LED-K4->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_P4->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_K4      0
-  #define  LED_K3      1
-  #define  LED_K2      2
-  #define  LED_K1      3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_JOY     8
-  #define  LED_HOME    9
-  #define  LED_GUIDE   9
-  #define  LED_SELECT  10
-  #define  LED_BACK    10
-  #define  LED_START   11
-#endif
 
 #ifdef _LED_ORDER_JWYDER_6BTN_
   // Map function names to LED index numbers 
@@ -115,7 +67,7 @@
 
 // maximum number of LEDs attached to Kaimana board
 // best to leave value untouched at 12 unless you understand why
-#define  LED_COUNT   12
+#define  LED_COUNT   10
 
 
 // general definitions for delays and other customizable features

@@ -54,7 +54,6 @@ void setup()
   defaultStartup();
   starryStartup(BLUE);
   walkyStartup(MAGENTA);
-  //starryIdleMulti();
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
