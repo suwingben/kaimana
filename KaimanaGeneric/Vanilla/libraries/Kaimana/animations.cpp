@@ -325,7 +325,7 @@ void starryStartup(int iR,int iG, int iB)
 int starryIdle(int iR,int iG, int iB)	
 {
 	static int i;
-	int delay_val;
+	
 	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
 	for (i = 0; i < LED_COUNT; ++i) //randomizing the array

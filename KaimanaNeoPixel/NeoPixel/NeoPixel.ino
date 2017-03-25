@@ -29,8 +29,7 @@ void setup()
 {                
   // light up all leds at boot to demonstrate everything is functional
   walkyStartup(GREEN);
-  starryStartup(BLUE);
-  starryIdleMulti();
+  starryStartup(BLUE);  
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -62,19 +61,19 @@ void loop()
 				switch(selection) 
 				{
 					case 0:
-						animation_idle();
+						walkyIdle(ORANGE);	
 						break;
 					case 1:
 						breatheSine(RED);
 						break;
 					case 2:
-						breatheApple(WHITE);
+						animation_idle2();
 						break;
 					case 3:
-						starryIdleMulti();						
+						animation_idle();
 						break;
 					case 4:
-						walkyIdle(ORANGE);
+						starryIdleMulti();
 						break;
 					case 5:
 						starryIdle(CYAN);
