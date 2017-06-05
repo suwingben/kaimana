@@ -90,7 +90,7 @@ void loop()
 				switch(selection)
 				{
 					case 0:
-						animation_idle();
+						walkyIdle(GREEN);//animation_idle();
             //walkyidle(ORANGE);
 						break;
 					case 1:
@@ -103,7 +103,7 @@ void loop()
 						starryStartup(MAGENTA);
 						break;
 					case 4:
-						walkyStartup(ORANGE);
+						walkyIdle(ORANGE);
 						break;
 					case 5:
 						starryIdle(CYAN);

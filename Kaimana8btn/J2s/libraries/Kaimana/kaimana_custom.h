@@ -124,22 +124,22 @@
   //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START
   //
   #define  LED_JOY     0xff
-  #define  LED_K4      0
-  #define  LED_K4_B    1
-  #define  LED_K3      2
-  #define  LED_K3_B    3
-  #define  LED_K2      4
-  #define  LED_K2_B    5
-  #define  LED_K1      6
+  #define  LED_P4      0
+  #define  LED_P4_B    1
+  #define  LED_P3      2
+  #define  LED_P3_B    3
+  #define  LED_P2      4
+  #define  LED_P2_B    5
+  #define  LED_P1      6
   #define  LED_P1_B    7
-  #define  LED_P1      8
-  #define  LED_P1_B    9
-  #define  LED_P2      10
-  #define  LED_P2_B    11
-  #define  LED_P3      12
-  #define  LED_P3_B    13
-  #define  LED_P4      14
-  #define  LED_P4_B    15  
+  #define  LED_K1      8
+  #define  LED_K1_B    9
+  #define  LED_K2      10
+  #define  LED_K2_B    11
+  #define  LED_K3      12
+  #define  LED_K3_B    13
+  #define  LED_K4      14
+  #define  LED_K4_B    15  
   #define  LED_HOME    0xff
   #define  LED_HOME_B  0xff
   #define  LED_GUIDE   0xff

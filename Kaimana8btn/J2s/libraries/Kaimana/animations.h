@@ -69,7 +69,7 @@ void starryStartup(int iR,int iG, int iB);
 void showStartup(void);
 void walkyStartup(int iR,int iG, int iB);
 int walkyHoliday(int iR,int iG, int iB);
-void walkyidle(int iR,int iG, int iB);
+void walkyIdle(int iR,int iG, int iB);
 void defaultStartup(void);
 void tourneyModeActivate(void);
 void tourneyModeDeactivate(void);

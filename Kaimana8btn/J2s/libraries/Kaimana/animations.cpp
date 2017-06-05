@@ -210,16 +210,16 @@ void walkyStartup(int iR,int iG, int iB)
 {
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
-		if ((i==0) || ((i % 2) == 1)) 
+		if ((i==0) || ((i % 2) == 0)) 
 		{turnOn(i, iR,iG,iB);}
 	}
 }
 
-void walkyidle(int iR,int iG, int iB)	
+void walkyIdle(int iR,int iG, int iB)	
 {
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
-		if ((i==0) || ((i % 2) == 1)) 
+		if ((i==0) || ((i % 2) == 0)) 
 		{blink(i, iR,iG,iB);}
 	}
 }
@@ -337,8 +337,11 @@ void starryStartup(int iR,int iG, int iB)
 	  trackled[rand] = temp;
     }	
 	for (i = 0; i < LED_COUNT; ++i) 
-    {      
-		turnOn(trackled[i], iR,iG,iB);			
+    {    
+		if ((trackled[i]==0) || ((trackled[i] % 2) == 0)) 
+		{  
+			turnOn(trackled[i], iR,iG,iB);	
+			}		
 	}
 }
 // LEDS blink on/off randomly
@@ -355,10 +358,12 @@ int starryIdle(int iR,int iG, int iB)
     }	
 
 	for (i = 0; i <LED_COUNT; ++i) 
-    {      
-		blink(trackled[i], iR,iG,iB);
-
-				// test all switches and exit idle animation if active switch found
+    {    
+		if ((trackled[i]==0) || ((trackled[i] % 2) == 0)) 
+		{    
+			blink(trackled[i], iR,iG,iB);
+		}
+		// test all switches and exit idle animation if active switch found
 		for(i=0;i<SWITCH_COUNT;++i)
 		{
 			if( !digitalRead(switchPins[i]) )
@@ -369,22 +374,22 @@ int starryIdle(int iR,int iG, int iB)
 // LEDS blink on/off randomly with multiple colors
 int starryIdleMulti()	
 {
-	static int i;
-	static int trackled[]= {0,1,2,3,4,5,6,7,8};
-	int delay_val;
-	
+	int i;
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i <= 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(0,8);
+      int rand = random(0,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i <= 8; ++i) 
-    {      
+
+	for (i = 0; i <LED_COUNT; ++i) 
+    {    
+		if ((trackled[i]==0) || ((trackled[i] % 2) == 0)) 
+		{       
 		blinkMulti(trackled[i]);
+		}
 		// test all switches and exit idle animation if active switch found
 		for(i=0;i<SWITCH_COUNT;++i)
 		{
