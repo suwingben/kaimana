@@ -1,1 +1,1 @@
-Copy-Item -Path F:\Projects\kaimana\Kaimana8btn\J2s\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse
+Copy-Item -Path C:\Users\javie\Documents\Repos\kaimana\Kaimana8btn\J2s\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse

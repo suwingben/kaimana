@@ -55,8 +55,8 @@ void setup()
   defaultStartup();
   //walkyStartup(GREEN);
   //starryStartup(BLUE);
-  //walkyStartup(RED);
-  //starryStartup(MAGENTA);
+  walkyStartup(RED);
+  starryStartup(MAGENTA);
   //starryIdleMulti();
   //starryIdle(CYAN);
 }
@@ -275,13 +275,7 @@ int pollSwitches(void)
   // test switch and set LED based on result
   if(!digitalRead(PIN_START))
   {
-  //Button hold to start tourneymode
-	holdTimeout += 1;
-	if(holdTimeout == 2000)
-	{
-	  tournamentMode = true;
-	  tourneyModeActivate();
-	}
+
     // switch is active
     if(iLED[LED_START] == true)
     {
@@ -291,8 +285,7 @@ int pollSwitches(void)
     }
     else
     {
-      // select new color when switch is first activated
-      holdTimeout = 0;
+      // select new color when switch is first activated      
       setLEDRandomColor(LED_START);
       iLED[LED_START] = true;
 
@@ -424,12 +417,20 @@ int pollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_K1] = true;
+	    //Button hold to start tourneymode
+		holdTimeout += 1;
+		if(holdTimeout == 2000)
+		{
+		tournamentMode = true;
+		tourneyModeActivate();
+		}
     }
     else
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_K1);
       iLED[LED_K1] = true;
+	  selection++;
     }
   }
   else
@@ -437,6 +438,8 @@ int pollSwitches(void)
       // switch is inactive
       kaimana.setLED(LED_K1, BLACK);
       iLED[LED_K1] = false;
+	  holdTimeout=0;
+	  
   }
 
 
@@ -722,13 +725,6 @@ int tourneypollSwitches(void)
   {
 
     // switch is active
-	//Button hold to stop tourneymode
-	holdTimeout += 1;
-	if(holdTimeout == 2000)
-	{
-	  tournamentMode = false;
-	  tourneyModeDeactivate();
-	}
     if(iLED[LED_START] == true)
     {
       //maintain color while switch is active
@@ -737,7 +733,6 @@ int tourneypollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      holdTimeout = 0;
       iLED[LED_START] = true;
     }
   }
@@ -855,17 +850,26 @@ int tourneypollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_K1] = true;
+	  	//Button hold to stop tourneymode
+	holdTimeout += 1;
+	if(holdTimeout == 2000)
+	{
+	  tournamentMode = false;
+	  tourneyModeDeactivate();
+	}
     }
     else
     {
       // select new color when switch is first activated
       iLED[LED_K1] = true;
+	  
     }
   }
   else
   {
       // switch is inactive
       iLED[LED_K1] = false;
+	  holdTimeout=0;
   }
 
 

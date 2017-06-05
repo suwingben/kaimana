@@ -36,16 +36,16 @@
 int trackled[]= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 void turnOn(int i,int iR,int iG, int iB)
 {
-	kaimana.setLEDBrightness(i, iR,iG,iB,100);
+	kaimana.setLEDBrightness(i, iR,iG,iB,1);
 	kaimana.updateALL();
 	delay( FAST_COLOR_DELAY );
 }
 void blink(int i,int iR,int iG, int iB)
 {
-  kaimana.setLEDBrightness(i,iR,iG,iB,100);
+  kaimana.setLEDBrightness(i,iR,iG,iB,1);
   kaimana.updateALL();
   delay( FAST_COLOR_DELAY );
-  kaimana.setLEDBrightness(i,BLACK,100);	
+  kaimana.setLEDBrightness(i,BLACK,1);	
 }
 // blink LED to a color selected at random
 void blinkMulti(int index)
@@ -328,18 +328,15 @@ int breatheApple(int iR, int iG, int iB)
 void starryStartup(int iR,int iG, int iB)	
 {
 	static int i;	
-	int delay_val;
-	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i <= 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(1,8);
+      int rand = random(1,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i <= LED_COUNT; ++i) 
+	for (i = 0; i < LED_COUNT; ++i) 
     {      
 		turnOn(trackled[i], iR,iG,iB);			
 	}
@@ -348,19 +345,16 @@ void starryStartup(int iR,int iG, int iB)
 int starryIdle(int iR,int iG, int iB)	
 {
 	static int i;
-
-	int delay_val;
-	
 	kaimana.setALL( BLACK ); //set everything to OFF | this is for when you are calling from a button combination the buttons pressed do not remain on
-	for (i = 0; i <= 8; ++i) //randomizing the array
+	for (i = 0; i < LED_COUNT; ++i) //randomizing the array
     {     
-      int rand = random(0,8);
+      int rand = random(0,LED_COUNT);
 	  int temp = trackled[i];
 	  trackled[i] = trackled[rand];
 	  trackled[rand] = temp;
     }	
-	delay_val = FAST_COLOR_DELAY;
-	for (i = 0; i <= 8; ++i) 
+
+	for (i = 0; i <LED_COUNT; ++i) 
     {      
 		blink(trackled[i], iR,iG,iB);
 
