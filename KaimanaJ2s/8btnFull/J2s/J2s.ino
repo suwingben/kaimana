@@ -43,6 +43,7 @@ int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
 int selection = 0;
+int aniTimeout= 0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -55,8 +56,8 @@ void setup()
   defaultStartup();
   //walkyStartup(GREEN);
   //starryStartup(BLUE);
-  walkyStartup(RED);
-  starryStartup(MAGENTA);
+  //walkyStartup(RED);
+  //starryStartup(MAGENTA);
   //starryIdleMulti();
   //starryIdle(CYAN);
 }
@@ -90,25 +91,22 @@ void loop()
 				switch(selection)
 				{
 					case 0:
-						walkyIdle(GREEN);
-						break;
+						animation_idle();
+						break;					
 					case 1:
-						breatheSine(RED);
+						starryIdleMulti();						
 						break;
 					case 2:
-						breatheApple(YELLOW);
-						break;
-					case 3:
-						starryStartup(MAGENTA);
-						break;
-					case 4:
-						walkyIdle(ORANGE);
-						break;
-					case 5:
 						starryIdle(CYAN);
 						break;
-					case 6:
-						starryIdleMulti();
+					case 3:
+						walkyIdle(ORANGE);
+						break;
+					case 4:
+						breatheApple(WHITE);
+						break;
+					case 5:
+						breatheSine(RED);
 						break;
 					default:
 						selection = 0;
@@ -226,17 +224,28 @@ int pollSwitches(void)
   // test switch and set LED based on result       // HOME = GUIDE
   if(!digitalRead(PIN_HOME))
   {
+
     // switch is active
     if(iLED[LED_HOME] == true)
     {
       //maintain color while switch is active
       iLED[LED_HOME] = true;
+	  //Button hold to change idle animation
+		aniTimeout += 1;
+		if(aniTimeout == 1000)
+		{
+			kaimana.setALL(WHITE);
+			delay(IDLE_ANIMATION_DELAY);
+			kaimana.setALL(BLACK);
+			selection++;
+		}
     }
     else
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
+	  aniTimeout= 0;
     }
   }
   else
@@ -429,7 +438,7 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_K1);
       iLED[LED_K1] = true;
-	  selection++;
+	  
     }
   }
   else

@@ -1,30 +1,4 @@
 //  kaimana_local.h
-//
-//  Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com
-//  All rights reserved.  Use is subject to license terms.
-//
-//  Code is provided for entertainment purposes and use with the Kaimana controller.
-//  Code may be copied, modified, resused with this Copyright notice.
-//  No commercial use without written permission from Paradise Arcade Shop.
-//
-//  Paradise Arcade Shop Kaimana LED Driver Board
-//  Initial Release October 15, 2013
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//
-//  Kaimana localization file based on original source released by ParadiseArcadeShop.com October 15, 2013
-//
-//  Created:  October 24, 2013    zonbipanda // gmail.com  -- Arduino 1.0.5 Support
-//  Revised:  October 29, 2013    zonbipanda // gmail.com
-//  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
-//  Revised:  August  23, 2016    info //mightyjrmods.com  -- Added _LED_ORDER_MIGHTYJR_
-//  Revised:  August  28, 2016    info //mightyjrmods.com  -- Updated uint8_t value type for Arduino 1.6.11 support
 
 #ifndef __kaimana_local_h__
 #define __kaimana_local_h__
@@ -35,122 +9,39 @@
 #include "Arduino.h"
 #include "kaimana.h"
 
-
-// uncomment exactly one of the _LED_ORDER_*_ choices below or make your own 
-// based on the order you have your LEDs connected to the Kaimana board
-//
-//#define  _LED_ORDER_DEFAULT_  true
-//#define _LED_ORDER_MIGHTYJR_ true
 #define  _LED_ORDER_MIGHTYJR_J2   true
-//#define  _LED_ORDER_JWYDER_ 	true
-//#define
-
-#ifdef _LED_ORDER_DEFAULT_
-  // Map function names to default LED index numbers
-  // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
-  // change or expand as needed
-  //
-  //   KAIMANA->LED_JOY->LED_HOME->LED_SELECT->LED_START->LED_P1->LED-P2->LED_P3->LED-P4->LED_K1->LED-K2->LED_K3->LED-K4
-  //
-  #define  LED_JOY     0
-  #define  LED_HOME    1
-  #define  LED_GUIDE   1
-  #define  LED_SELECT  2
-  #define  LED_BACK    2
-  #define  LED_START   3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_K1      8
-  #define  LED_K2      9
-  #define  LED_K3      10
-  #define  LED_K4      11
-#endif
-
-
-#ifdef _LED_ORDER_JWYDER_
-  // Map function names to LED index numbers 
-  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
-  // submitted by jwyder
-  //
-  //   KAIMANA->LED-K4->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_P4->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_K4      0
-  #define  LED_K3      1
-  #define  LED_K2      2
-  #define  LED_K1      3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_JOY     8
-  #define  LED_HOME    9
-  #define  LED_GUIDE   9
-  #define  LED_SELECT  10
-  #define  LED_BACK    10
-  #define  LED_START   11
-#endif
-
-#ifdef _LED_ORDER_MIGHTYJR_
-  // Map function names to LED index numbers 
-  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
-  // submitted by MIGHTYJR
-  //
-  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_P4      0
-  #define  LED_P3      1
-  #define  LED_P2      2
-  #define  LED_P1      3
-  #define  LED_K1      4
-  #define  LED_K2      5
-  #define  LED_K3      6
-  #define  LED_K4      7
-  #define  LED_JOY     8
-  #define  LED_HOME    9
-  #define  LED_GUIDE   9
-  #define  LED_SELECT  10
-  #define  LED_BACK    10
-  #define  LED_START   11
-  #define  LED_COUNT   12
-#endif
 
 #ifdef _LED_ORDER_MIGHTYJR_J2
-  // Map function names to Kaimana J2 LED index numbers 
-  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
-  // submitted by MIGHTYJR
-  //
-  //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START
+  //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_SELECT ->LED_HOME->LED_START
   //
   #define  LED_JOY     22
-  #define  LED_P4      0
-  #define  LED_P4_B    1
-  #define  LED_P3      2
-  #define  LED_P3_B    3
-  #define  LED_P2      4
-  #define  LED_P2_B    5
-  #define  LED_P1      6
-  #define  LED_P1_B    7
-  #define  LED_K1      8
-  #define  LED_K1_B    9
-  #define  LED_K2      10
-  #define  LED_K2_B    11
-  #define  LED_K3      12
-  #define  LED_K3_B    13
-  #define  LED_K4      14
-  #define  LED_K4_B    15  
-  #define  LED_HOME    16
-  #define  LED_HOME_B  17
-  #define  LED_GUIDE   16
-  #define  LED_GUIDE_B 17
-  #define  LED_SELECT  18
-  #define  LED_SELECT_B 19
-  #define  LED_BACK    18
-  #define  LED_BACK_B  19
+  #define  LED_K1      0
+  #define  LED_K1_B    1
+  #define  LED_K2      2
+  #define  LED_K2_B    3
+  #define  LED_K3      4
+  #define  LED_K3_B    5
+  #define  LED_K4      6
+  #define  LED_K4_B    7
+  #define  LED_P4      8
+  #define  LED_P4_B    9
+  #define  LED_P3      10
+  #define  LED_P3_B    11
+  #define  LED_P2      12
+  #define  LED_P2_B    13
+  #define  LED_P1      14
+  #define  LED_P1_B    15  
+  #define  LED_SELECT    16
+  #define  LED_SELECT_B  17
+  #define  LED_BACK    16
+  #define  LED_BACK_B  17
+  #define  LED_HOME	   18
+  #define  LED_HOME_B  19
+  #define  LED_GUIDE    18
+  #define  LED_GUIDE_B  19
   #define  LED_START   20
   #define  LED_START_B 21
-  // maximum number of LEDs attached to Kaimana board
+  // total number of LEDs attached to Kaimana board
   #define  LED_COUNT   23
 #endif
 

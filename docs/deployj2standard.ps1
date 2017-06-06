@@ -1,0 +1,1 @@
+﻿Copy-Item -Path C:\Users\javie\Documents\Repos\kaimana\KaimanaJ2s\8btnFull\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse
