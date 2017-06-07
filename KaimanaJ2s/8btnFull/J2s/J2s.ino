@@ -58,8 +58,7 @@ void setup()
   //starryStartup(BLUE);
   //walkyStartup(RED);
   //starryStartup(MAGENTA);
-  //starryIdleMulti();
-  //starryIdle(CYAN);
+
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function

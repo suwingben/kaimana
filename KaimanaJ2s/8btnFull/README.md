@@ -6,7 +6,12 @@ KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_SEL
 
 Every LED except for the Joystick is a J2, meaning there are two LEDs per button. The joystick is a single RGB LED which can be ordered from PAS.
 
-It has multiple startup animations as well as multiple idle animations. To change idle animations, hold HOME+Start for about a second the lights should blink white indicating you cycled to the next idle animation
+- Tournament Mode functionality
+	- Hold K1 for about 2 seconds and you should see the activation/deactivation animation play
+- New Startup Animations
+	- See animations.cpp, to select a different one remove the double slash "//" from the front of the line and add them to the line you dont want to use.
+- New Idle Animations
+	- Hold HOME+START for a second to cycle through them, you should see the LEDs flash white.
 
 
 /////////////////////////////////////////////////
