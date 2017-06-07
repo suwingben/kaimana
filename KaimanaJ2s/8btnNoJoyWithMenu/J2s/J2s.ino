@@ -1,5 +1,4 @@
-//  tester8btn.ino
-// n
+//  J2s.ino
 //  Copyright 2013 Paradise Arcade Shop, ParadiseArcadeShop.com
 //  All rights reserved.  Use is subject to license terms.
 //
@@ -43,6 +42,7 @@ int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
 int selection = 0;
+int aniTimeout= 0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -55,10 +55,8 @@ void setup()
   defaultStartup();
   //walkyStartup(GREEN);
   //starryStartup(BLUE);
-  walkyStartup(RED);
-  starryStartup(MAGENTA);
-  //starryIdleMulti();
-  //starryIdle(CYAN);
+  //walkyStartup(RED);
+  //starryStartup(MAGENTA);
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -90,25 +88,22 @@ void loop()
 				switch(selection)
 				{
 					case 0:
-						walkyIdle(GREEN);
-						break;
+						animation_idle();
+						break;					
 					case 1:
-						breatheSine(RED);
+						starryIdleMulti();						
 						break;
 					case 2:
-						breatheApple(YELLOW);
-						break;
-					case 3:
-						starryStartup(MAGENTA);
-						break;
-					case 4:
-						walkyIdle(ORANGE);
-						break;
-					case 5:
 						starryIdle(CYAN);
 						break;
-					case 6:
-						starryIdleMulti();
+					case 3:
+						walkyIdle(ORANGE);
+						break;
+					case 4:
+						breatheApple(WHITE);
+						break;
+					case 5:
+						breatheSine(RED);
 						break;
 					default:
 						selection = 0;
@@ -124,12 +119,8 @@ void loop()
 			// some switches were active so reset idle timeout to now + some seconds
 			ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
 		}
-
 	}
   }
-    // delay a little to avoid flickering (yea, updates happens really, really fast!)
-    // delay( MAIN_LOOP_DELAY );
-
 }
 
 
@@ -138,10 +129,6 @@ void loop()
 //  local functions start here
 //
 // ==============================================================
-
-
-
-
 
 int pollSwitches(void)
 {
@@ -179,37 +166,28 @@ int pollSwitches(void)
 
   switch(joystickDirection)
   {
-    case ATTACK_RIGHT:    // right
-      kaimana.setLED(LED_JOY, 127, 220, 000);
+    case ATTACK_RIGHT:    // right      
       iLED[LED_JOY] = true;
       break;
     case ATTACK_LEFT:    // left
-      kaimana.setLED(LED_JOY, 127, 000, 220);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN:    // down
-      kaimana.setLED(LED_JOY, 000, 220, 220);
-
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
-      kaimana.setLED(LED_JOY, 000, 255, 127);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_LEFT:    // down + left
-      kaimana.setLED(LED_JOY, 000, 127, 255);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP:    // up
-      kaimana.setLED(LED_JOY, 255, 000, 000);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP + ATTACK_RIGHT:    // up + right
-      kaimana.setLED(LED_JOY, 220, 127, 000);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP + ATTACK_LEFT:   // up + left
-      kaimana.setLED(LED_JOY, 220, 000, 127);
       iLED[LED_JOY] = true;
       break;
     default:   // zero or any undefined value on an 8 way stick like UP+DOWN which is not happening on my watch
@@ -226,17 +204,28 @@ int pollSwitches(void)
   // test switch and set LED based on result       // HOME = GUIDE
   if(!digitalRead(PIN_HOME))
   {
+
     // switch is active
     if(iLED[LED_HOME] == true)
     {
       //maintain color while switch is active
       iLED[LED_HOME] = true;
+	  //Button hold to change idle animation
+		aniTimeout += 1;
+		if(aniTimeout == 1000)
+		{
+			kaimana.setALL(WHITE);
+			delay(IDLE_ANIMATION_DELAY);
+			kaimana.setALL(BLACK);
+			selection++;
+		}
     }
     else
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
+	  aniTimeout= 0;
     }
   }
   else
@@ -429,7 +418,7 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_K1);
       iLED[LED_K1] = true;
-	  selection++;
+	  
     }
   }
   else

@@ -33,7 +33,7 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-int trackled[]= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+int trackled[]= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
 void turnOn(int i,int iR,int iG, int iB)
 {
 	kaimana.setLEDBrightness(i, iR,iG,iB,1);
@@ -220,7 +220,14 @@ void walkyIdle(int iR,int iG, int iB)
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
 		if ((i==0) || ((i % 2) == 0)) 
-		{blink(i, iR,iG,iB);}
+		{blink(i, iR,iG,iB);
+	
+			for(int j=0;j<SWITCH_COUNT;j++)
+			{
+				if( !digitalRead(switchPins[j]) )
+				return(false);
+			}
+		}
 	}
 }
 
@@ -229,13 +236,14 @@ int walkyHoliday(int iR,int iG, int iB)
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
 		if ((i==0) || ((i % 2) == 1))  
-		{turnOn(i, iR,iG,iB);}
-		
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
+		{turnOn(i, iR,iG,iB);
+			
+			for(i=0;i<SWITCH_COUNT;++i)
+			{
+				if( !digitalRead(switchPins[i]) )
+				return(false);
+			}
+		}
 	}
 }
 void defaultStartup(void)
@@ -362,13 +370,14 @@ int starryIdle(int iR,int iG, int iB)
 		if ((trackled[i]==0) || ((trackled[i] % 2) == 0)) 
 		{    
 			blink(trackled[i], iR,iG,iB);
+		
+			// Test all switches and exit idle animation if active switch found
+			for(int j=0;j<SWITCH_COUNT;j++)
+			{
+				if( !digitalRead(switchPins[j]) )
+				return(false);
+			}
 		}
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
 	}
 }
 // LEDS blink on/off randomly with multiple colors
@@ -388,14 +397,15 @@ int starryIdleMulti()
     {    
 		if ((trackled[i]==0) || ((trackled[i] % 2) == 0)) 
 		{       
-		blinkMulti(trackled[i]);
+			blinkMulti(trackled[i]);
+		
+			// test all switches and exit idle animation if active switch found
+			for(int j=0;j<SWITCH_COUNT;j++)
+			{
+				if( !digitalRead(switchPins[j]) )
+				return(false);
+			}
 		}
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
 	}
 }
 //Tournament mode animations
@@ -413,16 +423,19 @@ void tourneyModeActivate(void)
 	
 	kaimana.setLED(LED_K3, BLACK);
 	kaimana.setLED(LED_P3, BLACK);
+	kaimana.setLED(LED_START, BLACK);
 	kaimana.updateALL();
 	delay( T_DELAY );
 	
 	kaimana.setLED(LED_K2, BLACK);
 	kaimana.setLED(LED_P2, BLACK);
+	kaimana.setLED(LED_HOME, BLACK);
 	kaimana.updateALL();
 	delay( T_DELAY );
 	
 	kaimana.setLED(LED_K1, BLACK);
 	kaimana.setLED(LED_P1, BLACK);
+	kaimana.setLED(LED_SELECT, BLACK);
 	kaimana.updateALL();
 	delay( T_DELAY );
 }
@@ -435,16 +448,19 @@ void tourneyModeDeactivate(void)
 	
 	kaimana.setLED(LED_K1, RED);
 	kaimana.setLED(LED_P1, RED);
+	kaimana.setLED(LED_SELECT, RED);
 	kaimana.updateALL();
 	delay( T_DELAY );
 		
 	kaimana.setLED(LED_K2, RED);
 	kaimana.setLED(LED_P2, RED);
+	kaimana.setLED(LED_HOME, RED);
 	kaimana.updateALL();
 	delay( T_DELAY );
 	
 	kaimana.setLED(LED_K3, RED);
 	kaimana.setLED(LED_P3, RED);
+	kaimana.setLED(LED_START, RED);
 	kaimana.updateALL();
 	delay( T_DELAY );
 	

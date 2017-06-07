@@ -86,7 +86,6 @@ void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
   // set led identified by index to the RGB color passed to this function
 if(index == LED_JOY)
   {
-    index = 0;
    _led[index].r = iR;
    _led[index].g = iG;
    _led[index].b = iB;
