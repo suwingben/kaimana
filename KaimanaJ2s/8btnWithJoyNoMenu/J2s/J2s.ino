@@ -160,8 +160,66 @@ int pollSwitches(void)
     }
   }
 
+  // read arduino pins and save results in the mapped LED if button is pressed (pin grounded)
+
+  // complex special case for joystick but it's worth the effort
+  joystickDirection = ATTACK_NONE;
+
+  if(!digitalRead(PIN_RIGHT))
+    joystickDirection |= ATTACK_RIGHT;
+  if(!digitalRead(PIN_LEFT))
+    joystickDirection |= ATTACK_LEFT;
+  if(!digitalRead(PIN_DOWN))
+    joystickDirection |= ATTACK_DOWN;
+  if(!digitalRead(PIN_UP))
+    joystickDirection |= ATTACK_UP;
+
+  switch(joystickDirection)
+  {
+    case ATTACK_RIGHT:    // right
+      kaimana.setLED(LED_JOY, 127, 220, 000);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_LEFT:    // left
+      kaimana.setLED(LED_JOY, 127, 000, 220);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN:    // down
+      kaimana.setLED(LED_JOY, 000, 220, 220);
+
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
+      kaimana.setLED(LED_JOY, 000, 255, 127);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_DOWN + ATTACK_LEFT:    // down + left
+      kaimana.setLED(LED_JOY, 000, 127, 255);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP:    // up
+      kaimana.setLED(LED_JOY, 255, 000, 000);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP + ATTACK_RIGHT:    // up + right
+      kaimana.setLED(LED_JOY, 220, 127, 000);
+      iLED[LED_JOY] = true;
+      break;
+    case ATTACK_UP + ATTACK_LEFT:   // up + left
+      kaimana.setLED(LED_JOY, 220, 000, 127);
+      iLED[LED_JOY] = true;
+      break;
+    default:   // zero or any undefined value on an 8 way stick like UP+DOWN which is not happening on my watch
+      kaimana.setLED(LED_JOY, BLACK);
+      iLED[LED_JOY] = false;
+      break;
+  }
+
+
+
   // clear results for switch activity
   switchActivity = ATTACK_NONE;
+
 
   // test switch and set LED based on result
   if(!digitalRead(PIN_P1))
@@ -254,8 +312,7 @@ int pollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_P4] = true;
-	  	  //Button hold to change idle animation
-		aniTimeout += 1;
+	  aniTimeout += 1;
 		if(aniTimeout == 1000)
 		{
 			kaimana.setALL(WHITE);
@@ -268,7 +325,6 @@ int pollSwitches(void)
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_P4);
-
       iLED[LED_P4] = true;
     }
   }
@@ -447,6 +503,7 @@ int pollSwitches(void)
   if( kaimana.switchHistoryTest( COMBO_PATTERN_1B ) )
       animation_combo_1();
 
+
   // zero active switch counter (note: 4 way joystick counts as 1)
   iActiveSwitchCount = 0;
 
@@ -463,6 +520,7 @@ int pollSwitches(void)
   // return number of active switches
   return(iActiveSwitchCount);
 }
+
 
 int tourneypollSwitches(void)
 {
@@ -484,9 +542,7 @@ int tourneypollSwitches(void)
     }
   }
 
-  // read arduino pins and save results in the mapped LED if button is pressed (pin grounded)
 
- 
   // test switch and set LED based on result
   if(!digitalRead(PIN_K1))
   {
@@ -518,7 +574,6 @@ int tourneypollSwitches(void)
       iLED[LED_K1] = false;
 	  holdTimeout=0;
   }
-
   // return number of active switches
   return(iActiveSwitchCount);
 }
