@@ -45,7 +45,7 @@ void blink(int i,int iR,int iG, int iB)
   kaimana.setLEDBrightness(i,iR,iG,iB,1);
   kaimana.updateALL();
   delay( FAST_COLOR_DELAY );
-  kaimana.setLEDBrightness(i,BLACK,1);	
+  kaimana.setALL(BLACK);	
 }
 // blink LED to a color selected at random
 void blinkMulti(int index)
