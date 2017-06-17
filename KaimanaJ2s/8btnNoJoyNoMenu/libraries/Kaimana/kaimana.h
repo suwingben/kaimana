@@ -104,7 +104,7 @@ typedef struct __attribute__ ((__packed__)) {
 
 
 // table of switch pin numbers
-const unsigned char switchPins[SWITCH_COUNT] = { PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_P3, PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
+const unsigned char switchPins[SWITCH_COUNT] = { PIN_P1, PIN_P2, PIN_P3, PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
 
 
 // define the Kaimana class
