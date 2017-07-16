@@ -43,6 +43,7 @@ int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
 int selection = 0;
+int aniTimeout= 0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -51,14 +52,9 @@ Kaimana kaimana;
 // the setup routine runs first and once each time power is applied to the Kaimana board
 void setup()
 {
-  // light up all leds at boot to demonstrate everything is functional
-  defaultStartup();
-  //walkyStartup(GREEN);
-  //starryStartup(BLUE);
-  walkyStartup(RED);
-  starryStartup(MAGENTA);
-  //starryIdleMulti();
-  //starryIdle(CYAN);
+  // light up all leds at boot to demonstrate everything is functional  
+  starryStartup(GREEN);
+  
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -90,25 +86,22 @@ void loop()
 				switch(selection)
 				{
 					case 0:
-						walkyIdle(GREEN);
-						break;
+						breatheApple(GREEN);
+						break;					
 					case 1:
-						breatheSine(RED);
+						breatheSine(GREEN);											
 						break;
 					case 2:
-						breatheApple(YELLOW);
+						starryIdle(GREEN);
 						break;
 					case 3:
-						starryStartup(MAGENTA);
+						walkyIdle(GREEN);
 						break;
 					case 4:
-						walkyIdle(ORANGE);
+						animation_idle();
 						break;
 					case 5:
-						starryIdle(CYAN);
-						break;
-					case 6:
-						starryIdleMulti();
+						starryIdleMulti();	
 						break;
 					default:
 						selection = 0;
@@ -226,17 +219,28 @@ int pollSwitches(void)
   // test switch and set LED based on result       // HOME = GUIDE
   if(!digitalRead(PIN_HOME))
   {
+
     // switch is active
     if(iLED[LED_HOME] == true)
     {
       //maintain color while switch is active
       iLED[LED_HOME] = true;
+	  //Button hold to change idle animation
+		aniTimeout += 1;
+		if(aniTimeout == 1000)
+		{
+			kaimana.setALL(WHITE);
+			delay(IDLE_ANIMATION_DELAY);
+			kaimana.setALL(BLACK);
+			selection++;
+		}
     }
     else
     {
       // select new color when switch is first activated
       setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
+	  aniTimeout= 0;
     }
   }
   else
@@ -429,7 +433,7 @@ int pollSwitches(void)
       // select new color when switch is first activated
       setLEDRandomColor(LED_K1);
       iLED[LED_K1] = true;
-	  selection++;
+	  
     }
   }
   else
