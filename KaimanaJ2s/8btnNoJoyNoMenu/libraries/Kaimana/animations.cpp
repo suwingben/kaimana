@@ -215,7 +215,7 @@ void walkyStartup(int iR,int iG, int iB)
 	}
 }
 
-void walkyIdle(int iR,int iG, int iB)	
+int walkyIdle(int iR,int iG, int iB)	
 {
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
