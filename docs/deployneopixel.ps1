@@ -1,1 +1,0 @@
-Copy-Item -Path F:\Projects\kaimana\KaimanaNeoPixel\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse

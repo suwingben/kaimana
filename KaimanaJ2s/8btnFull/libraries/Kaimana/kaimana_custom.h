@@ -12,38 +12,43 @@
 #define  _LED_ORDER_MIGHTYJR_J2   true
 
 #ifdef _LED_ORDER_MIGHTYJR_J2
-  // KAIMANA->LED-K1->LED_K2->LED_K3->LED_K4->LED-P4->LED_P3->LED-P2->LED_P1->LED_SELECT ->LED_HOME->LED_STARTLED_JOY
+  // Map function names to Kaimana J2 LED index numbers 
+  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
+  // submitted by MIGHTYJR
+  //
+  //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START
   //
   #define  LED_JOY     22
-  #define  LED_K1      0
-  #define  LED_K1_B    1
-  #define  LED_K2      2
-  #define  LED_K2_B    3
-  #define  LED_K3      4
-  #define  LED_K3_B    5
-  #define  LED_K4      6
-  #define  LED_K4_B    7
-  #define  LED_P4      8
-  #define  LED_P4_B    9
-  #define  LED_P3      10
-  #define  LED_P3_B    11
-  #define  LED_P2      12
-  #define  LED_P2_B    13
-  #define  LED_P1      14
-  #define  LED_P1_B    15  
-  #define  LED_SELECT    16
-  #define  LED_SELECT_B  17
-  #define  LED_BACK    16
-  #define  LED_BACK_B  17
-  #define  LED_HOME	   18
-  #define  LED_HOME_B  19
-  #define  LED_GUIDE    18
-  #define  LED_GUIDE_B  19
+  #define  LED_P4      0
+  #define  LED_P4_B    1
+  #define  LED_P3      2
+  #define  LED_P3_B    3
+  #define  LED_P2      4
+  #define  LED_P2_B    5
+  #define  LED_P1      6
+  #define  LED_P1_B    7
+  #define  LED_K1      8
+  #define  LED_K1_B    9
+  #define  LED_K2      10
+  #define  LED_K2_B    11
+  #define  LED_K3      12
+  #define  LED_K3_B    13
+  #define  LED_K4      14
+  #define  LED_K4_B    15  
+  #define  LED_HOME    16
+  #define  LED_HOME_B  17
+  #define  LED_GUIDE   16
+  #define  LED_GUIDE_B 17
+  #define  LED_SELECT  18
+  #define  LED_SELECT_B 19
+  #define  LED_BACK    18
+  #define  LED_BACK_B  19
   #define  LED_START   20
   #define  LED_START_B 21
-  // total number of LEDs attached to Kaimana board
+  // maximum number of LEDs attached to Kaimana board
   #define  LED_COUNT   23
 #endif
+
 
 
 // general definitions for delays and other customizable features

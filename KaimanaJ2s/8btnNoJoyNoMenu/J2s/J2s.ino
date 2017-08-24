@@ -52,7 +52,7 @@ Kaimana kaimana;
 // the setup routine runs first and once each time power is applied to the Kaimana board
 void setup()
 {
-  // light up all leds at boot to demonstrate everything is functional
+  // light up all leds at boot to demonstrate everything is functional remove the  // from the animation you want to play
   defaultStartup();
   //walkyStartup(GREEN);
   //starryStartup(BLUE);
@@ -162,7 +162,49 @@ int pollSwitches(void)
 
   // clear results for switch activity
   switchActivity = ATTACK_NONE;
+    // test switch and set LED based on result       // HOME = GUIDE
+  if(!digitalRead(PIN_HOME))
+  {
 
+    // switch is active
+    if(iLED[LED_HOME] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_HOME] = true;
+	  //Button hold to change idle animation
+		aniTimeout += 1;
+		if(aniTimeout == 1000)
+		{
+			kaimana.setALL(WHITE);
+			delay(IDLE_ANIMATION_DELAY);
+			kaimana.setALL(BLACK);
+			selection++;
+		}
+		    //Button hold to start tourneymode
+		holdTimeout += 1;
+		if(holdTimeout == 8000)
+		{
+			tournamentMode = true;
+			tourneyModeActivate();	
+		}   
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_HOME);
+      iLED[LED_HOME] = true;
+	  aniTimeout= 0;
+	  holdTimeout=0;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_HOME, BLACK);
+      iLED[LED_HOME] = false;
+  }
+
+ 
   // test switch and set LED based on result
   if(!digitalRead(PIN_P1))
   {
@@ -254,15 +296,6 @@ int pollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_P4] = true;
-	  	  //Button hold to change idle animation
-		aniTimeout += 1;
-		if(aniTimeout == 1000)
-		{
-			kaimana.setALL(WHITE);
-			delay(IDLE_ANIMATION_DELAY);
-			kaimana.setALL(BLACK);
-			selection++;
-		}
     }
     else
     {
@@ -291,13 +324,7 @@ int pollSwitches(void)
     {
       //maintain color while switch is active
       iLED[LED_K1] = true;
-	    //Button hold to start tourneymode
-		holdTimeout += 1;
-		if(holdTimeout == 2000)
-		{
-		tournamentMode = true;
-		tourneyModeActivate();
-		}
+
     }
     else
     {

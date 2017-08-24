@@ -29,7 +29,8 @@
   #define  LED_P2      12
   #define  LED_P2_B    13
   #define  LED_P1      14
-  #define  LED_P1_B    15  
+  #define  LED_P1_B    15
+  #define  LED_HOME    16  
   // total number of LEDs attached to Kaimana board
   #define  LED_COUNT   16
 #endif

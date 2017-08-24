@@ -2,7 +2,7 @@ Tested on Arduino 1.6.11
 
 This Kaimana codebase is fully compatible with the Kaimana J2 LEDs and expects the following Wiring Setup:
 
-KAIMANA->LED-K1->LED_K2->LED_K3->LED_K4->LED-P4->LED_P3->LED-P2->LED_P1->LED_SELECT ->LED_HOME->LED_START->LED_JOY
+KAIMANA->LED-P4->LED_P3->LED-P2->LED_P1->LED-K1->LED_K2->LED_K3->LED_K4->LED_HOME->LED_SELECT->LED_START->LED_JOY
 
 Every LED except for the Joystick is a J2, meaning there are two LEDs per button. The joystick is a single RGB LED which can be ordered from PAS.
 

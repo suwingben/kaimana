@@ -1,1 +1,0 @@
-Copy-Item -Path F:\Projects\kaimana\Kaimana8btn\doublestickMaster\* -Destination C:\Users\javie\Documents\Arduino -Force -Recurse
