@@ -64,19 +64,18 @@ void animation_combo_6(void);    // Ultra 2 — Metsu Hadouken
 
 
 // other function prototypes
-void pressIntense(int index,int x,int iR, int iG, int iB);
 int animation_idle(void);
+int animation_idle2(void);
 void starryStartup(int iR,int iG, int iB);
 void showStartup(void);
 void walkyStartup(int iR,int iG, int iB);
-int walkyHoliday(int iR,int iG, int iB);
-void walkyIdle(int iR,int iG, int iB);
 void defaultStartup(void);
 void tourneyModeActivate(void);
 void tourneyModeDeactivate(void);
 int breatheSine(int iR, int iG, int iB);
 int breatheApple(int iR, int iG, int iB);
-int starryIdle(int iR,int iG, int iB);	
-int starryIdleMulti();
+void starryIdle(int iR,int iG, int iB);	
+void starryIdleMulti();
+void walkyIdle(int iR,int iG, int iB);	
 
 #endif

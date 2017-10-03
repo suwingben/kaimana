@@ -8,15 +8,24 @@
 #include <avr/pgmspace.h>
 #include "Arduino.h"
 #include "kaimana.h"
+#include "settings.h"
 
-#define  _LED_ORDER_MIGHTYJR_J2   true
+#define _START_DEFAULT_ANIMATION defaultStartup();
+#define _START_WALK_ANIMATION walkyStartup(_IDLE_COLOR);
+#define _START_STAR_ANIMATION starryStartup(_IDLE_COLOR);
+#define _IDLE_DEFAULT animation_idle();
+#define _IDLE_WALK_ANIMATION walkyIdle(_IDLE_COLOR);
+#define _IDLE_STAR_ANIMATION starryIdle(_IDLE_COLOR);	
+#define _IDLE_BREATHE_ANIMATION breatheSine(_IDLE_COLOR);
+#define _IDLE_BREATHE_MAC_ANIMATION breatheApple(_IDLE_COLOR);
 
-#ifdef _LED_ORDER_MIGHTYJR_J2
+
+  
+#ifdef _LED_ORDER_FULL
   // Map function names to Kaimana J2 LED index numbers 
   // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
-  // submitted by MIGHTYJR
   //
-  //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START
+  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START->LED_JOY
   //
   #define  LED_JOY     22
   #define  LED_P4      0
@@ -49,7 +58,71 @@
   #define  LED_COUNT   23
 #endif
 
+#ifdef _LED_ORDER_NO_MENU
+  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY
+  #define  LED_JOY     16
+  #define  LED_P4      0
+  #define  LED_P4_B    1
+  #define  LED_P3      2
+  #define  LED_P3_B    3
+  #define  LED_P2      4
+  #define  LED_P2_B    5
+  #define  LED_P1      6
+  #define  LED_P1_B    7
+  #define  LED_K1      8
+  #define  LED_K1_B    9
+  #define  LED_K2      10
+  #define  LED_K2_B    11
+  #define  LED_K3      12
+  #define  LED_K3_B    13
+  #define  LED_K4      14
+  #define  LED_K4_B    15  
+  #define  LED_HOME    16
+  #define  LED_HOME_B  0xff
+  #define  LED_GUIDE   0xff
+  #define  LED_GUIDE_B 0xff
+  #define  LED_SELECT  0xff
+  #define  LED_SELECT_B 0xff
+  #define  LED_BACK    0xff
+  #define  LED_BACK_B  0xff
+  #define  LED_START   0xff
+  #define  LED_START_B 0xff
+  // maximum number of LEDs attached to Kaimana board
+  #define  LED_COUNT   16
+#endif
 
+#ifdef _LED_ORDER_NO_MENU_NO_JOY
+  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4
+  #define  LED_JOY     0xff
+  #define  LED_P4      0
+  #define  LED_P4_B    1
+  #define  LED_P3      2
+  #define  LED_P3_B    3
+  #define  LED_P2      4
+  #define  LED_P2_B    5
+  #define  LED_P1      6
+  #define  LED_P1_B    7
+  #define  LED_K1      8
+  #define  LED_K1_B    9
+  #define  LED_K2      10
+  #define  LED_K2_B    11
+  #define  LED_K3      12
+  #define  LED_K3_B    13
+  #define  LED_K4      14
+  #define  LED_K4_B    15  
+  #define  LED_HOME    0xff
+  #define  LED_HOME_B  0xff
+  #define  LED_GUIDE   0xff
+  #define  LED_GUIDE_B 0xff
+  #define  LED_SELECT  0xff
+  #define  LED_SELECT_B 0xff
+  #define  LED_BACK    0xff
+  #define  LED_BACK_B  0xff
+  #define  LED_START   0xff
+  #define  LED_START_B 0xff
+  // maximum number of LEDs attached to Kaimana board
+  #define  LED_COUNT   16
+#endif
 
 // general definitions for delays and other customizable features
 // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)

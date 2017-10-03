@@ -33,7 +33,6 @@
 #include <avr/pgmspace.h>
 #include "Arduino.h"
 #include "kaimana_custom.h"
-#include "settings.h"
 
 
 // Map function names to arduino leonardo atmega32u4 digital pin numbers
@@ -121,7 +120,7 @@ class Kaimana
   public:
     Kaimana(void);
     void    setLED(int index, int iR, int iG, int iB);
-	void    setLEDBrightness(int index, int iR, int iG, int iB,float alpha=0);
+	void    setLEDBrightness(int index, int iR, int iG, int iB,int alpha);
     void    setALL(int iR, int iG, int iB);
     void    updateALL(void);
     void    switchHistoryClear(void);

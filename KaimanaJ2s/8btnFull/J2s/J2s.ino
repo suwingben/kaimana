@@ -34,7 +34,6 @@
 #include "kaimana_custom.h"
 #include "animations.h"
 
-
 // local function declarations
 int  pollSwitches(void);
 void showStartup(void);
@@ -43,6 +42,7 @@ int tourneypollSwitches(void);
 boolean tournamentMode = false;
 int holdTimeout = 0;
 int selection = 0;
+int intensity=0;
 
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
@@ -52,10 +52,7 @@ Kaimana kaimana;
 void setup()
 {
   // light up all leds at boot to demonstrate everything is functional
-  defaultStartup();
-  //walkyStartup(GREEN);
-  //starryStartup(BLUE);
-
+	_STARTUP_ANIMATION
 }
 
 // the loop routine repeats indefinitely and executes immediately following the setup() function
@@ -84,24 +81,31 @@ void loop()
 			// no switches active so test for start of idle timeout
 			if( millis() > ulTimeout )
 			{
-				switch(selection)
-				{
-					case 0:
-						starryIdle(GREEN);						
-						break;					
-					case 1:
-						breatheApple(GREEN);
+				#ifdef _IDLE_ALL				
+						switch(selection)
+						{
+							case 0:
+								starryIdle(_IDLE_COLOR);						
+								break;					
+							case 1:
+								breatheApple(_IDLE_COLOR);
+								break;
+							case 2:
+								breatheSine(_IDLE_COLOR);			
+								break;
+							case 3:
+								walkyIdle(_IDLE_COLOR);
+								break;
+							case 4:
+								animation_idle();
+							default:
+								selection = 0;
+								break;
+						}
 						break;
-					case 2:
-						breatheSine(GREEN);						
-						break;
-					case 3:
-						walkyIdle(GREEN);
-						break;
-					default:
-						selection = 0;
-						break;
-				}
+				#else				
+					_IDLE_ANIMATION				
+				#endif
 			}
 		}
 	}
@@ -163,36 +167,35 @@ int pollSwitches(void)
   switch(joystickDirection)
   {
     case ATTACK_RIGHT:    // right
-      kaimana.setLED(LED_JOY, 127, 220, 000);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_LEFT:    // left
-      kaimana.setLED(LED_JOY, 127, 000, 220);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN:    // down
-      kaimana.setLED(LED_JOY, 000, 220, 220);
-
+	  setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
-      kaimana.setLED(LED_JOY, 000, 255, 127);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_DOWN + ATTACK_LEFT:    // down + left
-      kaimana.setLED(LED_JOY, 000, 127, 255);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP:    // up
-      kaimana.setLED(LED_JOY, 255, 000, 000);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP + ATTACK_RIGHT:    // up + right
-      kaimana.setLED(LED_JOY, 220, 127, 000);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     case ATTACK_UP + ATTACK_LEFT:   // up + left
-      kaimana.setLED(LED_JOY, 220, 000, 127);
+      setLEDRandomColor(LED_JOY);
       iLED[LED_JOY] = true;
       break;
     default:   // zero or any undefined value on an 8 way stick like UP+DOWN which is not happening on my watch
@@ -200,7 +203,6 @@ int pollSwitches(void)
       iLED[LED_JOY] = false;
       break;
   }
-
 
 
   // clear results for switch activity
@@ -306,16 +308,15 @@ int pollSwitches(void)
     // switch is active
     if(iLED[LED_P1] == true)
     {
+		intensity ++;
 		//maintain color while switch is active
 		iLED[LED_P1] = true;
-
+		pressIntense(LED_P1, intensity,_ON_PRESS_BTN_COLOR);
     }
     else
     {
       // select new color when switch is first activated
-
-
-	  setLEDRandomColor(LED_P1);
+	  //setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
     }
   }
@@ -323,7 +324,11 @@ int pollSwitches(void)
   {
       // switch is inactive
       kaimana.setLED(LED_P1, BLACK);
-
+	  if(intensity > 0)
+	  {
+		  intensity--;
+		  pressIntense(LED_P1, intensity,_ON_PRESS_BTN_COLOR);
+	  }
 	  iLED[LED_P1] = false;
   }
 

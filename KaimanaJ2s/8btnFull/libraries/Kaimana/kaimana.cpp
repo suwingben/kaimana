@@ -31,7 +31,7 @@
 #include "Arduino.h"
 #include "kaimana.h"
 #include "kaimana_custom.h"
-
+#include "settings.h"
 
 Kaimana::Kaimana(void)
 {
@@ -68,22 +68,38 @@ Kaimana::Kaimana(void)
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
+	iR = iR * _LED_BRIGHTNESS;
+	iG = iG * _LED_BRIGHTNESS;
+	iB = iB * _LED_BRIGHTNESS;
+
+// JOYSTICK only has 1 LED so we test for that separately, everything else has 2 LEDS
+if(index == LED_JOY)
+  {
+   _led[index].r = iR;
+   _led[index].g = iG;
+   _led[index].b = iB;
+  }
+  else
+  {
+
      _led[index].r = iR;
      _led[index].g = iG;
      _led[index].b = iB;
      _led[index+ 1].r = iR;
      _led[index+ 1].g = iG;
      _led[index+ 1].b = iB;
-
-}
+   }
+   
+}  
   
 
-void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
+void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,float alpha)
 {
 	iR = iR * alpha;
 	iG = iG * alpha;
 	iB = iB * alpha;
-  // set led identified by index to the RGB color passed to this function
+
+// JOYSTICK only has 1 LED so we test for that separately, everything else has 2 LEDS
 if(index == LED_JOY)
   {
    _led[index].r = iR;

@@ -68,26 +68,14 @@ Kaimana::Kaimana(void)
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
-if(index == LED_JOY)
+  // set led identified by index to the RGB color passed to this function
+  if(index >=0 && index < LED_COUNT)
   {
-    index = 0;
-   _led[index].r = iR;
-   _led[index].g = iG;
-   _led[index].b = iB;
+    _led[index].r=iR * 0.2;
+    _led[index].g=iG * 0.2;
+    _led[index].b=iB * 0.2;
   }
-  else
-  {
-
-     _led[index].r = iR;
-     _led[index].g = iG;
-     _led[index].b = iB;
-     _led[index+ 1].r = iR;
-     _led[index+ 1].g = iG;
-     _led[index+ 1].b = iB;
-   }
-   
-}
-  
+}  
 
 void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
 {
@@ -95,24 +83,12 @@ void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
 	iG = iG * alpha;
 	iB = iB * alpha;
   // set led identified by index to the RGB color passed to this function
-if(index == LED_JOY)
+  if(index >=0 && index < LED_COUNT)
   {
-    index = 0;
-   _led[index].r = iR;
-   _led[index].g = iG;
-   _led[index].b = iB;
+    _led[index].r=iR;
+    _led[index].g=iG;
+    _led[index].b=iB;
   }
-  else
-  {
-
-     _led[index].r = iR;
-     _led[index].g = iG;
-     _led[index].b = iB;
-     _led[index+ 1].r = iR;
-     _led[index+ 1].g = iG;
-     _led[index+ 1].b = iB;
-   }
-   
 }  
 
 
@@ -123,7 +99,7 @@ void Kaimana::setALL(int iR, int iG, int iB)
   // set all leds in the array to the RGB color passed to this function
   for(index=0;index<LED_COUNT;++index)
   {
-    setLEDBrightness( index, iR, iG, iB,100);
+    setLED( index, iR, iG, iB );
   }
 
   // update the leds with new/current colors in the array
@@ -252,7 +228,6 @@ void Kaimana::updateALL(void)
   : "r18", "r19", "r20", "r26", "r27", "cc", "memory" \
   );
 }  
-
 
 
 void Kaimana::switchHistoryClear(void)
