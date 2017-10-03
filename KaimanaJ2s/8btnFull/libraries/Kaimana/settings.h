@@ -45,8 +45,8 @@ Add a // to the begginning of the _COLOR_RANDOM line to use the color on press.
 
 select BLACK to have them remain off.
 */
-//#define _COLOR_RANDOM
-#define _ON_PRESS_BTN_COLOR GREEN
+#define _COLOR_RANDOM
+//#define _ON_PRESS_BTN_COLOR GREEN
 
 /*
 ##START UP ANIMATION##
