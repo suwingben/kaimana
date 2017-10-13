@@ -86,7 +86,7 @@ void loop()
 						switch(selection)
 						{
 							case 0:
-								starryIdle(_IDLE_COLOR);						
+								animation_idle();
 								break;					
 							case 1:
 								breatheApple(_IDLE_COLOR);
@@ -98,7 +98,7 @@ void loop()
 								walkyIdle(_IDLE_COLOR);
 								break;
 							case 4:
-								animation_idle();
+								starryIdle(_IDLE_COLOR);						
 							default:
 								selection = 0;
 								break;
@@ -309,15 +309,13 @@ int pollSwitches(void)
     // switch is active
     if(iLED[LED_P1] == true)
     {
-		intensity ++;
 		//maintain color while switch is active
 		iLED[LED_P1] = true;
-		pressIntense(LED_P1, intensity,_COLOR_RANDOM);
     }
     else
     {
       // select new color when switch is first activated
-	  //setLEDRandomColor(LED_P1);
+	  setLEDRandomColor(LED_P1);
       iLED[LED_P1] = true;
     }
   }
@@ -325,11 +323,6 @@ int pollSwitches(void)
   {
       // switch is inactive
       kaimana.setLED(LED_P1, BLACK);
-	  if(intensity > 0)
-	  {
-		  intensity--;
-		  pressIntense(LED_P1, intensity,_COLOR_RANDOM);
-	  }
 	  iLED[LED_P1] = false;
   }
 

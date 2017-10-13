@@ -264,7 +264,7 @@ int animation_idle2(void)
 }
 
 //light walks thru all buttons
-void walkyIdle(int iR,int iG, int iB)	
+int walkyIdle(int iR,int iG, int iB)	
 {
   	for (int i = 0; i < LED_COUNT; i++) 
 	{
