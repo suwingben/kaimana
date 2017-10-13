@@ -33,6 +33,7 @@
 #include "kaimana.h"
 #include "kaimana_custom.h"
 #include "animations.h"
+#include "settings.h"
 
 // local function declarations
 int  pollSwitches(void);
@@ -311,7 +312,7 @@ int pollSwitches(void)
 		intensity ++;
 		//maintain color while switch is active
 		iLED[LED_P1] = true;
-		pressIntense(LED_P1, intensity,_ON_PRESS_BTN_COLOR);
+		pressIntense(LED_P1, intensity,_COLOR_RANDOM);
     }
     else
     {
@@ -327,7 +328,7 @@ int pollSwitches(void)
 	  if(intensity > 0)
 	  {
 		  intensity--;
-		  pressIntense(LED_P1, intensity,_ON_PRESS_BTN_COLOR);
+		  pressIntense(LED_P1, intensity,_COLOR_RANDOM);
 	  }
 	  iLED[LED_P1] = false;
   }
