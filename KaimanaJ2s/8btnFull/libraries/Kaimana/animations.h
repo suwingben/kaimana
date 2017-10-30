@@ -34,6 +34,7 @@
 #include "Arduino.h"
 #include "kaimana.h"
 #include "kaimana_custom.h"
+#include "settings.h"
 
 extern Kaimana kaimana;
 

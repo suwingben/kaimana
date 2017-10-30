@@ -237,7 +237,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_P1);
+      setLEDRandomColor(LED_HOME);
       iLED[LED_HOME] = true;
 
     }
