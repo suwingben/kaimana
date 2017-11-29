@@ -45,8 +45,8 @@ Add a // to the begginning of the _COLOR_RANDOM line to use the color on press.
 
 select BLACK to have them remain off.
 */
-//#define _COLOR_RANDOM
-#define _ON_PRESS_BTN_COLOR GREEN
+#define _COLOR_RANDOM
+//#define _ON_PRESS_BTN_COLOR GREEN
 
 /*
 ##START UP ANIMATION##
@@ -56,7 +56,7 @@ _START_WALK_ANIMATION
 _START_STAR_ANIMATION
 */
 
-#define _STARTUP_ANIMATION _START_WALK_ANIMATION
+#define _STARTUP_ANIMATION _START_DEFAULT_ANIMATION
 
 
 /*
@@ -71,4 +71,4 @@ _IDLE_BREATHE_MAC_ANIMATION
 */
 
 //#define _IDLE_ALL true
-#define _IDLE_ANIMATION _IDLE_WALK_ANIMATION
+#define _IDLE_ANIMATION _IDLE_DEFAULT
