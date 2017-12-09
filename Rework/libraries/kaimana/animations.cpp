@@ -340,6 +340,82 @@ int animation_idle(void)
   }
 }
 
+//############ TOURNAMENT MODE ANIMATIONS
+void tourneyModeActivate(void)
+{
+	
+	kaimana.setALL(RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K4, BLACK);
+	kaimana.setLED(LED_P4, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+	
+	kaimana.setLED(LED_K3, BLACK);
+	kaimana.setLED(LED_P3, BLACK);
+	kaimana.setLED(LED_START, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K2, BLACK);
+	kaimana.setLED(LED_P2, BLACK);
+	kaimana.setLED(LED_HOME, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K1, BLACK);
+	kaimana.setLED(LED_P1, BLACK);
+	kaimana.setLED(LED_SELECT, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+}
+
+void tourneyModeDeactivate(void)
+{
+	
+	
+	
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K1, RED);
+	kaimana.setLED(LED_P1, RED);
+	kaimana.setLED(LED_SELECT, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+		
+	kaimana.setLED(LED_K2, RED);
+	kaimana.setLED(LED_P2, RED);
+	kaimana.setLED(LED_HOME, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K3, RED);
+	kaimana.setLED(LED_P3, RED);
+	kaimana.setLED(LED_START, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K4, RED );
+	kaimana.setLED(LED_P4, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setALL(RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+}
 
 // Hadouken (Fireball)
 //
