@@ -58,35 +58,42 @@
   //
   //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START->LED_JOY
   //
-  #define  LED_JOY     0
-  #define  LED_P4      1
-  #define  LED_P4_B    2
-  #define  LED_P3      3
-  #define  LED_P3_B    4
-  #define  LED_P2      5
-  #define  LED_P2_B    6
-  #define  LED_P1      7
-  #define  LED_P1_B    8
-  #define  LED_K1      9
-  #define  LED_K1_B    10
-  #define  LED_K2      11
-  #define  LED_K2_B    12
-  #define  LED_K3      13
-  #define  LED_K3_B    14
-  #define  LED_K4      15
-  #define  LED_K4_B    16  
-  #define  LED_HOME    17
-  #define  LED_HOME_B  18
-  #define  LED_GUIDE   17
-  #define  LED_GUIDE_B 18
-  #define  LED_SELECT  19
-  #define  LED_SELECT_B 20
-  #define  LED_BACK    19
-  #define  LED_BACK_B  20
-  #define  LED_START   21
-  #define  LED_START_B 22
+  #define  LED_LEFT    0
+  #define  LED_LEFT_B  1
+  #define  LED_DOWN    2
+  #define  LED_DOWN_B  3
+  #define  LED_RIGHT   4
+  #define  LED_RIGHT_B 5
+  #define  LED_UP      6
+  #define  LED_UP_B    7
+  #define  LED_K1      8
+  #define  LED_K1_B    9
+  #define  LED_K2      10
+  #define  LED_K2_B    11
+  #define  LED_K3      12
+  #define  LED_K3_B    13
+  #define  LED_K4      14
+  #define  LED_K4_B    15
+  #define  LED_P4      16
+  #define  LED_P4_B    17
+  #define  LED_P3      18
+  #define  LED_P3_B    19
+  #define  LED_P2      20
+  #define  LED_P2_B    21
+  #define  LED_P1      22
+  #define  LED_P1_B    23  
+  #define  LED_HOME    24
+  #define  LED_HOME_B  25
+  #define  LED_GUIDE   26
+  #define  LED_GUIDE_B 27
+  #define  LED_SELECT  28
+  #define  LED_SELECT_B 29
+  #define  LED_BACK    30
+  #define  LED_BACK_B  31
+  #define  LED_START   32
+  #define  LED_START_B 33
   // maximum number of LEDs attached to Kaimana board
-  #define  LED_COUNT   23
+  #define  LED_COUNT   34
 #endif
 
 // general definitions for delays and other customizable features

@@ -120,28 +120,28 @@ void setLEDRandomColor(int index)
   switch(random(1,8))    // pick a random color between 1 and 8
   {
     case 1:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_1, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_1 );
       break;
     case 2:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_2, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_2 );
       break;
     case 3:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_3, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_3 );
       break;
     case 4:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_4, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_4 );
       break;
     case 5:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_5, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_5 );
       break;
     case 6:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_6, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_6 );
       break;
     case 7:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_7, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_7 );
       break;
     case 8:
-      kaimana.setLEDBrightness( index, COLOR_RANDOM_8, 1 );
+      kaimana.setLED( index, COLOR_RANDOM_8 );
       break;
     default:   // any undefined value so discard data and set led to BLACK
       kaimana.setLED(index, BLACK);    
@@ -174,61 +174,99 @@ int pollSwitches(void)
   // read arduino pins and save results in the mapped LED if button is pressed (pin grounded)
 
   // complex special case for joystick but it's worth the effort
-  joystickDirection = ATTACK_NONE;
-
-  if(!digitalRead(PIN_RIGHT))    
-    joystickDirection |= ATTACK_RIGHT;
-  if(!digitalRead(PIN_LEFT))
-    joystickDirection |= ATTACK_LEFT;
-  if(!digitalRead(PIN_DOWN))
-    joystickDirection |= ATTACK_DOWN;
-  if(!digitalRead(PIN_UP))
-    joystickDirection |= ATTACK_UP;
-
-  switch(joystickDirection)
-  {
-    case ATTACK_RIGHT:    // right
-      kaimana.setLED(LED_JOY, 127, 220, 000); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_LEFT:    // left
-      kaimana.setLED(LED_JOY, 127, 000, 220); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_DOWN:    // down
-      kaimana.setLED(LED_JOY, 000, 220, 220);
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_DOWN + ATTACK_RIGHT:    // down + right
-      kaimana.setLED(LED_JOY, 000, 255, 127); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_DOWN + ATTACK_LEFT:    // down + left
-      kaimana.setLED(LED_JOY, 000, 127, 255); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_UP:    // up
-      kaimana.setLED(LED_JOY, 255, 000, 000); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_UP + ATTACK_RIGHT:    // up + right
-      kaimana.setLED(LED_JOY, 220, 127, 000); 
-      iLED[LED_JOY] = true;
-      break;
-    case ATTACK_UP + ATTACK_LEFT:   // up + left
-      kaimana.setLED(LED_JOY, 220, 000, 127); 
-      iLED[LED_JOY] = true;
-      break;
-    default:   // zero or any undefined value on an 8 way stick like UP+DOWN which is not happening on my watch
-      kaimana.setLED(LED_JOY, BLACK);    
-      iLED[LED_JOY] = false;
-      break;
-  }  
-  
-  
-
   // clear results for switch activity
   switchActivity = ATTACK_NONE;
+
+  if(!digitalRead(PIN_RIGHT))
+  {
+    switchActivity |= ATTACK_RIGHT;
+      // switch is active
+      if(iLED[LED_RIGHT] == true)
+      {
+        //maintain color while switch is active
+        iLED[LED_RIGHT] = true;
+      }
+      else
+      {
+        // select new color when switch is first activated
+        setLEDRandomColor(LED_RIGHT);
+        iLED[LED_RIGHT] = true;
+      }
+    }
+    else
+    {
+        // switch is inactive
+        kaimana.setLED(LED_RIGHT, BLACK);    
+        iLED[LED_RIGHT] = false;
+    }
+  if(!digitalRead(PIN_LEFT))
+  {
+    switchActivity |= ATTACK_LEFT;
+    // switch is active
+    if(iLED[LED_LEFT] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_LEFT] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_LEFT);
+      iLED[LED_LEFT] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_LEFT, BLACK);    
+      iLED[LED_LEFT] = false;
+  }
+  if(!digitalRead(PIN_DOWN))
+  {
+    switchActivity |= ATTACK_DOWN;
+    // switch is active
+    if(iLED[LED_DOWN] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_DOWN] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_DOWN);
+      iLED[LED_DOWN] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_DOWN, BLACK);    
+      iLED[LED_DOWN] = false;
+  }
+  if(!digitalRead(PIN_UP))
+  {
+    switchActivity |= ATTACK_UP;
+    // switch is active
+    if(iLED[LED_UP] == true)
+    {
+      //maintain color while switch is active
+      iLED[LED_UP] = true;
+    }
+    else
+    {
+      // select new color when switch is first activated
+      setLEDRandomColor(LED_UP);
+      iLED[LED_UP] = true;
+    }
+  }
+  else
+  {
+      // switch is inactive
+      kaimana.setLED(LED_UP, BLACK);    
+      iLED[LED_UP] = false;
+  }
+
+
   
   // test switch and set LED based on result       // HOME = GUIDE
   if(!digitalRead(PIN_HOME))
