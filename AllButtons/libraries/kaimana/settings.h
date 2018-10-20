@@ -35,7 +35,7 @@ MAGENTA
 ORANGE 
 */
 
-#define _IDLE_COLOR PURPLE
+#define _IDLE_COLOR BLUE
 
 
 /*
@@ -43,10 +43,10 @@ ORANGE
 Set button color on press, same color options as above. 
 Add a // to the begginning of the _COLOR_RANDOM line to use the color on press.
 */
-#define _COLOR_RANDOM
+//#define _COLOR_RANDOM
 
 //Change to BLACK to have them remain off.
-//#define _ON_PRESS_BTN_COLOR PURPLE
+#define _ON_PRESS_BTN_COLOR RED
 
 /*
 IDLE BUTTON COLOR
@@ -71,7 +71,7 @@ _START_WALK_ANIMATION
 _START_STAR_ANIMATION
 */
 
-#define _STARTUP_ANIMATION _START_WALK_ANIMATION
+#define _STARTUP_ANIMATION _START_STAR_ANIMATION
 
 
 /*
@@ -86,10 +86,23 @@ _IDLE_BREATHE_MAC_ANIMATION
 */
 
 //#define _IDLE_ALL true
-#define _IDLE_ANIMATION _IDLE_DEFAULT
+#define _IDLE_ANIMATION _IDLE_WALK_ANIMATION
 
 
 /*
 On press behaviour
 
 */
+
+
+/* 
+LED Layouts
+You can select system or game specific layouts by uncommenting below. May be selectible with a button combo. Compatible with ArcadeShocks NeoGeo adapter
+NeoGEOABCDStraight (Type C)HOME + P3
+NeoGEOCDABSquare   (Type A)HOME + P2 
+NeoGEOACBDSquare   (Type B)HOME + K2
+*/
+
+
+
+

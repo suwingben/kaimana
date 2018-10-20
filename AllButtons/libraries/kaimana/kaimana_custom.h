@@ -23,8 +23,7 @@
 //  Created:  October 24, 2013    zonbipanda // gmail.com  -- Arduino 1.0.5 Support
 //  Revised:  October 29, 2013    zonbipanda // gmail.com
 //  Revised:  April   11, 2015    zonbipanda // gmail.com  -- Arduino 1.6.3 Support
-//  Revised:  August  23, 2016    info //mightyjrmods.com  -- Added _LED_ORDER_MIGHTYJR_
-//  Revised:  August  28, 2016    info //mightyjrmods.com  -- Updated uint8_t value type for Arduino 1.6.11 support
+//
 
 #ifndef __kaimana_local_h__
 #define __kaimana_local_h__
@@ -34,126 +33,44 @@
 #include <avr/pgmspace.h>
 #include "Arduino.h"
 #include "kaimana.h"
+#include "settings.h"
 
+
+#define _START_DEFAULT_ANIMATION defaultStartup();
+#define _START_WALK_ANIMATION walkyStartup(_IDLE_COLOR);
+#define _START_STAR_ANIMATION starryStartup(_IDLE_COLOR);
+#define _IDLE_DEFAULT animation_idle();
+#define _IDLE_WALK_ANIMATION walkyIdle(_IDLE_COLOR);
+#define _IDLE_STAR_ANIMATION starryIdle(_IDLE_COLOR);	
+#define _IDLE_BREATHE_ANIMATION breatheSine(_IDLE_COLOR);
+#define _IDLE_BREATHE_MAC_ANIMATION breatheApple(_IDLE_COLOR);
 
 // uncomment exactly one of the _LED_ORDER_*_ choices below or make your own 
 // based on the order you have your LEDs connected to the Kaimana board
 //
-//#define  _LED_ORDER_DEFAULT_  true
-//#define _LED_ORDER_MIGHTYJR_ true
-#define  _LED_ORDER_MIGHTYJR_J2   true
-//#define  _LED_ORDER_JWYDER_ 	true
-//#define
+#define  _LED_ORDER_FULL  true
 
-#ifdef _LED_ORDER_DEFAULT_
-  // Map function names to default LED index numbers
-  // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
-  // change or expand as needed
-  //
-  //   KAIMANA->LED_JOY->LED_HOME->LED_SELECT->LED_START->LED_P1->LED-P2->LED_P3->LED-P4->LED_K1->LED-K2->LED_K3->LED-K4
+#ifdef _LED_ORDER_FULL
+  // Map function names to Kaimana J2 LED index numbers 
   //
   #define  LED_JOY     0
-  #define  LED_HOME    1
-  #define  LED_GUIDE   1
-  #define  LED_SELECT  2
-  #define  LED_BACK    2
+  #define  LED_SELECT  1
   #define  LED_START   3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_K1      8
-  #define  LED_K2      9
-  #define  LED_K3      10
-  #define  LED_K4      11
-#endif
+  #define  LED_P4      5
+  #define  LED_P3      7
+  #define  LED_P2      9
+  #define  LED_P1      11
+  #define  LED_K1      13
+  #define  LED_K2      15
+  #define  LED_K3      17
+  #define  LED_K4      19
+  #define  LED_HOME    21
+  #define  LED_GUIDE   21
 
-
-#ifdef _LED_ORDER_JWYDER_
-  // Map function names to LED index numbers 
-  // example for just K4-K1 and P1-P4 are connected first to the Kaimana board
-  // submitted by jwyder
-  //
-  //   KAIMANA->LED-K4->LED_K3->LED_K2->LED_K1->LED-P1->LED_P2->LED-P3->LED_P4->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_K4      0
-  #define  LED_K3      1
-  #define  LED_K2      2
-  #define  LED_K1      3
-  #define  LED_P1      4
-  #define  LED_P2      5
-  #define  LED_P3      6
-  #define  LED_P4      7
-  #define  LED_JOY     8
-  #define  LED_HOME    9
-  #define  LED_GUIDE   9
-  #define  LED_SELECT  10
-  #define  LED_BACK    10
-  #define  LED_START   11
-#endif
-
-#ifdef _LED_ORDER_MIGHTYJR_
-  // Map function names to LED index numbers 
-  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
-  // submitted by MIGHTYJR
-  //
-  //   KAIMANA->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_JOY->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_P4      0
-  #define  LED_P3      1
-  #define  LED_P2      2
-  #define  LED_P1      3
-  #define  LED_K1      4
-  #define  LED_K2      5
-  #define  LED_K3      6
-  #define  LED_K4      7
-  #define  LED_JOY     8
-  #define  LED_HOME    9
-  #define  LED_GUIDE   9
-  #define  LED_SELECT  10
-  #define  LED_BACK    10
-  #define  LED_START   11
-  #define  LED_COUNT   12
-#endif
-
-#ifdef _LED_ORDER_MIGHTYJR_J2
-  // Map function names to Kaimana J2 LED index numbers 
-  // example for just P1-P4  and K4-K1 are connected first to the Kaimana board
-  // submitted by MIGHTYJR
-  //
-  //   KAIMANA->LED_JOY->LED-P4->LED_P3->LED_P2->LED_P1->LED-K1->LED_K2->LED-K3->LED_K4->LED_HOME->LED_SELECT->LED_START
-  //
-  #define  LED_JOY     0xff
-  #define  LED_P4      0
-  #define  LED_P4_B    1
-  #define  LED_P3      2
-  #define  LED_P3_B    3
-  #define  LED_P2      4
-  #define  LED_P2_B    5
-  #define  LED_P1      6
-  #define  LED_P1_B    7
-  #define  LED_K1      8
-  #define  LED_K1_B    9
-  #define  LED_K2      10
-  #define  LED_K2_B    11
-  #define  LED_K3      12
-  #define  LED_K3_B    13
-  #define  LED_K4      14
-  #define  LED_K4_B    15  
-  #define  LED_HOME    0xff
-  #define  LED_HOME_B  0xff
-  #define  LED_GUIDE   0xff
-  #define  LED_GUIDE_B 0xff
-  #define  LED_SELECT  0xff
-  #define  LED_SELECT_B 0xff
-  #define  LED_BACK    0xff
-  #define  LED_BACK_B  0xff
-  #define  LED_START   0xff
-  #define  LED_START_B 0xff
+ 
   // maximum number of LEDs attached to Kaimana board
-  #define  LED_COUNT   16
+  #define  LED_COUNT   22
 #endif
-
 
 // general definitions for delays and other customizable features
 // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
@@ -162,18 +79,20 @@
 #define  BOOT_COMPLETE_DELAY      500    // value in miliseconds
 #define  MAIN_LOOP_DELAY           50    // value in miliseconds - used main loop
 #define  IDLE_TIMEOUT_SECONDS       3    // value in seconds - normally 60 or 30 seconds but set very short for testing
-#define  IDLE_ANIMATION_DELAY       5    // value in miliseconds - use smaller value for faster idle animation playback
+#define  IDLE_ANIMATION_DELAY       15    // value in miliseconds - use smaller value for faster idle animation playback
 #define  T_DELAY      			  250    
 
+
+
 // definitions of RGB values use by random color generator: setLEDRandomColor(int)
-#define  COLOR_RANDOM_1    127,220,000    // lime green
-#define  COLOR_RANDOM_2    127,000,220    // purple
-#define  COLOR_RANDOM_3    000,220,220    // blue
-#define  COLOR_RANDOM_4    000,255,127    // cyan
-#define  COLOR_RANDOM_5    000,127,255    // cobalt blue
-#define  COLOR_RANDOM_6    255,000,000    // red
-#define  COLOR_RANDOM_7    245,113,012    // orange
-#define  COLOR_RANDOM_8    220,000,127    // magenta
+#define  COLOR_RANDOM_1    88,144,208    // armadillo
+#define  COLOR_RANDOM_2    176,240,0    // chameleon
+#define  COLOR_RANDOM_3    112,200,128    // octopus
+#define  COLOR_RANDOM_4    192,48,16    // mammoth
+#define  COLOR_RANDOM_5    160,112,152    // eagle
+#define  COLOR_RANDOM_6    248,120,248    // mandrill
+#define  COLOR_RANDOM_7    224,0,64    // kuwanger
+#define  COLOR_RANDOM_8    64,120,216    // penguin
 #define  COLOR_RANDOM_9	   177,037,075	
 
 // definitions for combo switch patterns
@@ -193,9 +112,7 @@
 #define  COMBO_PATTERN_5A    ATTACK_RIGHT + ATTACK_P3, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN, ATTACK_NONE, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN
 #define  COMBO_PATTERN_6A    ATTACK_RIGHT + ATTACK_K3, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN, ATTACK_NONE, ATTACK_RIGHT, ATTACK_DOWN + ATTACK_RIGHT, ATTACK_DOWN
 
-//#define  START_MENU			 ATTACK_P4 + ATTACK_P3 
-#define  TOURNAMENT_MODE     	ATTACK_P4 + ATTACK_P3
-//ATTACK_LEFT, ATTACK_RIGHT , ATTACK_LEFT,ATTACK_RIGHT
+
 // data points for single full sinusoidal wave _/-\_/-
 //
 const uint8_t sinusoid[257] PROGMEM = {

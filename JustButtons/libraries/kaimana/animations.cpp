@@ -38,6 +38,48 @@ int trackled[]= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
 //######## BUTTON FUNCTIONS
 
+// set LED to one of 8 predefined colors selected at random
+//
+void setLEDRandomColor(int index)
+{
+  #ifdef _COLOR_RANDOM
+    switch(random(1,8))    // pick a random color between 1 and 8
+    {
+      case 1:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_1, 1 );
+        break;
+      case 2:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_2, 1 );
+        break;
+      case 3:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_3, 1 );
+        break;
+      case 4:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_4, 1 );
+        break;
+      case 5:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_5, 1 );
+        break;
+      case 6:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_6, 1 );
+        break;
+      case 7:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_7, 1 );
+        break;
+      case 8:
+        kaimana.setLEDBrightness( index, COLOR_RANDOM_8, 1 );
+        break;
+      default:   // any undefined value so discard data and set led to BLACK
+        kaimana.setLED(index, BLACK);    
+        break;
+    }  
+    #endif
+    #ifndef _COLOR_RANDOM
+      kaimana.setLEDBrightness( index, _ON_PRESS_BTN_COLOR, 1 );
+    #endif
+}
+
+
 void turnOn(int i,int iR,int iG, int iB)
 {
 	kaimana.setLEDBrightness(i, iR,iG,iB,1);
@@ -164,31 +206,28 @@ int breatheSine(int iR, int iG, int iB)
 	
 	while(true)
 	{
-	int breatheSpeed= 1;
-	float factor = millis()/1000.0;
+	  int breatheSpeed= 1;
+	  float factor = millis()/1000.0;
 
-		int alpha = 129.0 + 127 * sin((factor*.50)* PI );
-		//STROOOBE int alpha = 127.0 + 127 * sin((factor*3)* PI );
-		// set all leds in the array to the RGB color passed to this function
-		if (alpha != 0 ){
-		for(index=0;index<=LED_COUNT;++index)
-		{
-			kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
-		}
-		
-		// update the leds with new/current colors in the array
-		kaimana.updateALL();
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
+	  	int alpha = 129.0 + 127 * sin((factor*.50)* PI );
+	  	//STROOOBE int alpha = 127.0 + 127 * sin((factor*3)* PI );
+	  	// set all leds in the array to the RGB color passed to this function
+	  	if (alpha != 0 ){
+	  	  for(index=0;index<=LED_COUNT;++index){
+	  	  	kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+	  	  }
+
+	  	  // update the leds with new/current colors in the array
+	  	  kaimana.updateALL();
+	  	  // test all switches and exit idle animation if active switch found
+	  	  for(i=0;i<SWITCH_COUNT;++i){
+	  	  	if( !digitalRead(switchPins[i]) )
+	  	  	return(false);
         }
 
-		// place test for switches here and use calculated timer not delay
-		delay( IDLE_ANIMATION_DELAY );
-		
-	}
+	  	  // place test for switches here and use calculated timer not delay
+	  	  delay( IDLE_ANIMATION_DELAY );  
+	  }
   } 
 }
 
@@ -220,25 +259,22 @@ int breatheApple(int iR, int iG, int iB)
 		// set all leds in the array to the RGB color passed to this function
 		
 		if (alpha != 0 ){
-			for(index=0;index<LED_COUNT;++index)
-		{
-			kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
-		}
-		// update the leds with new/current colors in the array
-		kaimana.updateALL();
-		if (alpha != 0 ){
-		// test all switches and exit idle animation if active switch found
-		for(i=0;i<SWITCH_COUNT;++i)
-		{
-			if( !digitalRead(switchPins[i]) )
-			return(false);
-        }
-		// place test for switches here and use calculated timer not delay
-		delay( IDLE_ANIMATION_DELAY );
-
-	}
-  }  
-}
+			for(index=0;index<LED_COUNT;++index){
+		  	kaimana.setLEDBrightness( index, iR, iG, iB,alpha );
+		  }
+		  // update the leds with new/current colors in the array
+		  kaimana.updateALL();
+		  if (alpha != 0 ){
+		    // test all switches and exit idle animation if active switch found
+		    for(i=0;i<SWITCH_COUNT;++i){
+		    	if( !digitalRead(switchPins[i]) )
+		    	return(false);
+          }
+		    // place test for switches here and use calculated timer not delay
+		    delay( IDLE_ANIMATION_DELAY );
+  	  }
+    }  
+  }
 }
 
 // LEDS blink on/off randomly

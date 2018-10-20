@@ -33,29 +33,29 @@
 #include <avr/pgmspace.h>
 #include "Arduino.h"
 #include "kaimana_custom.h"
-
+#include "settings.h"
 
 // Map function names to arduino leonardo atmega32u4 digital pin numbers
 // specific to ParadiseArcadeShop.com Kaimana board (PS360+LED)
-#define  PIN_DOWN    0xff
-#define  PIN_UP      0xff
-#define  PIN_LEFT    0xff
-#define  PIN_RIGHT   0xff
-#define  PIN_GUIDE   0xff
-#define  PIN_SELECT  0xff
-#define  PIN_BACK    0xff
-#define  PIN_START   0xff
-#define  PIN_P1      0xff
-#define  PIN_P2      0xff
-#define  PIN_P3      0xff
-#define  PIN_P4      0xff
-#define  PIN_K1      0xff
-#define  PIN_K2      0xff
-#define  PIN_K3      0xff
-#define  PIN_K4      0xff
-//
+#define  PIN_DOWN    11
+#define  PIN_UP      18
+#define  PIN_LEFT    19
+#define  PIN_RIGHT   20
 #define  PIN_HOME    8
-#define  PIN_LED     19
+#define  PIN_GUIDE   8
+#define  PIN_SELECT  9
+#define  PIN_BACK    9
+#define  PIN_START   10
+#define  PIN_P1      3
+#define  PIN_P2      2
+#define  PIN_P3      0
+#define  PIN_P4      1
+#define  PIN_K1      4
+#define  PIN_K2      21
+#define  PIN_K3      12
+#define  PIN_K4      6
+//
+#define  PIN_LED     23
 
 
 // Map function names to binary input masks on atmega32u4 digital pin numbers
@@ -77,7 +77,7 @@
 
 
 // number of switch inputs on kaimana
-#define  SWITCH_COUNT         15
+#define  SWITCH_COUNT         16
 
 // if this is changed then Kaimana::switchHistoryTest must also be revised
 #define SWITCH_HISTORY_MAX  16
@@ -93,8 +93,9 @@
 #define  PURPLE   255,000,255
 #define  CYAN     000,255,255
 #define  WHITE    255,255,255
-#define  MAGENTA  255,000,255
-#define  ORANGE   220,127,000
+#define  ORANGE   88,20,0
+
+
 // RGB value structure.
 typedef struct __attribute__ ((__packed__)) {
     uint8_t r;
@@ -104,7 +105,7 @@ typedef struct __attribute__ ((__packed__)) {
 
 
 // table of switch pin numbers
-const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_P3, PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
+const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2,PIN_P3,PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
 
 
 // define the Kaimana class
@@ -120,8 +121,8 @@ class Kaimana
   public:
     Kaimana(void);
     void    setLED(int index, int iR, int iG, int iB);
-	void    setLEDBrightness(int index, int iR, int iG, int iB,int alpha);
-    void    setALL(int iR, int iG, int iB);
+	void    setLEDBrightness(int index, int iR, int iG, int iB,float alpha=0);
+    void    setALL(int iR, int iG, int iB,float alpha=0);
     void    updateALL(void);
     void    switchHistoryClear(void);
     void    switchHistorySet(uint16_t latestValue);

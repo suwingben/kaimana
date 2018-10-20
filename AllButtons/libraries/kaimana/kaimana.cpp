@@ -31,7 +31,7 @@
 #include "Arduino.h"
 #include "kaimana.h"
 #include "kaimana_custom.h"
-
+#include "settings.h"
 
 Kaimana::Kaimana(void)
 {
@@ -44,12 +44,12 @@ Kaimana::Kaimana(void)
   // initialize random number seed with analog input #4 on port F1
   randomSeed(analogRead(4));
 
-/*   // set arduino pins for input and enable internal pull up resistors
+  // set arduino pins for input and enable internal pull up resistors
   pinMode( PIN_DOWN,   INPUT_PULLUP );
   pinMode( PIN_UP,     INPUT_PULLUP );
   pinMode( PIN_LEFT,   INPUT_PULLUP );
   pinMode( PIN_RIGHT,  INPUT_PULLUP );
-      // HOME = GUIDE
+  pinMode( PIN_HOME,   INPUT_PULLUP );    // HOME = GUIDE
   pinMode( PIN_SELECT, INPUT_PULLUP );    // SELECT = BACK 
   pinMode( PIN_START,  INPUT_PULLUP );
   pinMode( PIN_P1,     INPUT_PULLUP );
@@ -59,8 +59,8 @@ Kaimana::Kaimana(void)
   pinMode( PIN_K1,     INPUT_PULLUP );
   pinMode( PIN_K2,     INPUT_PULLUP );
   pinMode( PIN_K3,     INPUT_PULLUP );
-  pinMode( PIN_K4,     INPUT_PULLUP ); */
-  pinMode( PIN_HOME,   INPUT_PULLUP );
+  pinMode( PIN_K4,     INPUT_PULLUP );
+
   // initialize Switch History
   switchHistoryClear();
 }
@@ -68,43 +68,68 @@ Kaimana::Kaimana(void)
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
-  // set led identified by index to the RGB color passed to this function
-  if(index >=0 && index < LED_COUNT)
-  {
-    _led[index].r=iR;
-    _led[index].g=iG;
-    _led[index].b=iB;
-  }
-}  
+	iR = iR * _LED_BRIGHTNESS;
+	iG = iG * _LED_BRIGHTNESS;
+	iB = iB * _LED_BRIGHTNESS;
 
-void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,int alpha)
+// JOYSTICK only has 1 LED so we test for that separately, everything else has 2 LEDS
+if(index == LED_JOY)
+  {
+   _led[index].r = iR;
+   _led[index].g = iG;
+   _led[index].b = iB;
+  }
+  else
+  {
+
+     _led[index].r = iR;
+     _led[index].g = iG;
+     _led[index].b = iB;
+     _led[index+ 1].r = iR;
+     _led[index+ 1].g = iG;
+     _led[index+ 1].b = iB;
+   }
+}  
+void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,float alpha)
 {
 	iR = iR * alpha;
 	iG = iG * alpha;
 	iB = iB * alpha;
-  // set led identified by index to the RGB color passed to this function
-  if(index >=0 && index < LED_COUNT)
+
+// JOYSTICK only has 1 LED so we test for that separately, everything else has 2 LEDS
+if(index == LED_JOY)
   {
-    _led[index].r=iR;
-    _led[index].g=iG;
-    _led[index].b=iB;
+   _led[index].r = iR;
+   _led[index].g = iG;
+   _led[index].b = iB;
   }
-}  
+  else
+  {
 
+     _led[index].r = iR;
+     _led[index].g = iG;
+     _led[index].b = iB;
+     _led[index+ 1].r = iR;
+     _led[index+ 1].g = iG;
+     _led[index+ 1].b = iB;
+   }
+   
+} 
 
-void Kaimana::setALL(int iR, int iG, int iB)
+void Kaimana::setALL(int iR, int iG, int iB, float alpha)
 {
   int index;
 
   // set all leds in the array to the RGB color passed to this function
   for(index=0;index<LED_COUNT;++index)
   {
-    setLED( index, iR, iG, iB );
+    setLEDBrightness( index, iR, iG, iB,alpha );
   }
 
   // update the leds with new/current colors in the array
   updateALL();
 }
+
 
 void Kaimana::updateALL(void)
 {
@@ -222,11 +247,13 @@ void Kaimana::updateALL(void)
   : \
   : [rgb] "z" (&_led), \
     [len] "w" (sizeof(_led)/sizeof(_led[0])), \
-    [port] "I" (_SFR_IO_ADDR(PORTC)), \
+    [port] "I" (_SFR_IO_ADDR(PORTF)), \
     [pin] "I" (0) \
   : "r18", "r19", "r20", "r26", "r27", "cc", "memory" \
   );
 }  
+
+
 
 void Kaimana::switchHistoryClear(void)
 {
@@ -252,7 +279,8 @@ void Kaimana::switchHistorySet(uint16_t latestValue)
     _switchHistory[0] = latestValue;
   }
 }  
- 
+
+
 boolean Kaimana::switchHistoryTest( uint16_t a0, uint16_t a1, uint16_t a2,  uint16_t a3,  uint16_t a4,  uint16_t a5,  uint16_t a6,  uint16_t a7, uint16_t a8, uint16_t a9, uint16_t a10, uint16_t a11, uint16_t a12, uint16_t a13, uint16_t a14, uint16_t a15 )
 {
   static boolean result;

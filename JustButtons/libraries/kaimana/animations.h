@@ -74,5 +74,5 @@ int breatheSine(int iR, int iG, int iB);
 int breatheApple(int iR, int iG, int iB);
 int starryIdle(int iR,int iG, int iB);	
 int starryIdleMulti();
-
+void setLEDRandomColor(int index);
 #endif

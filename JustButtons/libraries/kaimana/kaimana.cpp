@@ -92,7 +92,6 @@ if(index == LED_JOY)
 }  
 void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,float alpha)
 {
-	alpha = _LED_BRIGHTNESS;
 	iR = iR * alpha;
 	iG = iG * alpha;
 	iB = iB * alpha;

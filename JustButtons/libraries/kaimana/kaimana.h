@@ -77,7 +77,7 @@
 
 
 // number of switch inputs on kaimana
-#define  SWITCH_COUNT         15
+#define  SWITCH_COUNT         16
 
 // if this is changed then Kaimana::switchHistoryTest must also be revised
 #define SWITCH_HISTORY_MAX  16
@@ -93,6 +93,7 @@
 #define  PURPLE   255,000,255
 #define  CYAN     000,255,255
 #define  WHITE    255,255,255
+#define  ORANGE   88,20,0
 
 
 // RGB value structure.
@@ -104,7 +105,7 @@ typedef struct __attribute__ ((__packed__)) {
 
 
 // table of switch pin numbers
-const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
+const unsigned char switchPins[SWITCH_COUNT] = { PIN_DOWN, PIN_UP, PIN_LEFT, PIN_RIGHT, PIN_HOME, PIN_SELECT, PIN_START, PIN_P1, PIN_P2,PIN_P3,PIN_P4, PIN_K1, PIN_K2, PIN_K3, PIN_K4 };
 
 
 // define the Kaimana class

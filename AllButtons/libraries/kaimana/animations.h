@@ -34,6 +34,7 @@
 #include "Arduino.h"
 #include "kaimana.h"
 #include "kaimana_custom.h"
+#include "settings.h"
 
 extern Kaimana kaimana;
 
@@ -50,11 +51,6 @@ extern Kaimana kaimana;
 #define FIREBALL_OFFSET_1    96    // used to create animation -- see code
 #define FIREBALL_DELAY      350    // value in microseconds
 
-
-
-// street figher 4 - ryu's special moves (combos)
-// http://www.eventhubs.com/guides/2008/jul/06/ryu-street-fighter-4-character-guide/
-//
 void animation_combo_1(void);    // Hadouken (Fireball)
 void animation_combo_2(void);    // Shoryuken (Dragon Punch)
 void animation_combo_3(void);    // Tatsumaki Senpukyaku (Hurricane Kick)
@@ -62,15 +58,15 @@ void animation_combo_4(void);    // Super — Shinkuu Hadouken
 void animation_combo_5(void);    // Ultra 1 — Metsu Hadouken
 void animation_combo_6(void);    // Ultra 2 — Metsu Hadouken
 
-
 // other function prototypes
-int checkbtn(void);
+
+void pressIntense(int index,int x,int iR, int iG, int iB);
 int animation_idle(void);
-int animation_idle2(void);
 void starryStartup(int iR,int iG, int iB);
 void showStartup(void);
 void walkyStartup(int iR,int iG, int iB);
-void walkyidle(int iR,int iG, int iB);	
+int walkyHoliday(int iR,int iG, int iB);
+int walkyIdle(int iR,int iG, int iB);
 void defaultStartup(void);
 void tourneyModeActivate(void);
 void tourneyModeDeactivate(void);
@@ -79,5 +75,5 @@ int breatheApple(int iR, int iG, int iB);
 int starryIdle(int iR,int iG, int iB);	
 int starryIdleMulti();
 void setLEDRandomColor(int index);
-
+void megacharge(int iR,int iG, int iB, int p1_timer);
 #endif
