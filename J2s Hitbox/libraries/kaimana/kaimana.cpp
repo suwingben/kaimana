@@ -65,6 +65,20 @@ Kaimana::Kaimana(void)
   switchHistoryClear();
 }
 
+void Kaimana::setLEDBrightness(int index, int iR, int iG, int iB,float alpha)
+{
+	iR = iR * alpha;
+	iG = iG * alpha;
+	iB = iB * alpha;
+
+     _led[index].r = iR;
+     _led[index].g = iG;
+     _led[index].b = iB;
+     _led[index+ 1].r = iR;
+     _led[index+ 1].g = iG;
+     _led[index+ 1].b = iB;
+   
+} 
 
 void Kaimana::setLED(int index, int iR, int iG, int iB)
 {
