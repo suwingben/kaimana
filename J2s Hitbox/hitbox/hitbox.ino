@@ -39,8 +39,9 @@
 int  pollSwitches(void);
 void showStartup(void);
 void setLEDRandomColor(int index);
-
-
+int tourneypollSwitches(void);
+int holdTimeout = 0;
+boolean tournamentMode = false;
 // ParadiseArcadeShop.com Kaimana features initialzied when Kaimana class instantiated
 Kaimana kaimana;
 
@@ -65,25 +66,34 @@ void loop()
   
 
   // infinite loop of read switches, update LEDs and idle animation when necessary
-  while(true)
+while(true)
   {
-    // active -- poll switches and update leds
-    if( pollSwitches() != 0 )
-    {
-        // some switches were active so reset idle timeout to now + some seconds
-        ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
-    }
-    else
-    {
-        // no switches active so test for start of idle timeout  
-        if( millis() > ulTimeout )
-        {
-          _IDLE_ANIMATION
-        }  
-    }
-    
-    // delay a little to avoid flickering (yea, updates happens really, really fast!)
-    delay( MAIN_LOOP_DELAY );
+	  	if (tournamentMode != true)
+		{
+			// active -- poll switches and update leds
+			if( pollSwitches() != 0 )
+			{
+				// some switches were active so reset idle timeout to now + some seconds
+				ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
+			}
+			else
+			{
+				// no switches active so test for start of idle timeout  
+				if( millis() > ulTimeout )
+				{
+				_IDLE_ANIMATION
+				}  
+			}
+		}
+	else
+	{
+		if( tourneypollSwitches() != 0 )
+		{
+			// some switches were active so reset idle timeout to now + some seconds
+			ulTimeout = millis() + ( (unsigned long)IDLE_TIMEOUT_SECONDS * 1000 );
+		}
+	}    
+
   } 
 }
 
@@ -149,7 +159,114 @@ void setLEDRandomColor(int index)
   }  
 }
 
+void tourneyModeActivate(void)
+{
+	
+	kaimana.setALL(RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K4, BLACK);
+	kaimana.setLED(LED_P4, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+	
+	kaimana.setLED(LED_K3, BLACK);
+	kaimana.setLED(LED_P3, BLACK);
+	kaimana.setLED(LED_START, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K2, BLACK);
+	kaimana.setLED(LED_P2, BLACK);
+	kaimana.setLED(LED_HOME, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K1, BLACK);
+	kaimana.setLED(LED_P1, BLACK);
+	kaimana.setLED(LED_SELECT, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
 
+  kaimana.setLED(LED_UP, BLACK);
+	kaimana.setLED(LED_UP, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_RIGHT, BLACK);
+	kaimana.setLED(LED_RIGHT, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_DOWN, BLACK);
+	kaimana.setLED(LED_DOWN, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_LEFT, BLACK);
+	kaimana.setLED(LED_LEFT, BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+}
+
+void tourneyModeDeactivate(void)
+{
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+  kaimana.setLED(LED_LEFT, RED );
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_DOWN, RED );
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_RIGHT, RED );
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+  kaimana.setLED(LED_UP, RED );
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+	kaimana.setLED(LED_K1, RED);
+	kaimana.setLED(LED_P1, RED);
+	kaimana.setLED(LED_SELECT, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+		
+	kaimana.setLED(LED_K2, RED);
+	kaimana.setLED(LED_P2, RED);
+	kaimana.setLED(LED_HOME, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K3, RED);
+	kaimana.setLED(LED_P3, RED);
+	kaimana.setLED(LED_START, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setLED(LED_K4, RED );
+	kaimana.setLED(LED_P4, RED);
+	kaimana.updateALL();
+	delay( T_DELAY );	
+
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setALL(RED);
+	kaimana.updateALL();
+	delay( T_DELAY );
+	
+	kaimana.setALL(BLACK);
+	kaimana.updateALL();
+	delay( T_DELAY );
+}
 
 int pollSwitches(void)
 {
@@ -269,13 +386,20 @@ int pollSwitches(void)
 
   
   // test switch and set LED based on result       // HOME = GUIDE
-  if(!digitalRead(PIN_HOME))
+   if(!digitalRead(PIN_HOME))
   {
     // switch is active
     if(iLED[LED_HOME] == true)
     {
       //maintain color while switch is active
       iLED[LED_HOME] = true;
+	    //Button hold to start tourneymode
+		holdTimeout += 1;
+		if(holdTimeout == 2000)
+		{
+		tournamentMode = true;
+		tourneyModeActivate();
+		}	
     }
     else
     {
@@ -289,6 +413,7 @@ int pollSwitches(void)
       // switch is inactive
       kaimana.setLED(LED_HOME, BLACK);    
       iLED[LED_HOME] = false;
+	  holdTimeout=0;
   }
 
 
@@ -618,6 +743,36 @@ int pollSwitches(void)
   return(iActiveSwitchCount);
 }  
 
+int tourneypollSwitches(void)
+{
+  static int  iLED[LED_COUNT];
+  static int  iActiveSwitchCount = 0;
+  static int  i;
+  static int  j;
+  static int  firsttime;
+  static uint16_t  joystickDirection;
+  static uint16_t  switchActivity;
+
+  // test switch and set LED based on result       // HOME = GUIDE
+  if(!digitalRead(PIN_HOME))
+  {
+	  //Button hold to change idle animation
+		holdTimeout += 1;
+		//Button hold to start tourneymode		
+		if(holdTimeout == 200)
+		{
+		tournamentMode = false;
+		tourneyModeDeactivate();
+		}
+      ++iActiveSwitchCount;
+	delay(10);	  
+  }
+  else
+  {  	 
+	holdTimeout=0;
+  }
+    return(iActiveSwitchCount);
+}
 
 
  
