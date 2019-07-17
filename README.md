@@ -1,6 +1,6 @@
 JRDIBBS Repo for the Paradise Arcade Shop Kaimana LED Driver Board
 
-The code in this repo is auxiliary to the original Kaimana Code developed by ZombiPanda and located at the fork source of this project.
+The code in this repo is auxiliary to the original Kaimana Code developed by ZombiPanda located at the fork source of this project.
 
 Main Features:
 * Support for Kaimana J2s
