@@ -129,6 +129,17 @@ void setLEDRandomColor(int index)
       break;
   }  
 }
+void setLEDYellow(int index)
+{
+  
+  kaimana.setLED(index, YELLOW);    
+      
+}  
+
+
+
+
+
 // Color Fade Animation when Idle
 int animation_idle(void)
 {

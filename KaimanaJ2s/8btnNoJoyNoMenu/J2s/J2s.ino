@@ -53,8 +53,8 @@ Kaimana kaimana;
 void setup()
 {
   // light up all leds at boot to demonstrate everything is functional remove the  // from the animation you want to play
-  defaultStartup();
-  //walkyStartup(GREEN);
+  //defaultStartup();
+  walkyStartup(YELLOW);
   //starryStartup(BLUE);
   //walkyStartup(RED);
   //starryStartup(MAGENTA);
@@ -90,22 +90,22 @@ void loop()
 				switch(selection)
 				{
 					case 0:
-						animation_idle();
+						walkyIdle(YELLOW);
 						break;					
 					case 1:
 						starryIdleMulti();						
 						break;
 					case 2:
-						starryIdle(CYAN);
+						starryIdle(YELLOW);
 						break;
 					case 3:
-						walkyIdle(ORANGE);
+						walkyIdle(YELLOW);
 						break;
 					case 4:
-						breatheApple(WHITE);
+						breatheApple(YELLOW);
 						break;
 					case 5:
-						breatheSine(RED);
+						breatheSine(YELLOW);
 						break;
 					default:
 						selection = 0;
@@ -221,14 +221,14 @@ int pollSwitches(void)
       // select new color when switch is first activated
 
 
-	  setLEDRandomColor(LED_P1);
+	   kaimana.setLED(LED_P1, BLACK);
       iLED[LED_P1] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_P1, BLACK);
+      kaimana.setLED(LED_P1, YELLOW);
 
 	  iLED[LED_P1] = false;
   }
@@ -248,14 +248,14 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_P2);
+       kaimana.setLED(LED_P2, BLACK);
       iLED[LED_P2] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_P2, BLACK);
+      kaimana.setLED(LED_P2, YELLOW);
       iLED[LED_P2] = false;
   }
 
@@ -274,14 +274,14 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_P3);
+       kaimana.setLED(LED_P3, BLACK);
       iLED[LED_P3] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_P3, BLACK);
+      kaimana.setLED(LED_P3, YELLOW);
       iLED[LED_P3] = false;
   }
 
@@ -300,7 +300,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_P4);
+       kaimana.setLED(LED_P4, BLACK);
 
       iLED[LED_P4] = true;
     }
@@ -308,7 +308,7 @@ int pollSwitches(void)
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_P4, BLACK);
+      kaimana.setLED(LED_P4, YELLOW);
       iLED[LED_P4] = false;
 	  aniTimeout = 0;
   }
@@ -329,7 +329,7 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_K1);
+       kaimana.setLED(LED_K1, BLACK);
       iLED[LED_K1] = true;
 	  
     }
@@ -337,7 +337,7 @@ int pollSwitches(void)
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_K1, BLACK);
+      kaimana.setLED(LED_K1, YELLOW);
       iLED[LED_K1] = false;
 	  holdTimeout=0;
 	  
@@ -358,14 +358,14 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_K2);
+       kaimana.setLED(LED_K2, BLACK);
       iLED[LED_K2] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_K2, BLACK);
+      kaimana.setLED(LED_K2, YELLOW);
       iLED[LED_K2] = false;
   }
 
@@ -384,14 +384,14 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_K3);
+       kaimana.setLED(LED_K3, BLACK);
       iLED[LED_K3] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_K3, BLACK);
+      kaimana.setLED(LED_K3, YELLOW);
       iLED[LED_K3] = false;
   }
 
@@ -410,14 +410,14 @@ int pollSwitches(void)
     else
     {
       // select new color when switch is first activated
-      setLEDRandomColor(LED_K4);
+       kaimana.setLED(LED_K4, BLACK);
       iLED[LED_K4] = true;
     }
   }
   else
   {
       // switch is inactive
-      kaimana.setLED(LED_K4, BLACK);
+      kaimana.setLED(LED_K4, YELLOW);
       iLED[LED_K4] = false;
   }
 
